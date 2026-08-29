@@ -89,8 +89,7 @@ export class ScrollChoreography {
     // Acts 1, 2, 3, 4 start primed below the viewport ready to sweep up
     gsap.set(actTerminal, {
       yPercent: 110,
-      scale: 0.85,
-      rotateX: 20,
+      scale: 0.92,
       opacity: 0,
       filter: 'blur(6px)',
       pointerEvents: 'none',
@@ -99,8 +98,7 @@ export class ScrollChoreography {
 
     gsap.set(actSkills, {
       yPercent: 110,
-      scale: 0.85,
-      rotateX: 20,
+      scale: 0.92,
       opacity: 0,
       filter: 'blur(6px)',
       pointerEvents: 'none',
@@ -109,8 +107,7 @@ export class ScrollChoreography {
 
     gsap.set(actProjects, {
       yPercent: 110,
-      scale: 0.85,
-      rotateX: 20,
+      scale: 0.92,
       opacity: 0,
       filter: 'blur(6px)',
       pointerEvents: 'none',
@@ -119,8 +116,7 @@ export class ScrollChoreography {
 
     gsap.set(actContact, {
       yPercent: 110,
-      scale: 0.85,
-      rotateX: 20,
+      scale: 0.92,
       opacity: 0,
       filter: 'blur(6px)',
       pointerEvents: 'none',
@@ -151,25 +147,23 @@ export class ScrollChoreography {
       .to(gridFloor, { backgroundPosition: '0 2800px', duration: 12, ease: 'none' }, 0);
 
     // =========================================================================
-    // 🌌 CHAPTER 0 -> 1: 3D VORTEX TEAR (HERO) -> MAINFRAME UNFOLD (ABOUT & ROBOT FACE)
+    // 🌌 CHAPTER 0 -> 1: HERO OUT -> MAINFRAME UNFOLD (ABOUT & ROBOT FACE)
     // =========================================================================
     masterTl
-      // Act 0 peels apart in 3D parallax layers
+      // Act 0 peels apart in parallax layers
       .to('.hero-left-column', {
         xPercent: -35,
-        yPercent: -50,
-        rotateZ: -6,
-        scale: 0.8,
+        yPercent: -40,
+        scale: 0.85,
         opacity: 0,
         filter: 'blur(8px)',
         duration: 1.2,
         ease: 'power2.inOut'
       }, 0.8)
       .to('.hero-right-widget', {
-        xPercent: 45,
-        yPercent: -45,
-        rotateZ: 8,
-        scale: 0.75,
+        xPercent: 35,
+        yPercent: -40,
+        scale: 0.85,
         opacity: 0,
         filter: 'blur(8px)',
         duration: 1.2,
@@ -185,7 +179,7 @@ export class ScrollChoreography {
       .fromTo(warpStreaks, { opacity: 0, scaleX: 0.5 }, { opacity: 0.8, scaleX: 1.4, duration: 0.6, yoyo: true, repeat: 1 }, 1.0)
       // Robot moves toward center console
       .to(this.sceneRobotWrapperEl, { right: '45%', duration: 1.6, ease: 'power1.inOut' }, 0.8)
-      // Act 1 (Neural Mainframe) enters via Hologram 3D Unfold
+      // Act 1 (Neural Mainframe) enters cleanly from bottom
       .set(actTerminal, { pointerEvents: 'auto' }, 1.3)
       .to(actTerminal, {
         yPercent: 0,
@@ -196,26 +190,26 @@ export class ScrollChoreography {
         ease: 'power3.out'
       }, 1.2)
       .fromTo('.robot-face-chassis', {
-        rotateY: -45,
-        rotateX: 15,
-        scale: 0.7,
-        opacity: 0,
-        filter: 'blur(10px)'
-      }, {
-        rotateY: 0,
-        rotateX: 0,
-        scale: 1.0,
-        opacity: 1,
-        filter: 'blur(0px)',
-        duration: 1.2,
-        ease: 'back.out(1.4)'
-      }, 1.4)
-      .fromTo('.terminal-dossier-column', {
-        xPercent: 40,
+        xPercent: -30,
+        scale: 0.85,
         opacity: 0,
         filter: 'blur(8px)'
       }, {
         xPercent: 0,
+        scale: 1.0,
+        opacity: 1,
+        filter: 'blur(0px)',
+        duration: 1.2,
+        ease: 'power3.out'
+      }, 1.4)
+      .fromTo('.terminal-dossier-column', {
+        xPercent: 30,
+        scale: 0.85,
+        opacity: 0,
+        filter: 'blur(8px)'
+      }, {
+        xPercent: 0,
+        scale: 1.0,
         opacity: 1,
         filter: 'blur(0px)',
         duration: 1.2,
@@ -224,22 +218,20 @@ export class ScrollChoreography {
       .call(() => this.triggerTypewriter(), [], 2.4);
 
     // =========================================================================
-    // 🚪 CHAPTER 1 -> 2: MAINFRAME SPLIT -> CYLINDRICAL ORBITAL FAN-OUT (SKILLS)
+    // 🚪 CHAPTER 1 -> 2: MAINFRAME OUT -> DATA CORE (SKILLS)
     // =========================================================================
     masterTl
       // Act 1 Robot Face & Dossier split apart
       .to('.robot-face-chassis', {
-        xPercent: -60,
-        rotateY: 50,
-        scale: 0.65,
+        xPercent: -40,
+        scale: 0.8,
         opacity: 0,
         duration: 1.1,
         ease: 'power2.in'
       }, 3.6)
       .to('.terminal-dossier-column', {
-        xPercent: 60,
-        rotateY: -50,
-        scale: 0.65,
+        xPercent: 40,
+        scale: 0.8,
         opacity: 0,
         duration: 1.1,
         ease: 'power2.in'
@@ -252,7 +244,7 @@ export class ScrollChoreography {
       .set(actTerminal, { pointerEvents: 'none' }, 4.6)
       // Robot moves to inventory position
       .to(this.sceneRobotWrapperEl, { right: '16%', duration: 1.5, ease: 'power1.inOut' }, 3.6)
-      // Act 2 (Data Core) enters via 3D Cylindrical Orbital Fan-out
+      // Act 2 (Data Core) enters cleanly
       .set(actSkills, { pointerEvents: 'auto' }, 3.9)
       .to(actSkills, {
         yPercent: 0,
@@ -262,39 +254,35 @@ export class ScrollChoreography {
         duration: 1.3,
         ease: 'power3.out'
       }, 3.8)
-      // 8 Skill cards explode outward from center in a 3D orbital spread
+      // 8 Skill cards cascade smoothly into position
       .fromTo('.skill-card', {
-        x: (idx) => (idx % 2 === 0 ? -180 : 180),
-        y: (idx) => (idx < 4 ? -80 : 80),
-        rotateY: (idx) => (idx % 2 === 0 ? 45 : -45),
-        rotateZ: (idx) => (idx % 2 === 0 ? -12 : 12),
-        scale: 0.45,
+        y: (idx) => (idx < 4 ? -40 : 40),
+        x: (idx) => (idx % 2 === 0 ? -25 : 25),
+        scale: 0.85,
         opacity: 0
       }, {
         x: 0,
         y: 0,
-        rotateY: 0,
-        rotateZ: 0,
         scale: 1.0,
         opacity: 1,
         stagger: 0.04,
-        duration: 1.2,
-        ease: 'back.out(1.5)'
+        duration: 1.1,
+        ease: 'power3.out'
       }, 4.0);
 
     // =========================================================================
-    // 🕹️ CHAPTER 2 -> 3: VORTEX IMPLOSION -> ISOMETRIC NEON HIGHWAY WARP (ARCADE)
+    // 🕹️ CHAPTER 2 -> 3: DATA CORE OUT -> ARCADE LEVEL SELECT (PROJECTS)
     // =========================================================================
     masterTl
-      // Skill cards implode into spinning singularity
+      // Skill cards fade out cleanly
       .to('.skill-card', {
-        scale: 0.2,
-        rotateZ: 45,
+        scale: 0.8,
+        y: -40,
         opacity: 0,
         stagger: 0.02,
-        filter: 'blur(14px)',
+        filter: 'blur(8px)',
         duration: 0.8,
-        ease: 'power3.in'
+        ease: 'power2.in'
       }, 6.2)
       .to(actSkills, {
         opacity: 0,
@@ -304,7 +292,7 @@ export class ScrollChoreography {
       .set(actSkills, { pointerEvents: 'none' }, 7.3)
       // Robot moves to arcade alley
       .to(this.sceneRobotWrapperEl, { right: '55%', duration: 1.5, ease: 'power1.inOut' }, 6.4)
-      // Act 3 (Arcade Runway) sweeps in along isometric 3D speed highway
+      // Act 3 (Arcade Runway) enters level and crisp
       .set(actProjects, { pointerEvents: 'auto' }, 6.7)
       .to(actProjects, {
         yPercent: 0,
@@ -315,49 +303,41 @@ export class ScrollChoreography {
         ease: 'power3.out'
       }, 6.6)
       .fromTo('#arcade-runway', {
-        rotateX: 32,
-        rotateY: -15,
-        scale: 0.75,
-        y: 100,
+        scale: 0.9,
+        y: 60,
         opacity: 0
       }, {
-        rotateX: 0,
-        rotateY: 0,
         scale: 1.0,
         y: 0,
         opacity: 1,
         duration: 1.2,
         ease: 'power3.out'
       }, 6.7)
-      // 4 Cabinets rocket in along runway lanes
+      // 4 Cabinets rise in smoothly
       .fromTo('.arcade-cabinet', {
-        x: (idx) => (idx + 1) * 120,
-        y: 80,
-        rotateY: -25,
-        scale: 0.6,
+        y: 60,
+        scale: 0.9,
         opacity: 0
       }, {
-        x: 0,
         y: 0,
-        rotateY: 0,
         scale: 1.0,
         opacity: 1,
         stagger: 0.07,
-        duration: 1.1,
-        ease: 'back.out(1.3)'
+        duration: 1.0,
+        ease: 'power3.out'
       }, 6.9);
 
     // =========================================================================
-    // 📡 CHAPTER 3 -> 4: HIGHWAY OVERDRIVE -> MATRIX DATA INGESTION (CLI TERMINAL)
+    // 📡 CHAPTER 3 -> 4: ARCADE OUT -> SECURE UPLINK TERMINAL (CONTACT)
     // =========================================================================
     masterTl
-      // Cabinets zoom past camera into distance
+      // Cabinets slide up and out
       .to('.arcade-cabinet', {
-        yPercent: -110,
-        scale: 1.3,
+        yPercent: -60,
+        scale: 0.85,
         opacity: 0,
         stagger: 0.03,
-        filter: 'blur(10px)',
+        filter: 'blur(8px)',
         duration: 0.8,
         ease: 'power2.in'
       }, 9.2)
@@ -372,7 +352,7 @@ export class ScrollChoreography {
       .fromTo('.radar-circle', { scale: 0.1, opacity: 1 }, { scale: 2.4, opacity: 0, stagger: 0.15, duration: 1.4, ease: 'power2.out' }, 9.9)
       // Robot stands beneath orbital uplink
       .to(this.sceneRobotWrapperEl, { right: '40%', duration: 1.5, ease: 'power1.inOut' }, 9.4)
-      // Act 4 (Interactive Cyber CLI Terminal) drops in from orbital space
+      // Act 4 (Interactive Cyber CLI Terminal) drops in straight and crisp
       .set(actContact, { pointerEvents: 'auto' }, 9.6)
       .to(actContact, {
         yPercent: 0,
@@ -383,20 +363,20 @@ export class ScrollChoreography {
         ease: 'power3.out'
       }, 9.6)
       .fromTo('.cli-terminal-window', {
-        scale: 0.7,
-        rotateX: -22,
+        scale: 0.88,
+        y: 50,
         opacity: 0,
-        filter: 'blur(12px)'
+        filter: 'blur(8px)'
       }, {
         scale: 1.0,
-        rotateX: 0,
+        y: 0,
         opacity: 1,
         filter: 'blur(0px)',
         duration: 1.2,
-        ease: 'back.out(1.2)'
+        ease: 'power3.out'
       }, 9.8)
       .fromTo('.quick-link-card', {
-        y: 60,
+        y: 40,
         opacity: 0
       }, {
         y: 0,
@@ -411,27 +391,32 @@ export class ScrollChoreography {
   }
 
   private setup3DMouseParallax() {
-    const parallaxRig = document.querySelector('#camera-parallax-rig') as HTMLElement;
-    if (!parallaxRig) return;
+    const farSkyline = document.querySelector('.far-skyline-layer') as HTMLElement;
+    const midSkyline = document.querySelector('.mid-skyline-layer') as HTMLElement;
+    if (!farSkyline && !midSkyline) return;
 
-    let targetRotateX = 0;
-    let targetRotateY = 0;
-    let currentRotateX = 0;
-    let currentRotateY = 0;
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
 
     window.addEventListener('mousemove', (e) => {
       const normX = (e.clientX / window.innerWidth - 0.5) * 2;
       const normY = (e.clientY / window.innerHeight - 0.5) * 2;
-
-      targetRotateY = normX * 3.5; // Max 3.5 deg Y rotation
-      targetRotateX = -normY * 2.5; // Max 2.5 deg X rotation
+      targetX = normX * 18;
+      targetY = normY * 10;
     });
 
     const updateParallax = () => {
-      currentRotateX += (targetRotateX - currentRotateX) * 0.08;
-      currentRotateY += (targetRotateY - currentRotateY) * 0.08;
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
 
-      parallaxRig.style.transform = `perspective(1200px) rotateX(${currentRotateX.toFixed(2)}deg) rotateY(${currentRotateY.toFixed(2)}deg)`;
+      if (midSkyline) {
+        midSkyline.style.transform = `translate(${currentX.toFixed(1)}px, ${currentY.toFixed(1)}px)`;
+      }
+      if (farSkyline) {
+        farSkyline.style.transform = `translate(${(currentX * 0.5).toFixed(1)}px, ${(currentY * 0.5).toFixed(1)}px)`;
+      }
       requestAnimationFrame(updateParallax);
     };
     updateParallax();

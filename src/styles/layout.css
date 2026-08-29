@@ -482,7 +482,6 @@
   align-items: center;
   justify-content: center;
   z-index: 10;
-  perspective: 1200px;
 }
 
 .camera-parallax-rig {
@@ -702,7 +701,7 @@
 }
 
 .rpg-status-card:hover {
-  transform: perspective(600px) rotateY(-5deg) rotateX(4deg);
+  transform: translateY(-4px);
   box-shadow: 0 0 32px rgba(79, 227, 255, 0.15);
 }
 
@@ -811,8 +810,7 @@
 .blast-door-right { right: 0; border-left: 2px solid var(--cyan-dim); border-right: none; }
 
 .terminal-console-3d {
-  perspective: 1200px;
-  transform-style: preserve-3d;
+  width: 100%;
 }
 
 /* About Layout: 2 Columns (Robot Face + Terminal) */
@@ -850,7 +848,7 @@
 
 .robot-face-chassis:hover,
 .robot-face-chassis.face-active {
-  transform: perspective(600px) rotateX(4deg) scale(1.02);
+  transform: translateY(-4px) scale(1.02);
   border-color: #ffffff;
   box-shadow: 0 0 32px rgba(79, 227, 255, 0.35);
 }
@@ -1094,8 +1092,7 @@
 
 /* ==================== ACT 2: DATA CORE 3D ORBITAL MATRIX ==================== */
 .skills-3d-scene {
-  perspective: 1400px;
-  transform-style: preserve-3d;
+  width: 100%;
 }
 
 .skills-grid {
@@ -1103,7 +1100,6 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-bottom: 24px;
-  transform-style: preserve-3d;
 }
 
 .skill-card {
@@ -1114,12 +1110,10 @@
   cursor: pointer;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
   min-height: 100px;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
 }
 
 .skill-card:hover {
-  transform: translateZ(28px) scale(1.04);
+  transform: translateY(-4px) scale(1.03);
 }
 
 .skill-card.legendary { border-color: var(--amber); }
@@ -1171,15 +1165,13 @@
 
 /* ==================== ACT 3: ARCADE ROW ISOMETRIC RUNWAY ==================== */
 .arcade-runway-3d {
-  perspective: 1600px;
-  transform-style: preserve-3d;
+  width: 100%;
 }
 
 .arcade-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
-  transform-style: preserve-3d;
 }
 
 .arcade-cabinet {
@@ -1193,12 +1185,11 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 320px;
-  transform-style: preserve-3d;
 }
 
 .arcade-cabinet:hover {
   border-color: var(--cyan);
-  transform: translateZ(36px) translateY(-6px);
+  transform: translateY(-6px) scale(1.02);
   box-shadow: 0 0 32px var(--cyan-glow);
 }
 
