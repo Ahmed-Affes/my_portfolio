@@ -428,38 +428,74 @@
             </div>
           </section>
 
-          <!-- ==================== ACT 2: INVENTORY (Skills 3D Orbital Matrix) ==================== -->
+          <!-- ==================== ACT 2: INVENTORY (Skills Horizontal Motion Runway & Jumping Robot) ==================== -->
           <section class="stage-act act-skills" id="act-skills" aria-labelledby="skills-title">
-            <div class="act-inner">
+            <div class="act-inner skills-runway-stage">
+              
               <div class="stage-label">
                 <span class="stage-label-box"></span>
-                <span>STAGE 02 — INVENTORY</span>
+                <span>STAGE 02 — DATA CORE RUNWAY // KINETIC INVENTORY</span>
               </div>
               <h2 class="zone-title" id="skills-title">Equipped skills</h2>
               <p class="zone-subtitle">
-                Border color = depth of production experience. Interactive 3D matrix responds to cursor and scroll velocity. Click any card to inspect telemetry.
+                Scroll to slide across the horizontal data runway. Unit 07 leaps across cards in real-time. Click any card to dock and inspect schematics.
               </p>
 
-              <!-- Skills 3D Orbital Matrix -->
-              <div class="skills-3d-scene" id="skills-3d-scene">
-                <div class="skills-grid" id="skills-grid"></div>
+              <!-- Single-Row Horizontal Runway Container -->
+              <div class="skills-runway-viewport" id="skills-runway-viewport">
+                
+                <!-- Animated Companion Robot Hopper -->
+                <div class="skills-jumping-robot" id="skills-jumping-robot" aria-hidden="true">
+                  <div class="hopper-pixel-body">
+                    <!-- Antenna -->
+                    <div class="hopper-antenna"><span class="antenna-bulb"></span></div>
+                    <!-- Head / Visor -->
+                    <div class="hopper-head">
+                      <div class="hopper-visor-glow"></div>
+                    </div>
+                    <!-- Torso with Power Core -->
+                    <div class="hopper-torso">
+                      <div class="hopper-core"></div>
+                    </div>
+                    <!-- Thruster Legs -->
+                    <div class="hopper-thruster">
+                      <span class="thruster-spark left"></span>
+                      <span class="thruster-spark right"></span>
+                    </div>
+                  </div>
+                  <div class="hopper-shadow"></div>
+                </div>
+
+                <!-- Single Horizontal Flex Track -->
+                <div class="skills-horizontal-track" id="skills-grid"></div>
+
+                <!-- Runway Circuit Bus Laser Line -->
+                <div class="runway-circuit-bus" aria-hidden="true">
+                  <div class="bus-data-pulse"></div>
+                </div>
               </div>
 
-              <!-- Legend -->
-              <div class="skill-legend" id="skill-legend">
-                <div class="legend-item">
-                  <span class="legend-color-box" style="background: var(--green); box-shadow: 0 0 6px var(--green);"></span>
-                  <span>CORE — working knowledge</span>
+              <!-- Legend & Scroll Indicator -->
+              <div class="skills-runway-footer">
+                <div class="skill-legend" id="skill-legend">
+                  <div class="legend-item">
+                    <span class="legend-color-box" style="background: var(--green); box-shadow: 0 0 6px var(--green);"></span>
+                    <span>CORE — working knowledge</span>
+                  </div>
+                  <div class="legend-item">
+                    <span class="legend-color-box" style="background: var(--cyan); box-shadow: 0 0 6px var(--cyan);"></span>
+                    <span>RARE — shipped production work</span>
+                  </div>
+                  <div class="legend-item">
+                    <span class="legend-color-box" style="background: var(--amber); box-shadow: 0 0 6px var(--amber);"></span>
+                    <span>LEGENDARY — go-to, daily driver</span>
+                  </div>
                 </div>
-                <div class="legend-item">
-                  <span class="legend-color-box" style="background: var(--cyan); box-shadow: 0 0 6px var(--cyan);"></span>
-                  <span>RARE — shipped production work</span>
-                </div>
-                <div class="legend-item">
-                  <span class="legend-color-box" style="background: var(--amber); box-shadow: 0 0 6px var(--amber);"></span>
-                  <span>LEGENDARY — go-to, daily driver</span>
+                <div class="runway-scroll-hint">
+                  <span class="hint-arrow">◄</span> SCROLL TO SLIDE RUNWAY <span class="hint-arrow">►</span>
                 </div>
               </div>
+
             </div>
           </section>
 

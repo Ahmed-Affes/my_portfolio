@@ -263,21 +263,80 @@ export class ScrollChoreography {
         duration: 1.3,
         ease: 'power3.out'
       }, 3.8)
-      // 8 Skill cards cascade smoothly into position
-      .fromTo('.skill-card', {
-        y: (idx) => (idx < 4 ? -40 : 40),
-        x: (idx) => (idx % 2 === 0 ? -25 : 25),
-        scale: 0.85,
+      // Initial appearance of horizontal runway track & jumping robot
+      .fromTo('.skills-horizontal-track', {
+        x: 100,
         opacity: 0
       }, {
         x: 0,
-        y: 0,
-        scale: 1.0,
         opacity: 1,
-        stagger: 0.04,
-        duration: 1.1,
-        ease: 'power3.out'
-      }, 4.0);
+        duration: 0.8,
+        ease: 'power2.out'
+      }, 3.9)
+      .fromTo('#skills-jumping-robot', {
+        y: -120,
+        opacity: 0,
+        scale: 0.5
+      }, {
+        y: 0,
+        opacity: 1,
+        scale: 1.0,
+        duration: 0.6,
+        ease: 'back.out(1.7)'
+      }, 4.0)
+
+      // =========================================================================
+      // 🚀 ACT 2 KINETIC SCRUB: HORIZONTAL RUNWAY + SYNCHRONIZED JUMPING ROBOT
+      // =========================================================================
+      // 1. Horizontal track scrubs across the screen from right to left
+      .to('.skills-horizontal-track', {
+        x: () => {
+          const track = document.getElementById('skills-grid');
+          const viewport = document.getElementById('skills-runway-viewport');
+          if (track && viewport) {
+            return -(track.scrollWidth - viewport.clientWidth + 80);
+          }
+          return -1550;
+        },
+        ease: 'none',
+        duration: 2.2
+      }, 4.1)
+
+      // 2. Parabolic jumps of the companion robot hopping across the 8 cards
+      // Hop 1: Card 0 -> Card 1
+      .to('#skills-jumping-robot', { y: -70, scaleY: 1.2, scaleX: 0.85, duration: 0.15, ease: 'power2.out' }, 4.15)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.15, ease: 'power2.in' }, 4.30)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.05 }, 4.45)
+
+      // Hop 2: Card 1 -> Card 2
+      .to('#skills-jumping-robot', { y: -70, scaleY: 1.2, scaleX: 0.85, duration: 0.15, ease: 'power2.out' }, 4.46)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.15, ease: 'power2.in' }, 4.61)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.05 }, 4.76)
+
+      // Hop 3: Card 2 -> Card 3
+      .to('#skills-jumping-robot', { y: -70, scaleY: 1.2, scaleX: 0.85, duration: 0.15, ease: 'power2.out' }, 4.77)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.15, ease: 'power2.in' }, 4.92)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.05 }, 5.07)
+
+      // Hop 4: Card 3 -> Card 4
+      .to('#skills-jumping-robot', { y: -70, scaleY: 1.2, scaleX: 0.85, duration: 0.15, ease: 'power2.out' }, 5.08)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.15, ease: 'power2.in' }, 5.23)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.05 }, 5.38)
+
+      // Hop 5: Card 4 -> Card 5
+      .to('#skills-jumping-robot', { y: -70, scaleY: 1.2, scaleX: 0.85, duration: 0.15, ease: 'power2.out' }, 5.39)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.15, ease: 'power2.in' }, 5.54)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.05 }, 5.69)
+
+      // Hop 6: Card 5 -> Card 6
+      .to('#skills-jumping-robot', { y: -70, scaleY: 1.2, scaleX: 0.85, duration: 0.15, ease: 'power2.out' }, 5.70)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.15, ease: 'power2.in' }, 5.85)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.05 }, 6.00)
+
+      // Hop 7: Card 6 -> Card 7
+      .to('#skills-jumping-robot', { y: -70, scaleY: 1.2, scaleX: 0.85, duration: 0.15, ease: 'power2.out' }, 6.01)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.15, ease: 'power2.in' }, 6.16)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.05 }, 6.25);
 
     // =========================================================================
     // 🕹️ CHAPTER 2 -> 3: DATA CORE OUT -> ARCADE LEVEL SELECT (PROJECTS)
