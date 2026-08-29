@@ -15,58 +15,40 @@ async function capture() {
   // Wait for preloader to finish
   await page.waitForTimeout(2000);
 
+  // 1. Capture Rich Story Hero
+  await page.screenshot({ path: path.join(outDir, '10_story_hero_rich.png') });
+  console.log('Captured 10_story_hero_rich.png');
+
   // Get max scroll distance
   const maxScroll = await page.evaluate(() => {
     const track = document.getElementById('scroll-track');
     return track ? track.offsetHeight - window.innerHeight : 4500;
   });
 
-  // 1. Scrub to Act 2: Skills (progress 0.50)
-  console.log('Scrubbing to Skills Act (progress 0.50)...');
-  await page.evaluate((scrollPos) => {
-    if (window.__lenis) {
-      window.__lenis.scrollTo(scrollPos, { immediate: true });
-    } else {
-      window.scrollTo(0, scrollPos);
-    }
-  }, maxScroll * 0.50);
-  await page.waitForTimeout(800);
+  const scrollScenarios = [
+    { name: '11_story_terminal_comms.png', progress: 0.25 },
+    { name: '12_story_skills_comms.png', progress: 0.50 },
+    { name: '13_story_arcade_comms.png', progress: 0.75 },
+    { name: '14_story_beacon_uplink.png', progress: 1.00 }
+  ];
 
-  // Click a skill card to test portal zoom on skills
-  console.log('Clicking JavaScript skill card...');
-  await page.click('.skill-card.legendary');
-  await page.waitForTimeout(500); // Capture mid-zoom portal effect
-  await page.screenshot({ path: path.join(outDir, '07_skill_portal_zoom.png') });
-  console.log('Captured 07_skill_portal_zoom.png');
+  for (const item of scrollScenarios) {
+    console.log(`Scrubbing to progress ${item.progress}...`);
+    await page.evaluate((scrollPos) => {
+      if (window.__lenis) {
+        window.__lenis.scrollTo(scrollPos, { immediate: true });
+      } else {
+        window.scrollTo(0, scrollPos);
+      }
+    }, maxScroll * item.progress);
 
-  // Close skill card
-  await page.click('.drawer-close-btn');
-  await page.waitForTimeout(1000);
-
-  // 2. Scrub to Act 3: Arcade Row (progress 0.75)
-  console.log('Scrubbing to Arcade Runway Act (progress 0.75)...');
-  await page.evaluate((scrollPos) => {
-    if (window.__lenis) {
-      window.__lenis.scrollTo(scrollPos, { immediate: true });
-    } else {
-      window.scrollTo(0, scrollPos);
-    }
-  }, maxScroll * 0.75);
-  await page.waitForTimeout(800);
-
-  // Click first arcade cabinet
-  console.log('Clicking arcade cabinet...');
-  await page.click('#cabinet-proj-1');
-  await page.waitForTimeout(400); // Capture mid-zoom portal fly-through
-  await page.screenshot({ path: path.join(outDir, '08_cabinet_portal_flythrough.png') });
-  console.log('Captured 08_cabinet_portal_flythrough.png');
-
-  await page.waitForTimeout(2200); // Fully opened state
-  await page.screenshot({ path: path.join(outDir, '09_cabinet_portal_docked.png') });
-  console.log('Captured 09_cabinet_portal_docked.png');
+    await page.waitForTimeout(1000);
+    await page.screenshot({ path: path.join(outDir, item.name) });
+    console.log(`Captured ${item.name}`);
+  }
 
   await browser.close();
-  console.log('All portal zoom screenshots captured successfully!');
+  console.log('All narrative environment screenshots captured successfully!');
 }
 
 capture().catch(err => {

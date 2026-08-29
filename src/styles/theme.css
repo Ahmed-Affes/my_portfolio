@@ -41,7 +41,14 @@ html, body {
   overflow-x: hidden;
   image-rendering: pixelated;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.8s ease;
 }
+
+body.env-act-0 { background-color: #070912; }
+body.env-act-1 { background-color: #051412; }
+body.env-act-2 { background-color: #070e28; }
+body.env-act-3 { background-color: #16081c; }
+body.env-act-4 { background-color: #030510; }
 
 /* ==================== PRELOADER OVERLAY (Screenshots 1 & 2) ==================== */
 .preloader-overlay {

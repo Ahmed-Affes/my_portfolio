@@ -400,4 +400,21 @@ document.addEventListener('DOMContentLoaded', () => {
       animateParticles();
     }
   }
+
+  // 12. Live UTC Cyber Clock
+  const clockEl = document.getElementById('hero-live-clock');
+  if (clockEl) {
+    const updateClock = () => {
+      const now = new Date();
+      const year = now.getUTCFullYear();
+      const month = String(now.getUTCMonth() + 1).padStart(2, '0');
+      const day = String(now.getUTCDate()).padStart(2, '0');
+      const hrs = String(now.getUTCHours()).padStart(2, '0');
+      const mins = String(now.getUTCMinutes()).padStart(2, '0');
+      const secs = String(now.getUTCSeconds()).padStart(2, '0');
+      clockEl.textContent = `SYS_TIME: ${year}.${month}.${day} // ${hrs}:${mins}:${secs} UTC`;
+    };
+    updateClock();
+    setInterval(updateClock, 1000);
+  }
 });

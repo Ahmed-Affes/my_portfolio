@@ -1,4 +1,4 @@
-/* Fixed HUD Header */
+/* ==================== HUD HEADER & PROGRESS TRACK ==================== */
 .hud-header {
   position: fixed;
   top: 0;
@@ -17,7 +17,8 @@
 
 .hud-brand {
   display: flex;
-  align-items: center;
+  align-items: baseline;
+  gap: 8px;
 }
 
 .hud-brand-tag {
@@ -25,6 +26,12 @@
   font-family: var(--font-pixel);
   font-size: 10px;
   letter-spacing: 1px;
+}
+
+.hud-brand-sub {
+  font-family: var(--font-terminal);
+  font-size: 18px;
+  color: var(--muted);
 }
 
 /* HUD Progress Track */
@@ -104,6 +111,12 @@
   gap: 6px;
 }
 
+.env-label {
+  color: var(--cyan);
+  font-family: var(--font-pixel);
+  font-size: 8px;
+}
+
 .status-dot {
   width: 6px;
   height: 6px;
@@ -142,7 +155,16 @@
   border-color: rgba(111, 131, 163, 0.25);
 }
 
-/* Multi-Layer Parallax Background */
+/* ==================== MULTI-LAYER PARALLAX & ENVIRONMENT PROPS ==================== */
+.environment-sky-tint {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.15;
+  transition: background 0.8s ease;
+}
+
 .parallax-bg-wrapper {
   position: fixed;
   inset: 0;
@@ -165,6 +187,79 @@
   opacity: 0.35;
 }
 
+/* Flying Cyber Patrol Drone */
+.cyber-patrol-drone {
+  position: absolute;
+  top: 140px;
+  left: 15%;
+  width: 32px;
+  height: 18px;
+  z-index: 2;
+  animation: droneFloat 8s ease-in-out infinite;
+}
+
+@keyframes droneFloat {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(80px, -20px); }
+  100% { transform: translate(0, 0); }
+}
+
+.drone-body {
+  width: 28px;
+  height: 12px;
+  background: #0f182e;
+  border: 1px solid var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drone-eye {
+  width: 8px;
+  height: 4px;
+  background: var(--magenta);
+  box-shadow: 0 0 6px var(--magenta);
+  animation: eyeBlink 1.5s infinite;
+}
+
+@keyframes eyeBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.drone-searchlight {
+  width: 60px;
+  height: 120px;
+  background: linear-gradient(to bottom, rgba(79, 227, 255, 0.25), transparent);
+  clip-path: polygon(40% 0%, 60% 0%, 100% 100%, 0% 100%);
+  margin-left: -16px;
+  opacity: 0.4;
+}
+
+/* Overhead Sky Power Cables */
+.sky-power-cables {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: 
+    radial-gradient(ellipse 100% 40% at 50% 0%, transparent 95%, rgba(15, 95, 115, 0.3) 98%, transparent 100%),
+    radial-gradient(ellipse 100% 60% at 50% 0%, transparent 95%, rgba(15, 95, 115, 0.25) 98%, transparent 100%);
+  opacity: 0.7;
+}
+
+/* Blinking Red Tower Beacon Lights */
+.beacon-blink {
+  animation: beaconPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes beaconPulse {
+  0%, 100% { opacity: 1; filter: drop-shadow(0 0 6px #ff2e88); }
+  50% { opacity: 0.2; }
+}
+
 .far-skyline-layer {
   position: absolute;
   bottom: 60px;
@@ -185,7 +280,22 @@
   will-change: transform;
 }
 
-/* ==================== WARP SPEED STREAKS (Act 0 -> Act 1) ==================== */
+/* Skyward Transmission Uplink Beam (Act 4) */
+.skyward-uplink-beam {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 100vh;
+  background: linear-gradient(to top, var(--cyan), rgba(79, 227, 255, 0.2) 60%, transparent);
+  box-shadow: 0 0 60px var(--cyan);
+  opacity: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ==================== WARP SPEED STREAKS & RADAR ==================== */
 .warp-speed-container {
   position: fixed;
   inset: 0;
@@ -205,7 +315,6 @@
   opacity: 0.7;
 }
 
-/* ==================== RADAR SHOCKWAVE WAVES (Act 3 -> Act 4) ==================== */
 .radar-waves-container {
   position: fixed;
   top: 50%;
@@ -232,7 +341,7 @@
 .radar-c2 { width: 420px; height: 420px; }
 .radar-c3 { width: 680px; height: 680px; }
 
-/* ==================== PORTAL TUNNEL EXPANSION (Card Click Fly-Through) ==================== */
+/* ==================== PORTAL TUNNEL OVERLAY ==================== */
 .portal-tunnel-overlay {
   position: fixed;
   top: 50%;
@@ -296,7 +405,7 @@
   z-index: 3;
 }
 
-/* ==================== ROBOT AVATAR & HOLOGRAM EMITTER (Screenshot 3) ==================== */
+/* ==================== ROBOT AVATAR & HOLOGRAM EMITTER ==================== */
 .scene-robot-wrapper {
   position: fixed;
   bottom: 24px;
@@ -366,7 +475,7 @@
 .cinematic-scroll-track {
   position: relative;
   width: 100%;
-  height: 600vh; /* Long rich scroll track */
+  height: 600vh;
 }
 
 .cinematic-pinned-viewport {
@@ -409,7 +518,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: calc(var(--hud-height) + 20px) 48px 80px 48px;
+  padding: calc(var(--hud-height) + 16px) 48px 100px 48px;
   transform-style: preserve-3d;
   will-change: transform, opacity;
 }
@@ -421,13 +530,22 @@
   transform-style: preserve-3d;
 }
 
-/* ==================== ACT 0: HERO (Screenshot 3) ==================== */
+/* ==================== ACT 0: HERO (Screenshot 3 & Rich Lore Widgets) ==================== */
 .hero-grid-layout {
   display: grid;
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: 1fr 340px;
   gap: 40px;
   align-items: center;
   transform-style: preserve-3d;
+}
+
+.hero-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .system-online-badge {
@@ -438,7 +556,6 @@
   font-family: var(--font-pixel);
   font-size: 8.5px;
   letter-spacing: 1px;
-  margin-bottom: 16px;
 }
 
 .system-online-box {
@@ -448,11 +565,21 @@
   box-shadow: 0 0 6px var(--green);
 }
 
+.hero-live-clock {
+  font-family: var(--font-pixel);
+  font-size: 7.5px;
+  color: var(--cyan);
+  background: rgba(15, 95, 115, 0.2);
+  border: 1px solid var(--cyan-dim);
+  padding: 4px 8px;
+  letter-spacing: 0.5px;
+}
+
 .hero-tag {
   font-family: var(--font-terminal);
   font-size: 24px;
   color: var(--ink);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   letter-spacing: 1px;
   display: flex;
   align-items: center;
@@ -468,21 +595,98 @@
 
 .hero-headline {
   font-family: var(--font-terminal);
-  font-size: clamp(60px, 8.5vw, 96px);
+  font-size: clamp(56px, 8vw, 92px);
   line-height: 0.95;
   color: var(--ink);
-  margin-bottom: 24px;
+  margin-bottom: 18px;
   letter-spacing: 2px;
   text-transform: uppercase;
   transform-style: preserve-3d;
 }
 
 .hero-sub {
-  font-size: 26px;
+  font-size: 24px;
   color: var(--muted);
-  margin-bottom: 32px;
+  margin-bottom: 20px;
   line-height: 1.35;
-  max-width: 580px;
+  max-width: 600px;
+}
+
+/* Mission Objective Card */
+.mission-objective-card {
+  background: rgba(13, 18, 36, 0.85);
+  border: 1px solid var(--cyan-dim);
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 600px;
+  border-left: 3px solid var(--cyan);
+}
+
+.objective-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.objective-pulse {
+  width: 6px;
+  height: 6px;
+  background: var(--cyan);
+  box-shadow: 0 0 6px var(--cyan);
+  border-radius: 50%;
+  animation: pulseDot 1.5s infinite;
+}
+
+.objective-title {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: var(--cyan);
+  letter-spacing: 1px;
+}
+
+.objective-desc {
+  font-size: 20px;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+/* Audio Visualizer Equalizer */
+.hero-audio-visualizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 16px;
+  margin-top: 4px;
+}
+
+.eq-bar {
+  width: 3px;
+  background: var(--cyan);
+  box-shadow: 0 0 4px var(--cyan);
+  animation: eqBounce 1.2s ease-in-out infinite alternate;
+}
+
+.eq-1 { height: 40%; animation-delay: 0.1s; }
+.eq-2 { height: 90%; animation-delay: 0.4s; }
+.eq-3 { height: 60%; animation-delay: 0.2s; }
+.eq-4 { height: 100%; animation-delay: 0.5s; }
+.eq-5 { height: 35%; animation-delay: 0.3s; }
+.eq-6 { height: 75%; animation-delay: 0.6s; }
+
+@keyframes eqBounce {
+  0% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1.0); }
+}
+
+.eq-label {
+  font-family: var(--font-pixel);
+  font-size: 6.5px;
+  color: var(--muted);
+  margin-left: 8px;
+  align-self: center;
 }
 
 .hero-actions {
@@ -908,6 +1112,56 @@
   color: var(--muted);
 }
 
+/* ==================== NARRATIVE COMMS RADIO DIALOGUE BAR ==================== */
+.comms-radio-hud {
+  position: fixed;
+  bottom: 18px;
+  left: 24px;
+  max-width: 580px;
+  background: rgba(7, 9, 18, 0.94);
+  border: 1px solid var(--cyan-dim);
+  border-left: 3px solid var(--amber);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 800;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+.comms-sender-badge {
+  font-family: var(--font-pixel);
+  font-size: 7.5px;
+  color: var(--amber);
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+}
+
+.comms-message-text {
+  font-family: var(--font-terminal);
+  font-size: 20px;
+  color: var(--ink);
+  line-height: 1.2;
+  flex: 1;
+}
+
+.comms-signal-meter {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+
+.signal-bar {
+  width: 2px;
+  background: var(--green);
+}
+.bar-1 { height: 25%; }
+.bar-2 { height: 50%; }
+.bar-3 { height: 75%; }
+.bar-4 { height: 100%; }
+
 /* ==================== REUSABLE INTERACTION DRAWER PANEL (§5) ==================== */
 .interaction-backdrop {
   position: fixed;
@@ -1020,6 +1274,9 @@
   }
   .skills-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .comms-radio-hud {
+    display: none;
   }
 }
 

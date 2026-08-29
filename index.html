@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/src/styles/theme.css">
   <link rel="stylesheet" href="/src/styles/layout.css">
 </head>
-<body>
+<body class="env-act-0">
   <!-- Retro CRT Boot Preloader (Screenshots 1 & 2) -->
   <div id="preloader-screen" class="preloader-overlay" role="dialog" aria-modal="true" aria-label="System Initializer">
     <div class="preloader-box">
@@ -23,6 +23,9 @@
   <!-- CRT Scanline & Vignette Overlays -->
   <div class="scanlines-overlay" aria-hidden="true"></div>
   <div class="crt-vignette" aria-hidden="true"></div>
+
+  <!-- Dynamic Ambient Sky / Environment Tint Overlay -->
+  <div class="environment-sky-tint" id="env-sky-tint" aria-hidden="true"></div>
 
   <!-- Warp Speed Streaks Layer (Act 0 -> 1 Warp Zoom) -->
   <div class="warp-speed-container" id="warp-streaks" aria-hidden="true">
@@ -51,6 +54,7 @@
   <header class="hud-header" role="banner">
     <div class="hud-brand">
       <span class="hud-brand-tag glitch-text">UNIT_07</span>
+      <span class="hud-brand-sub">// PORTFOLIO.EXE</span>
     </div>
 
     <!-- Progress Track with Mini-Robot and Checkpoints -->
@@ -70,7 +74,7 @@
     <!-- HUD Status & Audio Toggle -->
     <div class="hud-meta">
       <div class="hud-status-badge">
-        <span>LVL 04</span>
+        <span class="env-label" id="hud-env-label">SECTOR: 00 // CITY_SUB</span>
         <span>|</span>
         <span class="status-dot"></span>
         <span style="color: var(--green);">ONLINE</span>
@@ -82,20 +86,36 @@
     </div>
   </header>
 
-  <!-- Multi-Layer Atmospheric Parallax Background -->
+  <!-- Multi-Layer Atmospheric Parallax Background with Story Props -->
   <div class="parallax-bg-wrapper" aria-hidden="true">
     <div class="stars-layer"></div>
     <canvas id="particles-canvas"></canvas>
+
+    <!-- Flying Patrol Drone in Sky -->
+    <div class="cyber-patrol-drone" id="patrol-drone">
+      <div class="drone-body">
+        <div class="drone-eye"></div>
+      </div>
+      <div class="drone-searchlight"></div>
+    </div>
+
+    <!-- Sky Power Cables -->
+    <div class="sky-power-cables"></div>
 
     <!-- Far Skyline Silhouettes -->
     <svg class="far-skyline-layer" viewBox="0 0 1600 360" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="20" y="80" width="100" height="280" fill="#080c18"/>
       <rect x="140" y="140" width="110" height="220" fill="#060914"/>
+      <!-- Background Antenna Towers with Blinking Red Lights -->
+      <line x1="70" y1="20" x2="70" y2="80" stroke="#101932" stroke-width="2"/>
+      <circle cx="70" cy="18" r="3" fill="#ff2e88" class="beacon-blink"/>
+      <line x1="1400" y1="40" x2="1400" y2="100" stroke="#101932" stroke-width="2"/>
+      <circle cx="1400" cy="38" r="3" fill="#ff2e88" class="beacon-blink" style="animation-delay: 0.6s;"/>
       <rect x="1340" y="100" width="120" height="260" fill="#080c18"/>
       <rect x="1480" y="60" width="100" height="300" fill="#060914"/>
     </svg>
 
-    <!-- Mid Skyline Towers with Cyberpunk Windows (Matching Screenshot 3) -->
+    <!-- Mid Skyline Towers with Cyberpunk Windows & Billboards -->
     <svg class="mid-skyline-layer" viewBox="0 0 1600 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <!-- Left Buildings -->
       <rect x="20" y="180" width="90" height="240" fill="#0b1022" stroke="#121a36" stroke-width="1"/>
@@ -108,7 +128,7 @@
       <rect x="150" y="180" width="12" height="12" fill="#ff2e88" opacity="0.5"/>
       <rect x="175" y="260" width="12" height="12" fill="#4fe3ff" opacity="0.4"/>
 
-      <!-- Center-Right Towers with Light Shafts -->
+      <!-- Center-Right Towers with Light Shafts & Neon Billboard -->
       <rect x="1050" y="140" width="80" height="280" fill="#0c1328" stroke="#142042" stroke-width="1"/>
       <rect x="1075" y="190" width="10" height="10" fill="#ffb238" opacity="0.5"/>
       <rect x="1075" y="240" width="10" height="10" fill="#4fe3ff" opacity="0.4"/>
@@ -120,6 +140,9 @@
       <rect x="1490" y="190" width="90" height="230" fill="#0b1022" stroke="#121a36" stroke-width="1"/>
       <rect x="1515" y="240" width="10" height="10" fill="#4fe3ff" opacity="0.35"/>
     </svg>
+
+    <!-- Skyward Transmission Uplink Beam (Visible in Act 4) -->
+    <div class="skyward-uplink-beam" id="skyward-beam"></div>
   </div>
 
   <!-- Perspective Neon Grid Floor -->
@@ -150,10 +173,16 @@
             <div class="act-inner hero-grid-layout" id="hero-grid-container">
               <!-- Left Hero Content -->
               <div class="hero-left-content" id="hero-text-block">
-                <div class="system-online-badge">
-                  <span class="system-online-box"></span>
-                  <span>SYSTEM ONLINE</span>
+                <div class="hero-header-row">
+                  <div class="system-online-badge">
+                    <span class="system-online-box"></span>
+                    <span>SYSTEM ONLINE</span>
+                  </div>
+                  <div class="hero-live-clock" id="hero-live-clock">
+                    SYS_TIME: 2026.08.29 // 20:35:00 UTC
+                  </div>
                 </div>
+
                 <div class="hero-tag">
                   <span class="stage-label-box"></span>
                   <span>BOOT // PORTFOLIO.EXE</span>
@@ -162,8 +191,30 @@
                   YOUR NAME<br>HERE
                 </h1>
                 <p class="hero-sub" id="hero-sub">
-                  Full-stack builder. I ship web, mobile & desktop apps — then talk about it in first person through a robot, apparently.
+                  Full-stack builder. I engineer high-performance web systems, responsive mobile tools & microsecond clients — navigating through a cyberpunk game world.
                 </p>
+
+                <!-- Hero Mission Objective Card -->
+                <div class="mission-objective-card">
+                  <div class="objective-header">
+                    <span class="objective-pulse"></span>
+                    <span class="objective-title">CURRENT DIRECTIVE</span>
+                  </div>
+                  <div class="objective-desc">
+                    Explore sectors 01 through 04. Walk up and decrypt live archives.
+                  </div>
+                  <!-- Audio Equalizer Visualizer Bars -->
+                  <div class="hero-audio-visualizer">
+                    <span class="eq-bar eq-1"></span>
+                    <span class="eq-bar eq-2"></span>
+                    <span class="eq-bar eq-3"></span>
+                    <span class="eq-bar eq-4"></span>
+                    <span class="eq-bar eq-5"></span>
+                    <span class="eq-bar eq-6"></span>
+                    <span class="eq-label">TELEMETRY STREAM // 60 FPS</span>
+                  </div>
+                </div>
+
                 <div class="hero-actions">
                   <button class="btn-pixel primary" id="hero-view-projects-btn">
                     VIEW PROJECTS
@@ -192,12 +243,16 @@
                     </div>
                   </div>
                   <div class="rpg-row">
+                    <span class="rpg-label">EXP</span>
+                    <span class="rpg-val amber-val">6+ YRS PROD</span>
+                  </div>
+                  <div class="rpg-row">
                     <span class="rpg-label">PROJECTS</span>
                     <span class="rpg-val green-val">12 SHIPPED</span>
                   </div>
                   <div class="rpg-row">
                     <span class="rpg-label">CORE</span>
-                    <span class="rpg-val amber-val">ONLINE // 100%</span>
+                    <span class="rpg-val cyan-val">ONLINE // 100%</span>
                   </div>
                 </div>
               </div>
@@ -315,6 +370,20 @@
 
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Narrative Comms Radio Dialogue Bar (Story Subtitles) -->
+  <div class="comms-radio-hud" id="comms-hud" aria-live="polite">
+    <div class="comms-sender-badge" id="comms-sender">COMMS // OPERATOR</div>
+    <div class="comms-message-text" id="comms-message">
+      "UNIT_07 online. System diagnostic complete. Scroll to initiate district traversal."
+    </div>
+    <div class="comms-signal-meter">
+      <span class="signal-bar bar-1"></span>
+      <span class="signal-bar bar-2"></span>
+      <span class="signal-bar bar-3"></span>
+      <span class="signal-bar bar-4"></span>
     </div>
   </div>
 
