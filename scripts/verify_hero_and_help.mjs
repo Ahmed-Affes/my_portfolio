@@ -9,51 +9,74 @@ async function main() {
 
   console.log('Navigating to http://localhost:5173/ ...');
   await page.goto('http://localhost:5173/', { waitUntil: 'networkidle' });
-
-  // Wait for preloader to vanish
   await page.waitForTimeout(2500);
 
-  // 1. Capture Modern Hero Section
-  console.log('Capturing Modern Hero Section...');
+  // 1. Capture Seamless Hero
+  console.log('1. Capturing Seamless Hero...');
   await page.screenshot({ path: 'C:/Users/dwarf/.gemini/antigravity-ide/brain/95a9e117-719d-432d-b2b4-87d6765aa818/28_hero_modern_reference.png' });
 
-  // 2. Hover Floating Help Center Button
-  console.log('Hovering Floating Help Center Button...');
+  // 2. Open Help Center modal and verify NO duplicate welcome message
+  console.log('2. Opening Help Center CLI modal...');
   const helpBtn = page.locator('#floating-help-toggle');
-  await helpBtn.hover();
-  await page.waitForTimeout(500);
-  await page.screenshot({ path: 'C:/Users/dwarf/.gemini/antigravity-ide/brain/95a9e117-719d-432d-b2b4-87d6765aa818/29_floating_help_launcher.png' });
-
-  // 3. Click Floating Help Center Button to open modal
-  console.log('Opening Help Center CLI modal...');
   await helpBtn.click();
-  await page.waitForTimeout(600);
+  await page.waitForTimeout(500);
   await page.screenshot({ path: 'C:/Users/dwarf/.gemini/antigravity-ide/brain/95a9e117-719d-432d-b2b4-87d6765aa818/30_floating_cli_modal_opened.png' });
 
-  // 4. Click a quick pill (e.g. projects)
-  console.log('Clicking Projects quick pill in modal...');
-  const projPill = page.locator('.cli-pill-btn[data-cmd="projects"]');
-  await projPill.click();
-  await page.waitForTimeout(600);
-  await page.screenshot({ path: 'C:/Users/dwarf/.gemini/antigravity-ide/brain/95a9e117-719d-432d-b2b4-87d6765aa818/31_floating_cli_command_executed.png' });
-
-  // 5. Close modal by pressing Escape
-  console.log('Closing modal with Escape...');
+  // Close modal with Escape
   await page.keyboard.press('Escape');
   await page.waitForTimeout(500);
 
-  // 6. Scroll to Act 4 (Direct Neural Uplink)
-  console.log('Scrolling to Act 4...');
+  // 3. Scroll to Act 1 (About Me & Robot Face) and move mouse to test pupils
+  console.log('3. Scrolling to Act 1 (About Me & Robot Face)...');
   await page.evaluate(() => {
-    const act4 = document.getElementById('act-contact');
-    if (act4) {
-      window.scrollTo(0, document.body.scrollHeight);
+    const scrollTrack = document.getElementById('scroll-track');
+    if (scrollTrack) {
+      const maxScroll = scrollTrack.offsetHeight - window.innerHeight;
+      window.scrollTo(0, 0.25 * maxScroll);
     }
   });
-  await page.waitForTimeout(2000);
-  await page.screenshot({ path: 'C:/Users/dwarf/.gemini/antigravity-ide/brain/95a9e117-719d-432d-b2b4-87d6765aa818/32_direct_transmission_act4.png' });
+  await page.waitForTimeout(1500);
+  await page.mouse.move(400, 300);
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: 'C:/Users/dwarf/.gemini/antigravity-ide/brain/95a9e117-719d-432d-b2b4-87d6765aa818/33_act1_robot_face_eyes.png' });
 
-  console.log('Verification screenshots captured successfully!');
+  // 4. Scroll to Act 2 (Skills Matrix)
+  console.log('4. Scrolling to Act 2 (Skills Matrix)...');
+  await page.evaluate(() => {
+    const scrollTrack = document.getElementById('scroll-track');
+    if (scrollTrack) {
+      const maxScroll = scrollTrack.offsetHeight - window.innerHeight;
+      window.scrollTo(0, 0.50 * maxScroll);
+    }
+  });
+  await page.waitForTimeout(1500);
+  await page.screenshot({ path: 'C:/Users/dwarf/.gemini/antigravity-ide/brain/95a9e117-719d-432d-b2b4-87d6765aa818/34_act2_skills_matrix.png' });
+
+  // 5. Scroll to Act 3 (Arcade Cabinets)
+  console.log('5. Scrolling to Act 3 (Arcade Cabinets)...');
+  await page.evaluate(() => {
+    const scrollTrack = document.getElementById('scroll-track');
+    if (scrollTrack) {
+      const maxScroll = scrollTrack.offsetHeight - window.innerHeight;
+      window.scrollTo(0, 0.75 * maxScroll);
+    }
+  });
+  await page.waitForTimeout(1500);
+  await page.screenshot({ path: 'C:/Users/dwarf/.gemini/antigravity-ide/brain/95a9e117-719d-432d-b2b4-87d6765aa818/35_act3_arcade_cabinets.png' });
+
+  // 6. Scroll to Act 4 (Direct Transmission Uplink)
+  console.log('6. Scrolling to Act 4 (Direct Transmission Uplink)...');
+  await page.evaluate(() => {
+    const scrollTrack = document.getElementById('scroll-track');
+    if (scrollTrack) {
+      const maxScroll = scrollTrack.offsetHeight - window.innerHeight;
+      window.scrollTo(0, 1.00 * maxScroll);
+    }
+  });
+  await page.waitForTimeout(1500);
+  await page.screenshot({ path: 'C:/Users/dwarf/.gemini/antigravity-ide/brain/95a9e117-719d-432d-b2b4-87d6765aa818/36_act4_direct_uplink.png' });
+
+  console.log('All screenshots captured successfully!');
   await browser.close();
 }
 

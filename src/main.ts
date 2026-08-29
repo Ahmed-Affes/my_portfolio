@@ -11,11 +11,25 @@ import { CyberCLITerminal } from './interactive/cliTerminal';
 import { HeroQuantumReactor } from './interactive/heroReactor';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 0. Initialize War Star Shooting Meteor Engine, Hero Quantum Reactor & CLI Help Center
+  // 0. Initialize War Star Shooting Meteor Engine, Hero Quantum Reactor, Robot Face & CLI Help Center
   const meteorEngine = new WarStarMeteorEngine();
   new HeroQuantumReactor('hero-reactor-canvas');
+  const robotFace = new RobotFaceController('about-robot-face');
   const cliTerminal = new CyberCLITerminal('cli-terminal-window');
+  (window as any).__robotFace = robotFace;
+  (window as any).__cliTerminal = cliTerminal;
   // 1. Render Skills Cards (Data Core) FIRST
+  const skillPowerMap: Record<string, string> = {
+    'js-ts': '██████████ 98%',
+    'react': '█████████░ 95%',
+    'node': '█████████░ 90%',
+    'flutter': '████████░░ 88%',
+    'postgres': '████████░░ 86%',
+    'electron': '████████░░ 82%',
+    'docker': '████████░░ 80%',
+    'figma': '████████░░ 85%',
+  };
+
   const skillsGrid = document.getElementById('skills-grid');
   if (skillsGrid) {
     skillsGrid.innerHTML = PORTFOLIO_DATA.skills
@@ -24,7 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
         <article class="skill-card ${skill.rarity}" data-skill-id="${skill.id}" tabindex="0" role="button" aria-label="${skill.name}">
           <div class="skill-card-tier">${skill.level}</div>
           <div class="skill-card-name">${skill.name}</div>
-          <div style="font-size: 17px; color: var(--muted); line-height: 1.35;">${skill.detail}</div>
+          <div style="font-family: var(--font-pixel); font-size: 6px; color: ${skill.rarity === 'legendary' ? '#ffb238' : skill.rarity === 'rare' ? 'var(--cyan)' : 'var(--green)'}; margin-bottom: 6px; letter-spacing: 0.5px;">${skillPowerMap[skill.id] || '████████░░ 85%'}</div>
+          <div style="font-size: 16.5px; color: var(--muted); line-height: 1.35; margin-bottom: 6px;">${skill.detail}</div>
+          <div style="font-family: var(--font-pixel); font-size: 5.5px; color: var(--cyan); letter-spacing: 0.5px;">[CLICK TO EXPAND] ↗</div>
         </article>
       `
       )
@@ -257,10 +273,6 @@ document.addEventListener('DOMContentLoaded', () => {
       secondaryBtn: { text: 'GITHUB PROFILE ↗', href: 'https://github.com' }
     });
   });
-
-  // 6.5 Initialize Interactive Robot Face & Cyber CLI Terminal
-  (window as any).__robotFace = new RobotFaceController('about-robot-face');
-  (window as any).__cliTerminal = new CyberCLITerminal('cli-terminal-window');
 
   // Bio Dossier Tabs Swapping
   const bioTabButtons = document.querySelectorAll('#bio-tabs .bio-tab-btn');
