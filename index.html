@@ -291,23 +291,24 @@
             </div>
           </section>
 
-          <!-- ==================== ACT 1: TERMINAL (Neural Mainframe / About & Robot Face) ==================== -->
+          <!-- ==================== ACT 1: TERMINAL (Neural Holographic AI Laboratory) ==================== -->
           <section class="stage-act act-terminal" id="act-terminal" aria-labelledby="terminal-title">
-            <div class="act-inner">
+            <div class="act-inner mainframe-modern-stage">
+              
               <div class="stage-label">
                 <span class="stage-label-box"></span>
-                <span>STAGE 01 — NEURAL MAINFRAME</span>
+                <span>STAGE 01 — NEURAL MAINFRAME ARCHIVE</span>
               </div>
-              <h2 class="zone-title" id="terminal-title">Operator Bio & Neural Core</h2>
+              <h2 class="zone-title" id="terminal-title">Operator Bio &amp; Neural Core</h2>
               <p class="zone-subtitle">
                 Interactive biometric avatar tracks your cursor. Select memory sectors or click the terminal to inspect logs.
               </p>
 
-              <!-- Mainframe Layout: Left Robot Face + Right Bio Dossier Console -->
-              <div class="about-grid-layout">
+              <!-- Mainframe Lab Layout: Left Biometric Avatar Pod + Right Holographic Dossier Console -->
+              <div class="mainframe-lab-stage">
                 
-                <!-- Interactive Robot Face with Vector Mouse Eye-Tracking -->
-                <div class="robot-face-wrapper" id="robot-face-container">
+                <!-- Left Deck: Biometric Cyber Android Pod -->
+                <div class="biometric-avatar-pod" id="robot-face-container">
                   <div class="robot-face-chassis" id="about-robot-face" role="region" aria-label="Interactive Mouse Tracking Robot Face">
                     <div class="face-corner-bracket top-left"></div>
                     <div class="face-corner-bracket top-right"></div>
@@ -316,19 +317,30 @@
 
                     <!-- Face Header Telemetry -->
                     <div class="face-header-bar">
-                      <span class="face-status-dot"></span>
-                      <span class="face-telemetry-label">UNIT_07 // GAZE_TRACKER</span>
+                      <div class="face-title-group">
+                        <span class="face-status-dot"></span>
+                        <span class="face-telemetry-label">UNIT_07 // GAZE_TRACKER</span>
+                      </div>
                       <span class="face-fps">60 FPS</span>
+                    </div>
+
+                    <!-- Live CPU & Temperature Diagnostic Strip -->
+                    <div class="face-diagnostics-strip">
+                      <span id="face-cpu-stat">CPU: 1.2%</span>
+                      <span class="diag-sep">·</span>
+                      <span id="face-temp-stat">TEMP: 32°C</span>
+                      <span class="diag-sep">·</span>
+                      <span class="diag-status">STATUS: NOMINAL</span>
                     </div>
 
                     <!-- Robot Eye Sockets & Interactive Pupils -->
                     <div class="robot-eyes-row">
                       <div class="robot-eye-socket" id="robot-eye-left">
-                        <div class="eye-grid-lines"></div>
+                        <div class="eye-grid-bg"></div>
                         <div class="robot-pupil" id="robot-pupil-left"></div>
                       </div>
                       <div class="robot-eye-socket" id="robot-eye-right">
-                        <div class="eye-grid-lines"></div>
+                        <div class="eye-grid-bg"></div>
                         <div class="robot-pupil" id="robot-pupil-right"></div>
                       </div>
                     </div>
@@ -336,7 +348,7 @@
                     <!-- Laser Scanline Visor Sweeping Animation -->
                     <div class="robot-visor-scanline"></div>
 
-                    <!-- Animated Audio Voice Equalizer Mouth -->
+                    <!-- Animated 10-Bar Voice Equalizer Waveform Mouth -->
                     <div class="robot-mouth-equalizer" id="robot-mouth">
                       <span class="mouth-bar bar-1"></span>
                       <span class="mouth-bar bar-2"></span>
@@ -345,14 +357,33 @@
                       <span class="mouth-bar bar-5"></span>
                       <span class="mouth-bar bar-6"></span>
                       <span class="mouth-bar bar-7"></span>
+                      <span class="mouth-bar bar-8"></span>
+                      <span class="mouth-bar bar-9"></span>
+                      <span class="mouth-bar bar-10"></span>
                     </div>
 
                     <div class="face-footer-tag">[MOUSE OVER TO ENGAGE · CLICK TO WINK]</div>
                   </div>
+
+                  <!-- Quick Hardware & Operational Badges -->
+                  <div class="avatar-stats-strip">
+                    <div class="avatar-stat-card">
+                      <span class="stat-num">6+ YRS</span>
+                      <span class="stat-lbl">PROD SCALE</span>
+                    </div>
+                    <div class="avatar-stat-card">
+                      <span class="stat-num">0ms</span>
+                      <span class="stat-lbl">INPUT LATENCY</span>
+                    </div>
+                    <div class="avatar-stat-card">
+                      <span class="stat-num">100%</span>
+                      <span class="stat-lbl">PURE CODE</span>
+                    </div>
+                  </div>
                 </div>
 
-                <!-- Right Terminal Bio Dossier Console -->
-                <div class="terminal-dossier-column">
+                <!-- Right Deck: Holographic Neural Command Terminal -->
+                <div class="holographic-dossier-pod">
                   
                   <!-- Bio Dossier Memory Tabs -->
                   <div class="bio-tabs-header" id="bio-tabs">
@@ -370,14 +401,24 @@
                         <span class="dot yellow"></span>
                         <span class="dot green"></span>
                       </div>
-                      <div class="terminal-status">TELEMETRY_PORT // 2026</div>
+                      <div class="terminal-status">TELEMETRY_PORT // 2026 · [AUTHENTICATED]</div>
                       <div class="terminal-action-hint">[CLICK TO EXPAND]</div>
                     </div>
                     
                     <div class="terminal-body" id="terminal-bio-body">
-                      Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Alex. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads. Step into the Data Core or approach an Arcade Cabinet to inspect live archives.
+                      Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Ahmed Affes. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads. Step into the Data Core or approach an Arcade Cabinet to inspect live archives.
                     </div>
                     <span class="terminal-cursor" aria-hidden="true"></span>
+                  </div>
+
+                  <!-- Quick Direct Telemetry Chips & Action Row -->
+                  <div class="dossier-action-row">
+                    <button class="dossier-action-btn primary" id="dossier-resume-btn">
+                      VIEW FULL DOSSIER ↗
+                    </button>
+                    <button class="dossier-action-btn secondary" id="dossier-contact-btn">
+                      DIRECT UPLINK ↗
+                    </button>
                   </div>
 
                 </div>
@@ -407,8 +448,8 @@
               <!-- Legend -->
               <div class="skill-legend" id="skill-legend">
                 <div class="legend-item">
-                  <span class="legend-color-box" style="background: var(--cyan-dim); border: 1px solid var(--muted);"></span>
-                  <span>COMMON — working knowledge</span>
+                  <span class="legend-color-box" style="background: var(--green); box-shadow: 0 0 6px var(--green);"></span>
+                  <span>CORE — working knowledge</span>
                 </div>
                 <div class="legend-item">
                   <span class="legend-color-box" style="background: var(--cyan); box-shadow: 0 0 6px var(--cyan);"></span>
@@ -441,44 +482,97 @@
             </div>
           </section>
 
-          <!-- ==================== ACT 4: BEACON (Save Point / Deep Space Neural Uplink) ==================== -->
+          <!-- ==================== ACT 4: BEACON (Sub-Orbital Quantum Transmission Relay) ==================== -->
           <section class="stage-act act-contact" id="act-contact" aria-labelledby="contact-title">
-            <div class="act-inner">
+            <div class="act-inner transmission-modern-stage">
+              
               <div class="stage-label">
                 <span class="stage-label-box"></span>
-                <span>STAGE 04 — SECURE UPLINK</span>
+                <span>STAGE 04 — SUB-ORBITAL QUANTUM TRANSMITTER</span>
               </div>
               <h2 class="zone-title" id="contact-title">Direct Neural Uplink</h2>
               <p class="zone-subtitle">
                 Deep-space transmission channels are open. Transmit for full-stack contracts, creative architecture, or technical collaboration.
               </p>
 
-              <!-- Direct Transmission Cards Grid -->
-              <div class="beacon-quick-links" id="beacon-kiosk">
-                <a href="mailto:alex.developer@example.com" class="quick-link-card" id="beacon-email-link">
-                  <span class="card-icon">✉</span>
-                  <span class="card-title">DIRECT EMAIL</span>
-                  <span class="card-sub">alex.developer@example.com</span>
-                  <span class="card-status-tag">FAST RESPONSE</span>
-                </a>
-                <a href="https://github.com/Ahmed-Affes" target="_blank" rel="noopener noreferrer" class="quick-link-card" id="beacon-github-link">
-                  <span class="card-icon">⚡</span>
-                  <span class="card-title">GITHUB PROFILE</span>
-                  <span class="card-sub">github.com/Ahmed-Affes</span>
-                  <span class="card-status-tag">SOURCE CODE ↗</span>
-                </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="quick-link-card" id="beacon-linkedin-link">
-                  <span class="card-icon">◈</span>
-                  <span class="card-title">LINKEDIN UPLINK</span>
-                  <span class="card-sub">linkedin.com/in/ahmed-affes</span>
-                  <span class="card-status-tag">CONNECT ↗</span>
-                </a>
-                <a href="#" class="quick-link-card" id="beacon-resume-link">
-                  <span class="card-icon">📜</span>
-                  <span class="card-title">DOSSIER / RESUME</span>
-                  <span class="card-sub">curriculum_vitae_2026.pdf</span>
-                  <span class="card-status-tag">DOWNLOAD ↗</span>
-                </a>
+              <!-- Sub-Orbital Transmission Relay Stage: Radar Centerpiece + 4 Holographic Conduits -->
+              <div class="transmission-relay-stage">
+                
+                <!-- Centerpiece Procedural Radar Transmitter Array -->
+                <div class="quantum-radar-pod" id="quantum-radar-pod" title="Deep Space Sub-Orbital Radar Array">
+                  <div class="radar-glow-aura"></div>
+                  <canvas id="radar-canvas" width="220" height="220" class="radar-canvas"></canvas>
+                  <div class="radar-telemetry-badge">
+                    <span class="radar-status-dot"></span>
+                    <span class="radar-telemetry-text">FREQ: 433.92 MHz · LATENCY: 12ms · AES-256</span>
+                  </div>
+                </div>
+
+                <!-- 4 Holographic Transmission Conduits Grid -->
+                <div class="transmission-conduits-grid" id="beacon-kiosk">
+                  
+                  <!-- Conduit 1: Direct Email Frequency -->
+                  <div class="transmission-conduit-card" id="beacon-email-link">
+                    <div class="conduit-header">
+                      <span class="conduit-icon">✉</span>
+                      <span class="conduit-channel-tag">● DIRECT COMMS</span>
+                    </div>
+                    <h3 class="conduit-title">DIRECT EMAIL</h3>
+                    <div class="conduit-address">alex.developer@example.com</div>
+                    <div class="conduit-actions">
+                      <a href="mailto:alex.developer@example.com" class="conduit-action-btn primary">
+                        TRANSMIT EMAIL ↗
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Conduit 2: Neural Source Matrix (GitHub) -->
+                  <div class="transmission-conduit-card" id="beacon-github-link">
+                    <div class="conduit-header">
+                      <span class="conduit-icon">⚡</span>
+                      <span class="conduit-channel-tag">● 100% OPEN SOURCE</span>
+                    </div>
+                    <h3 class="conduit-title">GITHUB ARCHIVES</h3>
+                    <div class="conduit-address">github.com/Ahmed-Affes</div>
+                    <div class="conduit-actions">
+                      <a href="https://github.com/Ahmed-Affes" target="_blank" rel="noopener noreferrer" class="conduit-action-btn">
+                        ACCESS REPOSITORIES ↗
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Conduit 3: Professional Uplink Network (LinkedIn) -->
+                  <div class="transmission-conduit-card" id="beacon-linkedin-link">
+                    <div class="conduit-header">
+                      <span class="conduit-icon">◈</span>
+                      <span class="conduit-channel-tag">● VERIFIED OPERATOR</span>
+                    </div>
+                    <h3 class="conduit-title">LINKEDIN UPLINK</h3>
+                    <div class="conduit-address">linkedin.com/in/ahmed-affes</div>
+                    <div class="conduit-actions">
+                      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="conduit-action-btn">
+                        CONNECT NOW ↗
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Conduit 4: Tactical Dossier Core (Resume Download) -->
+                  <div class="transmission-conduit-card" id="beacon-resume-link">
+                    <div class="conduit-header">
+                      <span class="conduit-icon">📜</span>
+                      <span class="conduit-channel-tag">● DECRYPTED SPEC // 2026</span>
+                    </div>
+                    <h3 class="conduit-title">DOSSIER / RESUME</h3>
+                    <div class="conduit-address">curriculum_vitae_2026.pdf</div>
+                    <div class="conduit-actions">
+                      <a href="#" class="conduit-action-btn primary" id="conduit-resume-btn">
+                        DOWNLOAD DOSSIER ⬇
+                      </a>
+                    </div>
+                  </div>
+
+                </div>
+
               </div>
 
               <!-- Footer Area -->

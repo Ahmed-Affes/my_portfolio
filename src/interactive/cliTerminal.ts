@@ -57,6 +57,19 @@ export class CyberCLITerminal {
         this.toggleModal();
       }
     });
+
+    // Forward wheel scrolling when over backdrop to Lenis / document so page scrolls smoothly
+    this.modalEl?.addEventListener('wheel', (e: WheelEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('#cli-output-log')) {
+        const lenis = (window as any).__lenis;
+        if (lenis) {
+          lenis.scrollTo(lenis.scroll + e.deltaY * 0.8, { immediate: true });
+        } else {
+          window.scrollBy({ top: e.deltaY * 0.8 });
+        }
+      }
+    }, { passive: true });
   }
 
   private isTypingInInput(target: EventTarget | null): boolean {

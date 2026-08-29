@@ -104,12 +104,24 @@ export class RobotFaceController {
   private initMouthWaveform() {
     if (this.mouthBars.length === 0) return;
     
-    // Simulate real-time audio voice synthesizer
+    const cpuEl = document.getElementById('face-cpu-stat');
+    const tempEl = document.getElementById('face-temp-stat');
+
+    // Simulate real-time audio voice synthesizer & telemetry oscillation
     setInterval(() => {
       this.mouthBars.forEach((bar) => {
         const heightPercent = Math.floor(Math.random() * 85) + 15;
         bar.style.height = `${heightPercent}%`;
       });
+
+      if (cpuEl && Math.random() > 0.6) {
+        const cpu = (Math.random() * 2.5 + 0.8).toFixed(1);
+        cpuEl.textContent = `CPU: ${cpu}%`;
+      }
+      if (tempEl && Math.random() > 0.8) {
+        const temp = (Math.random() * 3 + 31).toFixed(0);
+        tempEl.textContent = `TEMP: ${temp}°C`;
+      }
     }, 120);
   }
 

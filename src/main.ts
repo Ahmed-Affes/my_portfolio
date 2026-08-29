@@ -9,11 +9,13 @@ import { WarStarMeteorEngine } from './canvas/meteorEngine';
 import { RobotFaceController } from './interactive/robotFace';
 import { CyberCLITerminal } from './interactive/cliTerminal';
 import { HeroQuantumReactor } from './interactive/heroReactor';
+import { RadarTransmitterEngine } from './interactive/radarTransmitter';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 0. Initialize War Star Shooting Meteor Engine, Hero Quantum Reactor, Robot Face & CLI Help Center
+  // 0. Initialize War Star Shooting Meteor Engine, Hero Quantum Reactor, Robot Face, Radar & CLI Help Center
   const meteorEngine = new WarStarMeteorEngine();
   new HeroQuantumReactor('hero-reactor-canvas');
+  new RadarTransmitterEngine('radar-canvas');
   const robotFace = new RobotFaceController('about-robot-face');
   const cliTerminal = new CyberCLITerminal('cli-terminal-window');
   (window as any).__robotFace = robotFace;
@@ -305,6 +307,44 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }, 12);
       }
+    });
+  });
+
+  // Dossier Quick Action Triggers
+  const dossierResumeBtn = document.getElementById('dossier-resume-btn');
+  dossierResumeBtn?.addEventListener('click', () => {
+    sounds.playPanelOpen();
+    interactionSystem.open(dossierResumeBtn, {
+      statusBadge: { text: 'DECRYPTED SPEC', type: 'legendary' },
+      title: 'Ahmed Affes — Dossier & CV',
+      tagline: 'CREATIVE FULL-STACK & MOTION ENGINEER // 2026',
+      metrics: 'EXP: 6+ YEARS · CLEARANCE: LEVEL 04 · STATUS: AVAILABLE',
+      description: 'Specializing in high-performance frontend architecture, custom canvas engines, GSAP kinetic web motion, distributed APIs, and production microservices.',
+      tags: ['TYPESCRIPT', 'REACT', 'NODE.JS', 'GSAP', 'CANVAS', 'FLUTTER', 'POSTGRESQL'],
+      primaryBtn: { text: 'DOWNLOAD PDF ⬇', href: '#' },
+      secondaryBtn: { text: 'CONTACT DIRECT ↗', href: 'mailto:alex.developer@example.com' }
+    });
+  });
+
+  document.getElementById('dossier-contact-btn')?.addEventListener('click', () => {
+    sounds.playHoverBlip();
+    const contactSec = document.getElementById('act-contact');
+    contactSec?.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  const conduitResumeBtn = document.getElementById('conduit-resume-btn');
+  conduitResumeBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    sounds.playPanelOpen();
+    interactionSystem.open(conduitResumeBtn, {
+      statusBadge: { text: 'DECRYPTED SPEC', type: 'legendary' },
+      title: 'Ahmed Affes — Dossier & CV',
+      tagline: 'CREATIVE FULL-STACK & MOTION ENGINEER // 2026',
+      metrics: 'EXP: 6+ YEARS · CLEARANCE: LEVEL 04 · STATUS: AVAILABLE',
+      description: 'Specializing in high-performance frontend architecture, custom canvas engines, GSAP kinetic web motion, distributed APIs, and production microservices.',
+      tags: ['TYPESCRIPT', 'REACT', 'NODE.JS', 'GSAP', 'CANVAS', 'FLUTTER', 'POSTGRESQL'],
+      primaryBtn: { text: 'DOWNLOAD PDF ⬇', href: '#' },
+      secondaryBtn: { text: 'SEND EMAIL ↗', href: 'mailto:alex.developer@example.com' }
     });
   });
 
