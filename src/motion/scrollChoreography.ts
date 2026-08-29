@@ -252,8 +252,9 @@ export class ScrollChoreography {
       }, 2.8)
       .set(actTerminal, { pointerEvents: 'none' }, 3.4)
 
-      // Robot moves to inventory position
-      .to(this.sceneRobotWrapperEl, { right: '16%', duration: 1.2, ease: 'power1.inOut' }, 3.0)
+      // Scene robot completely hides during Act 2 so ONLY the runway hopping robot is active
+      .to(this.sceneRobotWrapperEl, { autoAlpha: 0, scale: 0.4, duration: 0.4, ease: 'power2.in' }, 2.8)
+      .set(this.sceneRobotWrapperEl, { display: 'none' }, 3.2)
 
       // Act 2 (Data Core Runway) enters completely cleanly
       .set(actSkills, { pointerEvents: 'auto' }, 3.4)
@@ -358,8 +359,9 @@ export class ScrollChoreography {
       }, 6.9)
       .set(actSkills, { pointerEvents: 'none' }, 7.5)
 
-      // Robot moves to arcade alley
-      .to(this.sceneRobotWrapperEl, { right: '55%', duration: 1.2, ease: 'power1.inOut' }, 7.0)
+      // Robot re-materializes at arcade alley
+      .set(this.sceneRobotWrapperEl, { display: 'flex' }, 6.9)
+      .fromTo(this.sceneRobotWrapperEl, { autoAlpha: 0, scale: 0.5, right: '55%' }, { autoAlpha: 1, scale: 1.0, duration: 0.8, ease: 'power2.out', immediateRender: false }, 7.0)
 
       // Act 3 (Arcade Runway) enters level and crisp
       .set(actProjects, { pointerEvents: 'auto' }, 7.3)
@@ -397,7 +399,7 @@ export class ScrollChoreography {
       }, 7.4);
 
     // =========================================================================
-    // 📡 CHAPTER 3 -> 4: ARCADE OUT -> SECURE UPLINK TERMINAL (CONTACT)
+    // 📡 CHAPTER 3 -> 4: ARCADE OUT -> QUANTUM SATELLITE CONSTELLATION (CONTACT)
     // =========================================================================
     masterTl
       // Cabinets slide up and out
@@ -416,33 +418,102 @@ export class ScrollChoreography {
         ease: 'power2.in'
       }, 9.3)
       .set(actProjects, { pointerEvents: 'none' }, 10.3)
-      // Radar transmission pulses
-      .set(radarWaves, { opacity: 1 }, 9.8)
-      .fromTo('.radar-circle', { scale: 0.1, opacity: 1 }, { scale: 2.4, opacity: 0, stagger: 0.15, duration: 1.4, ease: 'power2.out' }, 9.9)
+
       // Robot stands beneath orbital uplink
       .to(this.sceneRobotWrapperEl, { right: '40%', duration: 1.5, ease: 'power1.inOut' }, 9.4)
-      // Act 4 (Direct Neural Uplink) drops in straight and crisp
-      .set(actContact, { pointerEvents: 'auto' }, 9.6)
+
+      // Act 4 (Direct Neural Uplink) enters
+      .set(actContact, { pointerEvents: 'auto' }, 9.4)
       .to(actContact, {
         yPercent: 0,
         scale: 1.0,
         opacity: 1,
         filter: 'blur(0px)',
-        duration: 1.3,
-        ease: 'power3.out'
-      }, 9.6)
-      .fromTo('.quick-link-card', {
-        y: 45,
-        scale: 0.92,
-        opacity: 0
-      }, {
-        y: 0,
-        scale: 1.0,
-        opacity: 1,
-        stagger: 0.08,
         duration: 1.0,
         ease: 'power3.out'
+      }, 9.4)
+
+      // 1. Central Radar Core expands and spins into place from singularity
+      .fromTo('.constellation-center-core', {
+        scale: 0.1,
+        rotate: -360,
+        opacity: 0
+      }, {
+        scale: 1.0,
+        rotate: 0,
+        opacity: 1,
+        duration: 1.0,
+        ease: 'back.out(1.6)'
+      }, 9.4)
+
+      // 2. 4 Orbital Satellites swoop in from 4 corners of deep space and lock with docking impact
+      .fromTo('.satellite-conduit-pod.pod-tl', {
+        x: -280,
+        y: -160,
+        rotate: -20,
+        scale: 0.25,
+        opacity: 0
+      }, {
+        x: 0,
+        y: 0,
+        rotate: 0,
+        scale: 1.0,
+        opacity: 1,
+        duration: 0.9,
+        ease: 'power3.out'
+      }, 9.6)
+
+      .fromTo('.satellite-conduit-pod.pod-tr', {
+        x: 280,
+        y: -160,
+        rotate: 20,
+        scale: 0.25,
+        opacity: 0
+      }, {
+        x: 0,
+        y: 0,
+        rotate: 0,
+        scale: 1.0,
+        opacity: 1,
+        duration: 0.9,
+        ease: 'power3.out'
+      }, 9.7)
+
+      .fromTo('.satellite-conduit-pod.pod-bl', {
+        x: -280,
+        y: 160,
+        rotate: 20,
+        scale: 0.25,
+        opacity: 0
+      }, {
+        x: 0,
+        y: 0,
+        rotate: 0,
+        scale: 1.0,
+        opacity: 1,
+        duration: 0.9,
+        ease: 'power3.out'
       }, 9.8)
+
+      .fromTo('.satellite-conduit-pod.pod-br', {
+        x: 280,
+        y: 160,
+        rotate: -20,
+        scale: 0.25,
+        opacity: 0
+      }, {
+        x: 0,
+        y: 0,
+        rotate: 0,
+        scale: 1.0,
+        opacity: 1,
+        duration: 0.9,
+        ease: 'power3.out'
+      }, 9.9)
+
+      // Radar transmission pulses
+      .set(radarWaves, { opacity: 1 }, 10.0)
+      .fromTo('.radar-circle', { scale: 0.1, opacity: 1 }, { scale: 2.4, opacity: 0, stagger: 0.15, duration: 1.4, ease: 'power2.out' }, 10.0)
       .call(() => this.triggerMatrixDecryption(), [], 10.4);
 
     ScrollTrigger.refresh();
@@ -541,6 +612,17 @@ export class ScrollChoreography {
 
       if (this.hudEnvLabelEl) this.hudEnvLabelEl.textContent = envLabel;
       if (this.envSkyTintEl) this.envSkyTintEl.style.backgroundColor = tintColor;
+
+      // In Act 2 (Data Core / Skills Runway), hide the background scene robot so ONLY the runway jumping robot is active
+      if (this.sceneRobotWrapperEl) {
+        if (sectorIdx === 2) {
+          this.sceneRobotWrapperEl.style.display = 'none';
+          this.sceneRobotWrapperEl.style.opacity = '0';
+        } else {
+          this.sceneRobotWrapperEl.style.display = 'flex';
+          this.sceneRobotWrapperEl.style.opacity = '1';
+        }
+      }
     }
   }
 
@@ -586,13 +668,17 @@ export class ScrollChoreography {
   }
 
   private triggerTypewriter() {
-    const dialogueEl = document.querySelector('.terminal-text-body') as HTMLElement;
+    const dialogueEl = document.getElementById('terminal-bio-body') || document.querySelector('.terminal-text-body') as HTMLElement;
     if (!dialogueEl || this.isTypingDialogue) return;
 
     this.isTypingDialogue = true;
     sounds.playCrtPower();
 
     const fullText = dialogueEl.getAttribute('data-full-text') || dialogueEl.textContent || '';
+    
+    // Trigger Robot Face speech
+    (window as any).__robotFace?.speak(fullText);
+
     dialogueEl.textContent = '';
 
     let charIndex = 0;

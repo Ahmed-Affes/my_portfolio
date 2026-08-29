@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const terminalBioBody = document.getElementById('terminal-bio-body');
 
   const bioTabData = [
-    "Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Alex. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads.",
+    "Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Ahmed Affes. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads.",
     "OPERATOR PRODUCTION TIMELINE:\n• 2024–PRESENT: Principal Motion & Full-Stack Architect — NextGen Web & Mobile Ecosystems\n• 2022–2024: Senior Systems Engineer — Distributed Microservices & High-Performance Clients\n• 2020–2022: Creative UI Developer — Pixel-Perfect Motion Engines & Interactive Canvas Apps",
     "HARDWARE / NEURAL CORE SPECS:\n• ARCHITECTURE: Full-Stack Distributed Engine (TypeScript, React, Node, WebGL)\n• RUNTIME EFFICIENCY: 0ms Input Latency · 60 FPS Locked\n• SECURITY CLEARANCE: 256-Bit Encrypted Uplink · Status: Available For Work"
   ];
@@ -309,6 +309,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const tabIdx = parseInt(btn.getAttribute('data-tab') || '0', 10);
       const text = bioTabData[tabIdx] || bioTabData[0];
+
+      // Trigger robotic voice speech
+      robotFace.speak(text);
 
       if (terminalBioBody) {
         terminalBioBody.textContent = '';

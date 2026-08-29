@@ -79,9 +79,9 @@
         <span class="status-dot"></span>
         <span style="color: var(--green);">ONLINE</span>
       </div>
-      <button class="audio-btn muted" id="audio-toggle" aria-label="Toggle Sound Effects">
-        <span id="audio-icon">🔇</span>
-        <span id="audio-label">AUDIO: OFF</span>
+      <button class="audio-btn" id="audio-toggle" aria-label="Toggle Sound Effects">
+        <span id="audio-icon">🔊</span>
+        <span id="audio-label">AUDIO: ON</span>
       </button>
     </div>
   </header>
@@ -443,30 +443,7 @@
 
               <!-- Single-Row Horizontal Runway Container -->
               <div class="skills-runway-viewport" id="skills-runway-viewport">
-                
-                <!-- Animated Companion Robot Hopper -->
-                <div class="skills-jumping-robot" id="skills-jumping-robot" aria-hidden="true">
-                  <div class="hopper-pixel-body">
-                    <!-- Antenna -->
-                    <div class="hopper-antenna"><span class="antenna-bulb"></span></div>
-                    <!-- Head / Visor -->
-                    <div class="hopper-head">
-                      <div class="hopper-visor-glow"></div>
-                    </div>
-                    <!-- Torso with Power Core -->
-                    <div class="hopper-torso">
-                      <div class="hopper-core"></div>
-                    </div>
-                    <!-- Thruster Legs -->
-                    <div class="hopper-thruster">
-                      <span class="thruster-spark left"></span>
-                      <span class="thruster-spark right"></span>
-                    </div>
-                  </div>
-                  <div class="hopper-shadow"></div>
-                </div>
-
-                <!-- Single Horizontal Flex Track -->
+                <!-- Single Horizontal Flex Track with Dynamic Companion Hopper -->
                 <div class="skills-horizontal-track" id="skills-grid"></div>
 
                 <!-- Runway Circuit Bus Laser Line -->
@@ -531,27 +508,29 @@
                 Deep-space transmission channels are open. Transmit for full-stack contracts, creative architecture, or technical collaboration.
               </p>
 
-              <!-- Sub-Orbital Transmission Relay Stage: Radar Centerpiece + 4 Holographic Conduits -->
-              <div class="transmission-relay-stage">
+              <!-- Sub-Orbital Quantum Satellite Constellation Stage -->
+              <div class="orbital-constellation-stage" id="orbital-constellation-stage">
                 
-                <!-- Centerpiece Procedural Radar Transmitter Array -->
-                <div class="quantum-radar-pod" id="quantum-radar-pod" title="Deep Space Sub-Orbital Radar Array">
-                  <div class="radar-glow-aura"></div>
-                  <canvas id="radar-canvas" width="220" height="220" class="radar-canvas"></canvas>
-                  <div class="radar-telemetry-badge">
-                    <span class="radar-status-dot"></span>
-                    <span class="radar-telemetry-text">FREQ: 433.92 MHz · LATENCY: 12ms · AES-256</span>
+                <!-- Central Quantum Radar Array Core -->
+                <div class="constellation-center-core" id="constellation-center-core">
+                  <div class="quantum-radar-pod" id="quantum-radar-pod" title="Deep Space Sub-Orbital Radar Array">
+                    <div class="radar-glow-aura"></div>
+                    <canvas id="radar-canvas" width="220" height="220" class="radar-canvas"></canvas>
+                    <div class="radar-telemetry-badge">
+                      <span class="radar-status-dot"></span>
+                      <span class="radar-telemetry-text">FREQ: 433.92 MHz · AES-256 · TARGET LOCKED</span>
+                    </div>
                   </div>
                 </div>
 
-                <!-- 4 Holographic Transmission Conduits Grid -->
-                <div class="transmission-conduits-grid" id="beacon-kiosk">
+                <!-- 4 Orbital Satellite Conduits (Surrounding Constellation) -->
+                <div class="orbital-satellites-container" id="beacon-kiosk">
                   
-                  <!-- Conduit 1: Direct Email Frequency -->
-                  <div class="transmission-conduit-card" id="beacon-email-link">
+                  <!-- Satellite 1: Direct Email Frequency (Top-Left) -->
+                  <div class="satellite-conduit-pod pod-tl" id="beacon-email-link" data-quadrant="NW">
                     <div class="conduit-header">
                       <span class="conduit-icon">✉</span>
-                      <span class="conduit-channel-tag">● DIRECT COMMS</span>
+                      <span class="conduit-channel-tag">● FREQ_01 // COMMS</span>
                     </div>
                     <h3 class="conduit-title">DIRECT EMAIL</h3>
                     <div class="conduit-address">alex.developer@example.com</div>
@@ -562,11 +541,11 @@
                     </div>
                   </div>
 
-                  <!-- Conduit 2: Neural Source Matrix (GitHub) -->
-                  <div class="transmission-conduit-card" id="beacon-github-link">
+                  <!-- Satellite 2: Neural Source Matrix (GitHub - Top-Right) -->
+                  <div class="satellite-conduit-pod pod-tr" id="beacon-github-link" data-quadrant="NE">
                     <div class="conduit-header">
                       <span class="conduit-icon">⚡</span>
-                      <span class="conduit-channel-tag">● 100% OPEN SOURCE</span>
+                      <span class="conduit-channel-tag">● FREQ_02 // ARCHIVE</span>
                     </div>
                     <h3 class="conduit-title">GITHUB ARCHIVES</h3>
                     <div class="conduit-address">github.com/Ahmed-Affes</div>
@@ -577,26 +556,26 @@
                     </div>
                   </div>
 
-                  <!-- Conduit 3: Professional Uplink Network (LinkedIn) -->
-                  <div class="transmission-conduit-card" id="beacon-linkedin-link">
+                  <!-- Satellite 3: Professional Uplink Network (LinkedIn - Bottom-Left) -->
+                  <div class="satellite-conduit-pod pod-bl" id="beacon-linkedin-link" data-quadrant="SW">
                     <div class="conduit-header">
                       <span class="conduit-icon">◈</span>
-                      <span class="conduit-channel-tag">● VERIFIED OPERATOR</span>
+                      <span class="conduit-channel-tag">● FREQ_03 // UPLINK</span>
                     </div>
                     <h3 class="conduit-title">LINKEDIN UPLINK</h3>
                     <div class="conduit-address">linkedin.com/in/ahmed-affes</div>
                     <div class="conduit-actions">
-                      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="conduit-action-btn">
+                      <a href="https://linkedin.com/in/ahmed-affes" target="_blank" rel="noopener noreferrer" class="conduit-action-btn">
                         CONNECT NOW ↗
                       </a>
                     </div>
                   </div>
 
-                  <!-- Conduit 4: Tactical Dossier Core (Resume Download) -->
-                  <div class="transmission-conduit-card" id="beacon-resume-link">
+                  <!-- Satellite 4: Operator Technical Dossier / CV (Bottom-Right) -->
+                  <div class="satellite-conduit-pod pod-br" id="beacon-resume-link" data-quadrant="SE">
                     <div class="conduit-header">
                       <span class="conduit-icon">📜</span>
-                      <span class="conduit-channel-tag">● DECRYPTED SPEC // 2026</span>
+                      <span class="conduit-channel-tag">● FREQ_04 // DOSSIER</span>
                     </div>
                     <h3 class="conduit-title">DOSSIER / RESUME</h3>
                     <div class="conduit-address">curriculum_vitae_2026.pdf</div>

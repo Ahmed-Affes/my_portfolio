@@ -101,28 +101,90 @@ export class RobotFaceController {
     }, 400);
   }
 
+  private isSpeaking: boolean = false;
+
   private initMouthWaveform() {
     if (this.mouthBars.length === 0) return;
     
     const cpuEl = document.getElementById('face-cpu-stat');
     const tempEl = document.getElementById('face-temp-stat');
 
-    // Simulate real-time audio voice synthesizer & telemetry oscillation
+    // Speech & Standby Voice Synthesizer Loop
     setInterval(() => {
-      this.mouthBars.forEach((bar) => {
-        const heightPercent = Math.floor(Math.random() * 85) + 15;
-        bar.style.height = `${heightPercent}%`;
+      this.mouthBars.forEach((bar, idx) => {
+        if (this.isSpeaking) {
+          // Dynamic high-energy vocal equalizer while talking
+          const vocalHeight = Math.floor(Math.sin(Date.now() * 0.015 + idx) * 35 + 55);
+          bar.style.height = `${Math.max(15, Math.min(100, vocalHeight))}%`;
+          bar.style.background = '#ffffff';
+          bar.style.boxShadow = '0 0 10px var(--cyan)';
+        } else {
+          // Subtle resting hum
+          const heightPercent = Math.floor(Math.sin(Date.now() * 0.004 + idx * 0.5) * 20 + 25);
+          bar.style.height = `${Math.max(10, Math.min(80, heightPercent))}%`;
+          bar.style.background = 'var(--cyan)';
+          bar.style.boxShadow = '0 0 6px var(--cyan)';
+        }
       });
 
       if (cpuEl && Math.random() > 0.6) {
-        const cpu = (Math.random() * 2.5 + 0.8).toFixed(1);
+        const cpu = this.isSpeaking ? (Math.random() * 4.5 + 3.5).toFixed(1) : (Math.random() * 1.5 + 0.8).toFixed(1);
         cpuEl.textContent = `CPU: ${cpu}%`;
       }
       if (tempEl && Math.random() > 0.8) {
-        const temp = (Math.random() * 3 + 31).toFixed(0);
+        const temp = this.isSpeaking ? (Math.random() * 2 + 34).toFixed(0) : (Math.random() * 2 + 31).toFixed(0);
         tempEl.textContent = `TEMP: ${temp}°C`;
       }
-    }, 120);
+    }, 80);
+  }
+
+  public speak(text: string) {
+    if (!('speechSynthesis' in window)) return;
+    if (sounds.getMuted()) return;
+
+    try {
+      window.speechSynthesis.cancel();
+      
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1.05;
+      utterance.pitch = 0.85; // Robotic pitch
+      utterance.volume = 0.9;
+
+      // Select high quality English voice if available
+      const voices = window.speechSynthesis.getVoices();
+      const cyberVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('David') || v.name.includes('Zira'))) || voices[0];
+      if (cyberVoice) {
+        utterance.voice = cyberVoice;
+      }
+
+      utterance.onstart = () => {
+        this.isSpeaking = true;
+        this.containerEl?.classList.add('face-talking');
+        sounds.playHoverBlip();
+      };
+
+      utterance.onend = () => {
+        this.isSpeaking = false;
+        this.containerEl?.classList.remove('face-talking');
+      };
+
+      utterance.onerror = () => {
+        this.isSpeaking = false;
+        this.containerEl?.classList.remove('face-talking');
+      };
+
+      window.speechSynthesis.speak(utterance);
+    } catch (err) {
+      console.warn('Speech synthesis unavailable:', err);
+    }
+  }
+
+  public stopSpeaking() {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    this.isSpeaking = false;
+    this.containerEl?.classList.remove('face-talking');
   }
 
   private startRenderLoop() {
@@ -141,6 +203,7 @@ export class RobotFaceController {
   }
 
   public destroy() {
+    this.stopSpeaking();
     if (this.animFrameId) {
       cancelAnimationFrame(this.animFrameId);
     }

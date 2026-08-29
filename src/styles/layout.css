@@ -1832,9 +1832,9 @@
   color: var(--cyan);
 }
 
-/* ==================== ACT 4: SUB-ORBITAL QUANTUM TRANSMISSION RELAY ==================== */
+/* ==================== ACT 4: SUB-ORBITAL QUANTUM SATELLITE CONSTELLATION ==================== */
 .transmission-modern-stage {
-  max-width: 1100px;
+  max-width: 1150px;
   width: 100%;
   margin: 0 auto;
   position: relative;
@@ -1844,13 +1844,24 @@
   flex-direction: column;
 }
 
-.transmission-relay-stage {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 28px;
-  align-items: center;
+.orbital-constellation-stage {
+  position: relative;
   width: 100%;
-  margin: 12px 0 20px 0;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px 0 24px 0;
+}
+
+.constellation-center-core {
+  position: relative;
+  z-index: 15;
+  width: 240px;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .quantum-radar-pod {
@@ -1858,9 +1869,9 @@
   height: 240px;
   position: relative;
   border-radius: 50%;
-  border: 1.5px solid rgba(79, 227, 255, 0.45);
-  box-shadow: 0 0 40px rgba(79, 227, 255, 0.25), inset 0 0 30px rgba(57, 255, 136, 0.1);
-  background: radial-gradient(circle, rgba(12, 20, 42, 0.92) 0%, rgba(4, 7, 16, 0.98) 100%);
+  border: 2px solid rgba(79, 227, 255, 0.6);
+  box-shadow: 0 0 50px rgba(79, 227, 255, 0.35), inset 0 0 35px rgba(57, 255, 136, 0.15);
+  background: radial-gradient(circle, rgba(12, 20, 42, 0.95) 0%, rgba(4, 7, 16, 0.98) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1872,7 +1883,7 @@
   position: absolute;
   inset: -20px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(79, 227, 255, 0.25) 0%, rgba(57, 255, 136, 0.1) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(79, 227, 255, 0.3) 0%, rgba(57, 255, 136, 0.15) 45%, transparent 70%);
   pointer-events: none;
   animation: pulseDot 4s infinite alternate;
 }
@@ -1887,20 +1898,21 @@
 .radar-telemetry-badge {
   position: absolute;
   bottom: 12px;
-  left: 20px;
-  right: 20px;
+  left: 15px;
+  right: 15px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   font-family: var(--font-pixel);
   font-size: 5.5px;
-  background: rgba(5, 8, 16, 0.92);
-  border: 1px solid rgba(79, 227, 255, 0.4);
-  padding: 3px 6px;
+  background: rgba(5, 8, 16, 0.94);
+  border: 1px solid rgba(79, 227, 255, 0.5);
+  padding: 4px 6px;
   color: var(--cyan);
   pointer-events: none;
   border-radius: 2px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.9);
 }
 
 .radar-status-dot {
@@ -1912,30 +1924,54 @@
   animation: pulseDot 1.2s infinite;
 }
 
-.transmission-conduits-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+.orbital-satellites-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
-.transmission-conduit-card {
-  background: rgba(8, 12, 26, 0.88);
-  border: 1px solid var(--cyan-dim);
+.satellite-conduit-pod {
+  position: absolute;
+  width: 360px;
+  pointer-events: auto;
+  background: rgba(8, 12, 26, 0.92);
+  border: 1.5px solid var(--cyan-dim);
   padding: 16px 20px;
-  position: relative;
-  backdrop-filter: blur(10px);
-  border-radius: 2px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  border-radius: 4px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.7);
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.25s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.transmission-conduit-card:hover {
-  transform: translateY(-4px);
+.satellite-conduit-pod:hover,
+.satellite-conduit-pod.target-locked {
+  transform: translateY(-4px) scale(1.02);
   border-color: var(--cyan);
-  box-shadow: 0 0 28px rgba(79, 227, 255, 0.3), inset 0 0 14px rgba(79, 227, 255, 0.08);
+  box-shadow: 0 0 36px rgba(79, 227, 255, 0.45), inset 0 0 16px rgba(79, 227, 255, 0.1);
+}
+
+/* 4 Quadrants Positioning */
+.satellite-conduit-pod.pod-tl {
+  top: 10px;
+  left: 20px;
+}
+
+.satellite-conduit-pod.pod-tr {
+  top: 10px;
+  right: 20px;
+}
+
+.satellite-conduit-pod.pod-bl {
+  bottom: 10px;
+  left: 20px;
+}
+
+.satellite-conduit-pod.pod-br {
+  bottom: 10px;
+  right: 20px;
 }
 
 .conduit-header {

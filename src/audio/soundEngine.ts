@@ -2,7 +2,7 @@
 
 class SoundEngine {
   private ctx: AudioContext | null = null;
-  private isMuted: boolean = true;
+  private isMuted: boolean = false;
   private ambientOsc1: OscillatorNode | null = null;
   private ambientOsc2: OscillatorNode | null = null;
   private ambientGain: GainNode | null = null;
@@ -11,8 +11,31 @@ class SoundEngine {
   private listeners: ((muted: boolean) => void)[] = [];
 
   constructor() {
-    // Start muted by default per spec
-    this.isMuted = true;
+    // Audio ON by default
+    this.isMuted = false;
+    this.bindAutoUnlock();
+  }
+
+  private bindAutoUnlock() {
+    const unlock = () => {
+      if (!this.isMuted) {
+        this.initCtx();
+        if (!this.isAmbientPlaying) {
+          this.startAmbient();
+        }
+      }
+      window.removeEventListener('click', unlock);
+      window.removeEventListener('keydown', unlock);
+      window.removeEventListener('scroll', unlock);
+      window.removeEventListener('touchstart', unlock);
+      window.removeEventListener('wheel', unlock);
+    };
+
+    window.addEventListener('click', unlock, { once: true });
+    window.addEventListener('keydown', unlock, { once: true });
+    window.addEventListener('scroll', unlock, { once: true });
+    window.addEventListener('touchstart', unlock, { once: true });
+    window.addEventListener('wheel', unlock, { once: true });
   }
 
   private initCtx() {
