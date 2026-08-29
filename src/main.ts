@@ -8,10 +8,13 @@ import { gsap, EASE_UI } from './motion/customEases';
 import { WarStarMeteorEngine } from './canvas/meteorEngine';
 import { RobotFaceController } from './interactive/robotFace';
 import { CyberCLITerminal } from './interactive/cliTerminal';
+import { HeroQuantumReactor } from './interactive/heroReactor';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 0. Initialize War Star Shooting Meteor Engine
+  // 0. Initialize War Star Shooting Meteor Engine, Hero Quantum Reactor & CLI Help Center
   const meteorEngine = new WarStarMeteorEngine();
+  new HeroQuantumReactor('hero-reactor-canvas');
+  const cliTerminal = new CyberCLITerminal('cli-terminal-window');
   // 1. Render Skills Cards (Data Core) FIRST
   const skillsGrid = document.getElementById('skills-grid');
   if (skillsGrid) {
@@ -368,26 +371,22 @@ document.addEventListener('DOMContentLoaded', () => {
     sounds.toggleMute();
   });
 
-  // 10. Setup Hero CTAs smooth scrolling to target progress
+  // 10. Setup Hero CTAs smooth scrolling & CLI modal trigger
   const heroViewProjectsBtn = document.getElementById('hero-view-projects-btn');
-  const heroOpenChannelBtn = document.getElementById('hero-open-channel-btn');
+  const heroCliTriggerBtn = document.getElementById('hero-cli-trigger-btn');
 
   heroViewProjectsBtn?.addEventListener('click', () => {
     sounds.playHoverBlip();
     const scrollTrack = document.getElementById('scroll-track');
     if (scrollTrack) {
       const maxScroll = scrollTrack.offsetHeight - window.innerHeight;
-      scrollChoreography.lenis.scrollTo(0.75 * maxScroll, { duration: 1.5 });
+      scrollChoreography.lenis.scrollTo(0.25 * maxScroll, { duration: 1.5 });
     }
   });
 
-  heroOpenChannelBtn?.addEventListener('click', () => {
+  heroCliTriggerBtn?.addEventListener('click', () => {
     sounds.playHoverBlip();
-    const scrollTrack = document.getElementById('scroll-track');
-    if (scrollTrack) {
-      const maxScroll = scrollTrack.offsetHeight - window.innerHeight;
-      scrollChoreography.lenis.scrollTo(1.00 * maxScroll, { duration: 1.8 });
-    }
+    cliTerminal.openModal();
   });
 
   // 11. Ambient Canvas Particle Simulator

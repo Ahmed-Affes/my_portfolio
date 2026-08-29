@@ -165,117 +165,130 @@
       <div class="camera-parallax-rig" id="camera-parallax-rig">
         <div class="scene-camera" id="scene-camera">
 
-          <!-- ==================== ACT 0: BOOT (Modern Cyberpunk Centerpiece) ==================== -->
+          <!-- ==================== ACT 0: BOOT (Pure-Code Cyberpunk Holographic Mainframe) ==================== -->
           <section class="stage-act act-boot" id="act-boot" aria-labelledby="hero-title">
             <div class="act-inner hero-modern-stage" id="hero-modern-stage">
               
-              <!-- 4-Corner Target Reticles (Reference Screenshot) -->
+              <!-- 4-Corner Target Reticles -->
               <div class="hero-corner-bracket top-left"></div>
               <div class="hero-corner-bracket top-right"></div>
               <div class="hero-corner-bracket bottom-left"></div>
               <div class="hero-corner-bracket bottom-right"></div>
 
-              <!-- Top Status Bar -->
+              <!-- Top Telemetry Header -->
               <div class="hero-modern-header">
                 <div class="hero-brand-tag">
                   <span class="hero-brand-dot"></span>
-                  <span>AHMED AFFES // ARCHITECT</span>
+                  <span>UNIT_07 // AHMED AFFES</span>
                 </div>
                 <div class="hero-live-clock" id="hero-live-clock">
                   SYS_TIME: 2026.08.29 // 20:45:00 UTC
                 </div>
                 <div class="hero-status-pill">
                   <span class="status-pulse-dot"></span>
-                  <span>AVAILABLE FOR WORK</span>
+                  <span>NEURAL CORE ONLINE</span>
                 </div>
               </div>
 
-              <!-- Giant Futuristic Headline -->
+              <!-- Giant Futuristic Master Title -->
               <div class="hero-giant-headline-wrapper">
                 <h1 class="hero-giant-headline glitch-text" id="hero-title">
-                  CYBERPUNK
+                  AHMED AFFES
                 </h1>
+                <div class="hero-role-subtitle">
+                  CREATIVE FULL-STACK ARCHITECT &amp; MOTION DESIGN ENGINEER
+                </div>
               </div>
 
-              <!-- Central Cyber Operator Centerpiece with Interactive HUD Callouts -->
+              <!-- 3-Column Pure-Code Procedural Centerpiece -->
               <div class="hero-centerpiece-container">
                 
-                <!-- Left HUD Callout: Stories & Lore -->
+                <!-- Left HUD Dossier: Engineering Focus -->
                 <div class="hero-hud-callout left-callout" id="hud-callout-left">
                   <div class="hud-callout-header">
                     <span class="hud-callout-bullet"></span>
-                    <span class="hud-callout-title">STORIES & LORE</span>
+                    <span class="hud-callout-title">CORE ARCHITECTURE</span>
                   </div>
                   <p class="hud-callout-desc">
-                    Full-stack systems architect engineering high-performance web applications, distributed clients & real-time canvas worlds.
+                    Engineering high-velocity distributed systems, canvas rendering engines &amp; cinematic motion frontends with zero boilerplate.
                   </p>
+                  <div class="hud-tech-specs">
+                    <div class="spec-row"><span class="spec-label">RUNTIME:</span> <span class="spec-val">TYPESCRIPT / NODE</span></div>
+                    <div class="spec-row"><span class="spec-label">MOTION:</span> <span class="spec-val">GSAP / LENIS / RAF</span></div>
+                    <div class="spec-row"><span class="spec-label">SYSTEM:</span> <span class="spec-val">FULL-STACK &amp; CANVAS</span></div>
+                  </div>
                   <div class="hud-pointer-line left-line">
                     <span class="hud-pin-target"></span>
                   </div>
                 </div>
 
-                <!-- Central Illuminated Cyberpunk Character Frame -->
-                <div class="hero-character-frame" id="hero-character-frame">
-                  <div class="hero-character-glow-ring"></div>
-                  <img
-                    src="/assets/cyber_operator_portrait.jpg"
-                    alt="Cyberpunk Humanoid Operator"
-                    class="hero-character-image"
-                    id="hero-character-img"
-                  />
-                  <div class="hero-scanline-laser"></div>
-                  <div class="hero-character-hud-overlay">
-                    <div class="char-hud-tag">OPERATOR // UNIT_07</div>
-                    <div class="char-hud-status">SCAN: ACTIVE</div>
+                <!-- Centerpiece: Procedural Quantum Holographic Core (Canvas 2D) -->
+                <div class="hero-reactor-frame" id="hero-reactor-frame" title="Interactive Quantum Reactor Core — Move mouse to perturb flux">
+                  <div class="reactor-glow-aura"></div>
+                  <canvas id="hero-reactor-canvas" class="hero-reactor-canvas" width="280" height="280"></canvas>
+                  <div class="reactor-hud-overlay">
+                    <div class="reactor-hud-tag">QUANTUM_CORE // v2.6</div>
+                    <div class="reactor-hud-status">FLUX: OPTIMAL</div>
                   </div>
                 </div>
 
-                <!-- Right HUD Callout: Events & Updates -->
+                <!-- Right HUD Dossier: Production Directive & Actions -->
                 <div class="hero-hud-callout right-callout" id="hud-callout-right">
                   <div class="hud-callout-header">
                     <span class="hud-callout-bullet"></span>
-                    <span class="hud-callout-title">EVENTS AND UPDATES</span>
+                    <span class="hud-callout-title">TACTICAL DIRECTIVE</span>
                   </div>
                   <p class="hud-callout-desc">
-                    Explore high-velocity projects where modern full-stack engineering meets cutting-edge motion choreography.
+                    6+ years delivering mission-critical web applications, high-performance APIs &amp; tailored interactive worlds.
                   </p>
-                  <button class="hero-cta-orange-btn" id="hero-view-projects-btn">
-                    EXPLORE WORK ↗
-                  </button>
+                  <div class="hud-action-row">
+                    <button class="hero-cta-orange-btn" id="hero-view-projects-btn">
+                      COMMENCE RUN ↗
+                    </button>
+                    <button class="hero-secondary-btn" id="hero-cli-trigger-btn">
+                      CLI HELP &gt;_
+                    </button>
+                  </div>
                   <div class="hud-pointer-line right-line">
                     <span class="hud-pin-target"></span>
                   </div>
                 </div>
               </div>
 
-              <!-- Bottom Row: Floating Metric Cards (Reference Screenshot) -->
+              <!-- Bottom Row: Real-time Telemetry & Dynamic Metric Displays -->
               <div class="hero-bottom-floating-row">
                 
-                <!-- Left Floating Glass Card: Experience & Avatar -->
+                <!-- Left Metric Card: Production Metrics -->
                 <div class="floating-metric-card left-card" id="hero-metric-left">
-                  <div class="metric-avatar-wrapper">
-                    <img src="/assets/operator_card_avatar.jpg" alt="Soldier Avatar" class="metric-avatar-img" />
-                    <span class="avatar-online-badge"></span>
-                  </div>
+                  <div class="metric-pixel-icon">⚡</div>
                   <div class="metric-text-block">
-                    <div class="metric-number-highlight">76,285K+</div>
-                    <div class="metric-heading">Experience the Future</div>
-                    <div class="metric-sub">Distributed systems & pixel-perfect clients</div>
+                    <div class="metric-number-highlight">6+ YEARS PROD</div>
+                    <div class="metric-heading">Full-Stack Craftsmanship</div>
+                    <div class="metric-sub">Distributed architectures &amp; pure code motion</div>
                   </div>
                 </div>
 
-                <!-- Center Prompt -->
-                <div class="hero-scroll-directive">
+                <!-- Center Audio Visualizer & Scroll Directive -->
+                <div class="hero-scroll-directive" id="hero-scroll-directive">
+                  <div class="hero-audio-visualizer" aria-label="Core Audio Frequency">
+                    <div class="eq-bar eq-1"></div>
+                    <div class="eq-bar eq-2"></div>
+                    <div class="eq-bar eq-3"></div>
+                    <div class="eq-bar eq-4"></div>
+                    <div class="eq-bar eq-5"></div>
+                    <div class="eq-bar eq-6"></div>
+                  </div>
                   <span class="scroll-directive-arrow">▼</span>
                   <span class="scroll-directive-text">SCROLL TO COMMENCE MISSION</span>
                 </div>
 
-                <!-- Right Floating Glass Card: Years of Experience -->
+                <!-- Right Metric Card: Code Quality Standard -->
                 <div class="floating-metric-card right-card" id="hero-metric-right">
-                  <div class="metric-big-stat">6+</div>
+                  <div class="metric-pixel-icon">🛡️</div>
                   <div class="metric-text-block">
-                    <div class="metric-heading">Years of Experience</div>
-                    <div class="metric-sub">100% Hand-tuned · Zero runtime errors</div>
+                    <div class="metric-number-highlight">ZERO TEMPLATES</div>
+                    <div class="metric-heading">100% Hand-Crafted Code</div>
+                    <div class="metric-sub">Tailored physics, Web APIs &amp; GSAP timelines</div>
                   </div>
                 </div>
 

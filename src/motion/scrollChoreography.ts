@@ -165,7 +165,7 @@ export class ScrollChoreography {
         duration: 1.1,
         ease: 'power2.inOut'
       }, 0.8)
-      .to('.hero-character-frame', {
+      .to('.hero-reactor-frame', {
         scale: 0.7,
         opacity: 0,
         filter: 'blur(10px)',
