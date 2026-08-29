@@ -438,12 +438,24 @@
               </div>
               <h2 class="zone-title" id="skills-title">Equipped skills</h2>
               <p class="zone-subtitle">
-                Scroll to slide across the horizontal data runway. Unit 07 leaps across cards in real-time. Click any card to dock and inspect schematics.
+                Scroll to slide across the horizontal data runway. The quantum laser scanner analyzes production cartridges in real-time. Click any card to dock and inspect schematics.
               </p>
 
               <!-- Single-Row Horizontal Runway Container -->
               <div class="skills-runway-viewport" id="skills-runway-viewport">
-                <!-- Single Horizontal Flex Track with Dynamic Companion Hopper -->
+                
+                <!-- Center Quantum Laser Scanner Head -->
+                <div class="runway-laser-scanner" id="runway-laser-scanner" aria-hidden="true">
+                  <div class="scanner-optic-head">
+                    <span class="optic-lens"></span>
+                    <span class="optic-reticle-bracket left"></span>
+                    <span class="optic-reticle-bracket right"></span>
+                    <div class="optic-beam-cone"></div>
+                  </div>
+                  <div class="scanner-data-readout">DATA_BUS // ACTIVE_SCAN</div>
+                </div>
+
+                <!-- Single Horizontal Flex Track -->
                 <div class="skills-horizontal-track" id="skills-grid"></div>
 
                 <!-- Runway Circuit Bus Laser Line -->
@@ -508,80 +520,93 @@
                 Deep-space transmission channels are open. Transmit for full-stack contracts, creative architecture, or technical collaboration.
               </p>
 
-              <!-- Sub-Orbital Quantum Satellite Constellation Stage -->
-              <div class="orbital-constellation-stage" id="orbital-constellation-stage">
+              <!-- Central Unified Cyber Comms Station Console -->
+              <div class="comms-station-deck" id="comms-console-deck">
                 
-                <!-- Central Quantum Radar Array Core -->
-                <div class="constellation-center-core" id="constellation-center-core">
-                  <div class="quantum-radar-pod" id="quantum-radar-pod" title="Deep Space Sub-Orbital Radar Array">
+                <!-- Left Sector: Tactical Radar Scope & Uplink Status Deck -->
+                <div class="console-left-sector">
+                  <div class="radar-scope-frame" id="quantum-radar-pod">
+                    <div class="radar-corner-bracket tl"></div>
+                    <div class="radar-corner-bracket tr"></div>
+                    <div class="radar-corner-bracket bl"></div>
+                    <div class="radar-corner-bracket br"></div>
                     <div class="radar-glow-aura"></div>
-                    <canvas id="radar-canvas" width="220" height="220" class="radar-canvas"></canvas>
-                    <div class="radar-telemetry-badge">
-                      <span class="radar-status-dot"></span>
-                      <span class="radar-telemetry-text">FREQ: 433.92 MHz · AES-256 · TARGET LOCKED</span>
+                    <canvas id="radar-canvas" width="190" height="190" class="radar-canvas"></canvas>
+                  </div>
+
+                  <div class="radar-console-meta">
+                    <div class="meta-status-pill">
+                      <span class="status-live-blip"></span>
+                      <span class="meta-status-text">TRANSMITTER ONLINE</span>
+                    </div>
+                    <div class="console-telemetry-grid">
+                      <div class="tele-item"><span class="t-key">FREQ:</span> <span class="t-val">433.92 MHz</span></div>
+                      <div class="tele-item"><span class="t-key">LATENCY:</span> <span class="t-val">12ms</span></div>
+                      <div class="tele-item"><span class="t-key">CIPHER:</span> <span class="t-val">AES-256</span></div>
+                      <div class="tele-item"><span class="t-key">SIGNAL:</span> <span class="t-val">99.8%</span></div>
                     </div>
                   </div>
                 </div>
 
-                <!-- 4 Orbital Satellite Conduits (Surrounding Constellation) -->
-                <div class="orbital-satellites-container" id="beacon-kiosk">
+                <!-- Right Sector: 4 High-Tech Communication Conduits (2x2 Grid) -->
+                <div class="console-right-sector" id="beacon-kiosk">
                   
-                  <!-- Satellite 1: Direct Email Frequency (Top-Left) -->
-                  <div class="satellite-conduit-pod pod-tl" id="beacon-email-link" data-quadrant="NW">
-                    <div class="conduit-header">
+                  <!-- Conduit 1: Direct Email -->
+                  <div class="comms-conduit-card" id="beacon-email-link">
+                    <div class="conduit-top-bar">
+                      <span class="conduit-channel-code">01 // COMMS</span>
                       <span class="conduit-icon">✉</span>
-                      <span class="conduit-channel-tag">● FREQ_01 // COMMS</span>
                     </div>
-                    <h3 class="conduit-title">DIRECT EMAIL</h3>
-                    <div class="conduit-address">alex.developer@example.com</div>
-                    <div class="conduit-actions">
-                      <a href="mailto:alex.developer@example.com" class="conduit-action-btn primary">
+                    <div class="conduit-label">DIRECT EMAIL</div>
+                    <div class="conduit-val">alex.developer@example.com</div>
+                    <div class="conduit-btn-row">
+                      <a href="mailto:alex.developer@example.com" class="conduit-btn primary">
                         TRANSMIT EMAIL ↗
                       </a>
                     </div>
                   </div>
 
-                  <!-- Satellite 2: Neural Source Matrix (GitHub - Top-Right) -->
-                  <div class="satellite-conduit-pod pod-tr" id="beacon-github-link" data-quadrant="NE">
-                    <div class="conduit-header">
+                  <!-- Conduit 2: GitHub Archives -->
+                  <div class="comms-conduit-card" id="beacon-github-link">
+                    <div class="conduit-top-bar">
+                      <span class="conduit-channel-code">02 // ARCHIVE</span>
                       <span class="conduit-icon">⚡</span>
-                      <span class="conduit-channel-tag">● FREQ_02 // ARCHIVE</span>
                     </div>
-                    <h3 class="conduit-title">GITHUB ARCHIVES</h3>
-                    <div class="conduit-address">github.com/Ahmed-Affes</div>
-                    <div class="conduit-actions">
-                      <a href="https://github.com/Ahmed-Affes" target="_blank" rel="noopener noreferrer" class="conduit-action-btn">
-                        ACCESS REPOSITORIES ↗
+                    <div class="conduit-label">GITHUB ARCHIVES</div>
+                    <div class="conduit-val">github.com/Ahmed-Affes</div>
+                    <div class="conduit-btn-row">
+                      <a href="https://github.com/Ahmed-Affes" target="_blank" rel="noopener noreferrer" class="conduit-btn">
+                        ACCESS CODE ↗
                       </a>
                     </div>
                   </div>
 
-                  <!-- Satellite 3: Professional Uplink Network (LinkedIn - Bottom-Left) -->
-                  <div class="satellite-conduit-pod pod-bl" id="beacon-linkedin-link" data-quadrant="SW">
-                    <div class="conduit-header">
+                  <!-- Conduit 3: LinkedIn Uplink -->
+                  <div class="comms-conduit-card" id="beacon-linkedin-link">
+                    <div class="conduit-top-bar">
+                      <span class="conduit-channel-code">03 // NETWORK</span>
                       <span class="conduit-icon">◈</span>
-                      <span class="conduit-channel-tag">● FREQ_03 // UPLINK</span>
                     </div>
-                    <h3 class="conduit-title">LINKEDIN UPLINK</h3>
-                    <div class="conduit-address">linkedin.com/in/ahmed-affes</div>
-                    <div class="conduit-actions">
-                      <a href="https://linkedin.com/in/ahmed-affes" target="_blank" rel="noopener noreferrer" class="conduit-action-btn">
-                        CONNECT NOW ↗
+                    <div class="conduit-label">LINKEDIN UPLINK</div>
+                    <div class="conduit-val">linkedin.com/in/ahmed-affes</div>
+                    <div class="conduit-btn-row">
+                      <a href="https://linkedin.com/in/ahmed-affes" target="_blank" rel="noopener noreferrer" class="conduit-btn">
+                        CONNECT ↗
                       </a>
                     </div>
                   </div>
 
-                  <!-- Satellite 4: Operator Technical Dossier / CV (Bottom-Right) -->
-                  <div class="satellite-conduit-pod pod-br" id="beacon-resume-link" data-quadrant="SE">
-                    <div class="conduit-header">
+                  <!-- Conduit 4: Operator Technical Dossier -->
+                  <div class="comms-conduit-card" id="beacon-resume-link">
+                    <div class="conduit-top-bar">
+                      <span class="conduit-channel-code">04 // SPEC</span>
                       <span class="conduit-icon">📜</span>
-                      <span class="conduit-channel-tag">● FREQ_04 // DOSSIER</span>
                     </div>
-                    <h3 class="conduit-title">DOSSIER / RESUME</h3>
-                    <div class="conduit-address">curriculum_vitae_2026.pdf</div>
-                    <div class="conduit-actions">
-                      <a href="#" class="conduit-action-btn primary" id="conduit-resume-btn">
-                        DOWNLOAD DOSSIER ⬇
+                    <div class="conduit-label">DOSSIER / RESUME</div>
+                    <div class="conduit-val">curriculum_vitae_2026.pdf</div>
+                    <div class="conduit-btn-row">
+                      <a href="#" class="conduit-btn primary" id="conduit-resume-btn">
+                        DOWNLOAD CV ⬇
                       </a>
                     </div>
                   </div>
