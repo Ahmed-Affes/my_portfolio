@@ -491,7 +491,7 @@
 .cinematic-scroll-track {
   position: relative;
   width: 100%;
-  height: 600vh;
+  height: 750vh;
 }
 
 .cinematic-pinned-viewport {
@@ -1854,10 +1854,13 @@
 
 /* ==================== ACT 3: ORBITAL CYBER UFO DROPSHIP & TRACTOR BEAM ==================== */
 .projects-ufo-sky-hanger {
-  position: relative;
+  position: absolute;
+  top: 15px;
+  left: 0;
+  right: 0;
   width: 100%;
-  height: 100px;
-  margin-bottom: 4px;
+  height: 0;
+  margin: 0;
   overflow: visible;
   pointer-events: none;
   z-index: 40;
@@ -2065,21 +2068,22 @@
 
 .arcade-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 6px;
 }
 
 .arcade-cabinet {
   background: var(--bg2);
   border: 1px solid var(--cyan-dim);
-  padding: 20px;
+  padding: 12px 14px;
   position: relative;
   cursor: pointer;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 320px;
+  min-height: 270px;
   transform-style: preserve-3d;
 }
 
@@ -2099,33 +2103,34 @@
 .cabinet-top-section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .cabinet-badge-row {
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .cabinet-level-tag {
   font-family: var(--font-pixel);
-  font-size: 8px;
+  font-size: 7.5px;
   color: var(--muted);
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   letter-spacing: 0.5px;
 }
 
 .cabinet-title {
   font-family: var(--font-terminal);
-  font-size: 28px;
+  font-size: 24px;
   color: var(--ink);
-  margin-bottom: 8px;
+  margin-bottom: 4px;
+  line-height: 1.05;
 }
 
 .cabinet-screen {
   background: var(--bg3);
   border: 1px solid rgba(79, 227, 255, 0.2);
-  height: 120px;
-  margin: 12px 0;
+  height: 90px;
+  margin: 6px 0;
   position: relative;
   display: flex;
   align-items: center;
@@ -2140,22 +2145,22 @@
 }
 
 .cabinet-desc {
-  font-size: 21px;
+  font-size: 17.5px;
   color: var(--muted);
-  line-height: 1.35;
-  margin-bottom: 14px;
+  line-height: 1.25;
+  margin-bottom: 6px;
 }
 
 .cabinet-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 4px;
 }
 
 .tag-chip {
   font-family: var(--font-pixel);
-  font-size: 7px;
-  padding: 3px 6px;
+  font-size: 6px;
+  padding: 2px 5px;
   background: rgba(15, 95, 115, 0.2);
   border: 1px solid var(--cyan-dim);
   color: var(--cyan);

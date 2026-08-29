@@ -406,7 +406,7 @@ export class ScrollChoreography {
         7.25
       )
 
-      // Act 3 (Arcade Runway) enters
+      // Act 3 (Arcade Runway) enters and settles
       .set(actProjects, { pointerEvents: 'auto' }, 7.1)
       .to(actProjects, {
         yPercent: 0,
@@ -417,101 +417,101 @@ export class ScrollChoreography {
         ease: 'power3.out'
       }, 7.1)
 
-      // 🛸 1. Cyber UFO Swoops in from upper orbit to Station 1 (left)
+      // 🛸 1. Cyber UFO Swoops in from upper orbit to Station 1 (left) and hovers
       .fromTo('#projects-ufo-beamer', 
         { y: -140, opacity: 0, scale: 0.5, xPercent: -150 },
-        { y: 0, opacity: 1, scale: 1.0, xPercent: -150, duration: 0.35, ease: 'power2.out' },
-        7.15
+        { y: 0, opacity: 1, scale: 1.0, xPercent: -150, duration: 0.5, ease: 'power2.out' },
+        7.5
       )
 
       // Station 1: Tractor Beam fires -> Cabinet 1 drops from sky
-      .call(() => sounds.playUfoBeam(), [], 7.25)
+      .call(() => sounds.playUfoBeam(), [], 8.1)
       .fromTo('#ufo-tractor-beam',
         { opacity: 0, scaleY: 0 },
-        { opacity: 1, scaleY: 1, duration: 0.15, ease: 'power2.out' },
-        7.25
+        { opacity: 1, scaleY: 1, duration: 0.25, ease: 'power2.out' },
+        8.1
       )
       .fromTo('#arcade-row .arcade-cabinet:nth-child(1)',
-        { y: -130, opacity: 0, scale: 0.75, rotateX: 35 },
+        { y: -160, opacity: 0, scale: 0.75, rotateX: 35 },
         { 
           y: 0, 
           opacity: 1, 
           scale: 1.0, 
           rotateX: 0, 
-          duration: 0.35, 
+          duration: 0.5, 
           ease: 'back.out(1.8)',
           onStart: () => sounds.playCabinetLand()
         },
-        7.30
+        8.15
       )
-      .to('#ufo-tractor-beam', { opacity: 0, duration: 0.12 }, 7.50)
+      .to('#ufo-tractor-beam', { opacity: 0, duration: 0.2 }, 8.65)
 
-      // 🛸 2. UFO flies to Station 2 (mid-left)
-      .to('#projects-ufo-beamer', { xPercent: -50, duration: 0.3, ease: 'power1.inOut' }, 7.55)
-      .call(() => sounds.playUfoBeam(), [], 7.65)
-      .to('#ufo-tractor-beam', { opacity: 1, duration: 0.12 }, 7.65)
+      // 🛸 2. UFO glides to Station 2 (mid-left)
+      .to('#projects-ufo-beamer', { xPercent: -50, duration: 0.45, ease: 'power1.inOut' }, 8.8)
+      .call(() => sounds.playUfoBeam(), [], 8.95)
+      .to('#ufo-tractor-beam', { opacity: 1, duration: 0.2 }, 8.95)
       .fromTo('#arcade-row .arcade-cabinet:nth-child(2)',
-        { y: -130, opacity: 0, scale: 0.75, rotateX: 35 },
+        { y: -160, opacity: 0, scale: 0.75, rotateX: 35 },
         { 
           y: 0, 
           opacity: 1, 
           scale: 1.0, 
           rotateX: 0, 
-          duration: 0.35, 
+          duration: 0.5, 
           ease: 'back.out(1.8)',
           onStart: () => sounds.playCabinetLand()
         },
-        7.70
+        9.0
       )
-      .to('#ufo-tractor-beam', { opacity: 0, duration: 0.12 }, 7.90)
+      .to('#ufo-tractor-beam', { opacity: 0, duration: 0.2 }, 9.4)
 
-      // 🛸 3. UFO flies to Station 3 (mid-right)
-      .to('#projects-ufo-beamer', { xPercent: 50, duration: 0.3, ease: 'power1.inOut' }, 7.95)
-      .call(() => sounds.playUfoBeam(), [], 8.05)
-      .to('#ufo-tractor-beam', { opacity: 1, duration: 0.12 }, 8.05)
+      // 🛸 3. UFO glides to Station 3 (mid-right)
+      .to('#projects-ufo-beamer', { xPercent: 50, duration: 0.45, ease: 'power1.inOut' }, 9.5)
+      .call(() => sounds.playUfoBeam(), [], 9.65)
+      .to('#ufo-tractor-beam', { opacity: 1, duration: 0.2 }, 9.65)
       .fromTo('#arcade-row .arcade-cabinet:nth-child(3)',
-        { y: -130, opacity: 0, scale: 0.75, rotateX: 35 },
+        { y: -160, opacity: 0, scale: 0.75, rotateX: 35 },
         { 
           y: 0, 
           opacity: 1, 
           scale: 1.0, 
           rotateX: 0, 
-          duration: 0.35, 
+          duration: 0.5, 
           ease: 'back.out(1.8)',
           onStart: () => sounds.playCabinetLand()
         },
-        8.10
+        9.7
       )
-      .to('#ufo-tractor-beam', { opacity: 0, duration: 0.12 }, 8.30)
+      .to('#ufo-tractor-beam', { opacity: 0, duration: 0.2 }, 10.1)
 
-      // 🛸 4. UFO flies to Station 4 (far-right)
-      .to('#projects-ufo-beamer', { xPercent: 150, duration: 0.3, ease: 'power1.inOut' }, 8.35)
-      .call(() => sounds.playUfoBeam(), [], 8.45)
-      .to('#ufo-tractor-beam', { opacity: 1, duration: 0.12 }, 8.45)
+      // 🛸 4. UFO glides to Station 4 (far-right)
+      .to('#projects-ufo-beamer', { xPercent: 150, duration: 0.45, ease: 'power1.inOut' }, 10.2)
+      .call(() => sounds.playUfoBeam(), [], 10.35)
+      .to('#ufo-tractor-beam', { opacity: 1, duration: 0.2 }, 10.35)
       .fromTo('#arcade-row .arcade-cabinet:nth-child(4)',
-        { y: -130, opacity: 0, scale: 0.75, rotateX: 35 },
+        { y: -160, opacity: 0, scale: 0.75, rotateX: 35 },
         { 
           y: 0, 
           opacity: 1, 
           scale: 1.0, 
           rotateX: 0, 
-          duration: 0.35, 
+          duration: 0.5, 
           ease: 'back.out(1.8)',
           onStart: () => sounds.playCabinetLand()
         },
-        8.50
+        10.4
       )
-      .to('#ufo-tractor-beam', { opacity: 0, duration: 0.12 }, 8.70)
+      .to('#ufo-tractor-beam', { opacity: 0, duration: 0.2 }, 10.8)
 
       // 🛸 5. All Cabinets deployed -> UFO powers up warp drive and zooms away into upper right
       .to('#projects-ufo-beamer', {
         xPercent: 280,
         y: -180,
-        scale: 0.3,
+        scale: 0.2,
         opacity: 0,
-        duration: 0.45,
+        duration: 0.6,
         ease: 'power3.in'
-      }, 8.78);
+      }, 10.9);
 
     // =========================================================================
     // 📡 CHAPTER 3 -> 4: ARCADE OUT -> DEEP SPACE QUANTUM COMMS STATION (CONTACT)
@@ -527,16 +527,16 @@ export class ScrollChoreography {
         filter: 'blur(8px)',
         duration: 0.7,
         ease: 'power2.in'
-      }, 9.2)
+      }, 11.5)
       .to(actProjects, {
         opacity: 0,
         duration: 0.8,
         ease: 'power2.in'
-      }, 9.3)
-      .set(actProjects, { pointerEvents: 'none' }, 10.3)
+      }, 11.6)
+      .set(actProjects, { pointerEvents: 'none' }, 12.4)
 
       // Act 4 (Direct Neural Uplink) enters with Quantum Aperture Expansion
-      .set(actContact, { pointerEvents: 'auto' }, 9.4)
+      .set(actContact, { pointerEvents: 'auto' }, 11.7)
       .to(actContact, {
         yPercent: 0,
         scale: 1.0,
@@ -544,7 +544,7 @@ export class ScrollChoreography {
         filter: 'blur(0px)',
         duration: 0.9,
         ease: 'power3.out'
-      }, 9.4)
+      }, 11.7)
 
       // 1. Station Console expands from central quantum core
       .fromTo('.comms-station-deck', {
@@ -557,7 +557,7 @@ export class ScrollChoreography {
         opacity: 1,
         duration: 0.9,
         ease: 'power3.out'
-      }, 9.4)
+      }, 11.7)
 
       // 2. Tactical Radar Scope boots with 360° spin lock
       .fromTo('.radar-scope-frame', {
@@ -570,7 +570,7 @@ export class ScrollChoreography {
         opacity: 1,
         duration: 1.0,
         ease: 'back.out(1.8)'
-      }, 9.5)
+      }, 11.8)
 
       // 3. 4 Integrated Comms Conduits slide in with Matrix Stagger
       .fromTo('.comms-conduit-card', {
@@ -584,12 +584,12 @@ export class ScrollChoreography {
         stagger: 0.08,
         duration: 0.8,
         ease: 'power3.out'
-      }, 9.6)
+      }, 11.9)
 
       // Radar transmission pulses
-      .set(radarWaves, { opacity: 1 }, 10.0)
-      .fromTo('.radar-circle', { scale: 0.1, opacity: 1 }, { scale: 2.4, opacity: 0, stagger: 0.15, duration: 1.4, ease: 'power2.out' }, 10.0)
-      .call(() => this.triggerMatrixDecryption(), [], 10.4);
+      .set(radarWaves, { opacity: 1 }, 12.3)
+      .fromTo('.radar-circle', { scale: 0.1, opacity: 1 }, { scale: 2.4, opacity: 0, stagger: 0.15, duration: 1.4, ease: 'power2.out' }, 12.3)
+      .call(() => this.triggerMatrixDecryption(), [], 12.6);
 
     ScrollTrigger.refresh();
   }
@@ -654,22 +654,22 @@ export class ScrollChoreography {
     let envClass = 'env-act-0';
     let tintColor = 'rgba(79, 227, 255, 0.04)';
 
-    if (progress < 0.20) {
+    if (progress < 0.18) {
       sectorIdx = 0;
       envLabel = 'SECTOR: 00 // CITY_SUB';
       envClass = 'env-act-0';
       tintColor = 'rgba(79, 227, 255, 0.04)';
-    } else if (progress < 0.45) {
+    } else if (progress < 0.38) {
       sectorIdx = 1;
       envLabel = 'SECTOR: 01 // ARCHIVE_VAULT';
       envClass = 'env-act-1';
       tintColor = 'rgba(57, 255, 136, 0.08)';
-    } else if (progress < 0.70) {
+    } else if (progress < 0.60) {
       sectorIdx = 2;
       envLabel = 'SECTOR: 02 // DATA_CORE';
       envClass = 'env-act-2';
       tintColor = 'rgba(79, 227, 255, 0.1)';
-    } else if (progress < 0.90) {
+    } else if (progress < 0.88) {
       sectorIdx = 3;
       envLabel = 'SECTOR: 03 // ARCADE_ROW';
       envClass = 'env-act-3';
