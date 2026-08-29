@@ -75,9 +75,11 @@
     <div class="hud-meta">
       <div class="hud-status-badge">
         <span class="env-label" id="hud-env-label">SECTOR: 00 // CITY_SUB</span>
-        <span>|</span>
+        <span class="hud-divider">|</span>
         <span class="status-dot"></span>
         <span style="color: var(--green);">ONLINE</span>
+        <span class="hud-divider">|</span>
+        <span class="hud-neural-badge"><span class="status-pulse-dot"></span>NEURAL CORE ONLINE</span>
       </div>
       <button class="audio-btn" id="audio-toggle" aria-label="Toggle Sound Effects">
         <span id="audio-icon">🔊</span>
@@ -163,10 +165,6 @@
                 </div>
                 <div class="hero-live-clock" id="hero-live-clock">
                   SYS_TIME: 2026.08.29 // 20:45:00 UTC
-                </div>
-                <div class="hero-status-pill">
-                  <span class="status-pulse-dot"></span>
-                  <span>NEURAL CORE ONLINE</span>
                 </div>
               </div>
 
@@ -287,7 +285,7 @@
               </div>
               <h2 class="zone-title" id="terminal-title">Operator Bio &amp; Neural Core</h2>
               <p class="zone-subtitle">
-                Interactive biometric avatar tracks your cursor. Select memory sectors or click the terminal to inspect logs.
+                Cursor-tracking gaze module and operational dossier archive. Select memory sectors or click the terminal to inspect logs.
               </p>
 
               <!-- Mainframe Lab Layout: Left Biometric Avatar Pod + Right Holographic Dossier Console -->
@@ -461,6 +459,11 @@
             </div>
           </section>
 
+          <!-- Interstitial: Arcade Insert Coin Moment -->
+          <div class="interstitial-coin" aria-hidden="true">
+            <span class="coin-text">GAME OVER — INSERT COIN TO CONTINUE</span>
+          </div>
+
           <!-- ==================== ACT 3: ARCADE ROW (Projects Level Select) ==================== -->
           <section class="stage-act act-projects" id="act-projects" aria-labelledby="projects-title">
             <div class="act-inner">
@@ -531,9 +534,9 @@
                       <span class="conduit-icon">✉</span>
                     </div>
                     <div class="conduit-label">DIRECT EMAIL</div>
-                    <div class="conduit-val">alex.developer@example.com</div>
+                    <div class="conduit-val">ahmed.affes.dev@gmail.com</div>
                     <div class="conduit-btn-row">
-                      <a href="mailto:alex.developer@example.com" class="conduit-btn primary">
+                      <a href="mailto:ahmed.affes.dev@gmail.com" class="conduit-btn primary">
                         TRANSMIT EMAIL ↗
                       </a>
                     </div>
@@ -578,7 +581,7 @@
                     <div class="conduit-label">DOSSIER / RESUME</div>
                     <div class="conduit-val">curriculum_vitae_2026.pdf</div>
                     <div class="conduit-btn-row">
-                      <a href="#" class="conduit-btn primary" id="conduit-resume-btn">
+                      <a href="/Ahmed_Affes_CV_2026.pdf" class="conduit-btn primary" id="conduit-resume-btn" download>
                         DOWNLOAD CV ⬇
                       </a>
                     </div>
@@ -590,7 +593,6 @@
 
               <!-- Footer Area -->
               <footer class="beacon-footer-area" role="contentinfo">
-                <div class="insert-coin-text">GAME OVER — INSERT COIN TO CONTINUE</div>
                 <div class="copyright-text">© 2026 AHMED AFFES · built pixel by pixel, not by template</div>
               </footer>
             </div>
@@ -674,6 +676,12 @@
     <div class="drawer-tags stagger-item"></div>
     <div class="drawer-footer-actions stagger-item"></div>
   </aside>
+
+  <!-- Custom Cursor Reticle -->
+  <div class="custom-cursor" id="custom-cursor" aria-hidden="true">
+    <div class="cursor-ring"></div>
+    <div class="cursor-dot"></div>
+  </div>
 
   <script type="module" src="/src/main.ts"></script>
 </body>

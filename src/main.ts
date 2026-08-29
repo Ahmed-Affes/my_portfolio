@@ -11,6 +11,9 @@ import { CyberCLITerminal } from './interactive/cliTerminal';
 import { HeroQuantumReactor } from './interactive/heroReactor';
 import { RadarTransmitterEngine } from './interactive/radarTransmitter';
 import { HeroSubtitleMorpher } from './interactive/heroSubtitleMorpher';
+import { CustomCursorController } from './interactive/cursor';
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 document.addEventListener('DOMContentLoaded', () => {
   // 0. Initialize War Star Shooting Meteor Engine, Hero Quantum Reactor, Robot Face, Radar, Subtitle Morpher & CLI Help Center
@@ -54,15 +57,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     skillsGrid.innerHTML = jumpingRobotHtml + PORTFOLIO_DATA.skills
       .map(
-        (skill) => `
+        (skill) => {
+          const powerEntry = skillPowerMap[skill.id] || '████████░░ 85%';
+          const barPart = powerEntry.replace(/\s*\d+%$/, '');
+          const pctPart = powerEntry.match(/(\d+%)$/)?.[1] || '85%';
+          const tierColor = skill.rarity === 'legendary' ? '#ffb238' : skill.rarity === 'rare' ? 'var(--cyan)' : 'var(--green)';
+          return `
         <article class="skill-card ${skill.rarity}" data-skill-id="${skill.id}" tabindex="0" role="button" aria-label="${skill.name}">
           <div class="skill-card-tier">${skill.level}</div>
           <div class="skill-card-name">${skill.name}</div>
-          <div style="font-family: var(--font-pixel); font-size: 6px; color: ${skill.rarity === 'legendary' ? '#ffb238' : skill.rarity === 'rare' ? 'var(--cyan)' : 'var(--green)'}; margin-bottom: 6px; letter-spacing: 0.5px;">${skillPowerMap[skill.id] || '████████░░ 85%'}</div>
-          <div style="font-size: 16.5px; color: var(--muted); line-height: 1.35; margin-bottom: 8px;">${skill.detail}</div>
+          <div class="skill-power-bar" style="color: ${tierColor};">
+            <span class="power-bar-blocks">${barPart}</span>
+            <span class="power-bar-pct">${pctPart}</span>
+          </div>
+          <div class="skill-card-detail">${skill.detail}</div>
           <div class="skill-expand-hint-badge shine-badge">[CLICK TO EXPAND] ↗</div>
         </article>
-      `
+      `;
+        }
       )
       .join('');
   }
@@ -74,10 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
       .map(
         (proj) => `
         <article class="arcade-cabinet" id="cabinet-${proj.id}" data-project-id="${proj.id}" tabindex="0" role="button" aria-label="${proj.title}">
-          <div class="walk-up-indicator shine-badge">WALK UP ▲ [CLICK]</div>
-          <div>
+          <div class="cabinet-top-section">
+            <div class="walk-up-indicator shine-badge">WALK UP ▲ [CLICK]</div>
             <div class="cabinet-level-tag">${proj.levelTitle}</div>
-            <div style="margin-bottom: 8px;">
+            <div class="cabinet-badge-row">
               <span class="pixel-badge ${proj.status === 'SHIPPED' ? 'badge-shipped' : 'badge-in-dev'}">${proj.status}</span>
             </div>
             <h3 class="cabinet-title">${proj.title}</h3>
@@ -279,8 +291,8 @@ document.addEventListener('DOMContentLoaded', () => {
       metrics: 'CHANNEL: OPEN · ENCRYPTION: 256-BIT · PING: <12ms',
       description: 'Send a direct transmission for full-stack engineering contracts, creative motion development, or technical collaboration.',
       tags: ['AVAILABLE FOR WORK', 'REMOTE / HYBRID', 'CONTRACT / FULL-TIME'],
-      primaryBtn: { text: 'SEND EMAIL ↗', href: 'mailto:alex.developer@example.com' },
-      secondaryBtn: { text: 'GITHUB PROFILE ↗', href: 'https://github.com' }
+      primaryBtn: { text: 'SEND EMAIL ↗', href: 'mailto:ahmed.affes.dev@gmail.com' },
+      secondaryBtn: { text: 'GITHUB PROFILE ↗', href: 'https://github.com/Ahmed-Affes' }
     });
   });
 
@@ -346,8 +358,8 @@ document.addEventListener('DOMContentLoaded', () => {
       metrics: 'EXP: 6+ YEARS · CLEARANCE: LEVEL 04 · STATUS: AVAILABLE',
       description: 'Specializing in high-performance frontend architecture, custom canvas engines, GSAP kinetic web motion, distributed APIs, and production microservices.',
       tags: ['TYPESCRIPT', 'REACT', 'NODE.JS', 'GSAP', 'CANVAS', 'FLUTTER', 'POSTGRESQL'],
-      primaryBtn: { text: 'DOWNLOAD PDF ⬇', href: '#' },
-      secondaryBtn: { text: 'CONTACT DIRECT ↗', href: 'mailto:alex.developer@example.com' }
+      primaryBtn: { text: 'DOWNLOAD PDF ⬇', href: '/Ahmed_Affes_CV_2026.pdf' },
+      secondaryBtn: { text: 'CONTACT DIRECT ↗', href: 'mailto:ahmed.affes.dev@gmail.com' }
     });
   });
 
@@ -368,8 +380,8 @@ document.addEventListener('DOMContentLoaded', () => {
       metrics: 'EXP: 6+ YEARS · CLEARANCE: LEVEL 04 · STATUS: AVAILABLE',
       description: 'Specializing in high-performance frontend architecture, custom canvas engines, GSAP kinetic web motion, distributed APIs, and production microservices.',
       tags: ['TYPESCRIPT', 'REACT', 'NODE.JS', 'GSAP', 'CANVAS', 'FLUTTER', 'POSTGRESQL'],
-      primaryBtn: { text: 'DOWNLOAD PDF ⬇', href: '#' },
-      secondaryBtn: { text: 'SEND EMAIL ↗', href: 'mailto:alex.developer@example.com' }
+      primaryBtn: { text: 'DOWNLOAD PDF ⬇', href: '/Ahmed_Affes_CV_2026.pdf' },
+      secondaryBtn: { text: 'SEND EMAIL ↗', href: 'mailto:ahmed.affes.dev@gmail.com' }
     });
   });
 
@@ -403,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const currentMsg = [...bootMessages].reverse().find((m) => loadProgress >= m.threshold);
     if (currentMsg && preloaderStatusEl) {
-      preloaderStatusEl.textContent = currentMsg.text;
+      preloaderStatusEl.textContent = `[${String(loadProgress).padStart(3, ' ')}%] ${currentMsg.text}`;
     }
 
     if (loadProgress >= 100) {
@@ -415,11 +427,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Hero Intro Animation
-        gsap.fromTo(
-          '#act-boot .hero-grid-layout',
-          { opacity: 0, scale: 0.94, y: 30 },
-          { opacity: 1, scale: 1, y: 0, duration: 1.0, ease: EASE_UI }
-        );
+        if (!prefersReducedMotion) {
+          gsap.fromTo(
+            '#act-boot .hero-modern-stage',
+            { opacity: 0, scale: 0.94, y: 30 },
+            { opacity: 1, scale: 1, y: 0, duration: 1.0, ease: EASE_UI }
+          );
+        }
       }, 400);
     }
   }, 45);
@@ -536,5 +550,44 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     updateClock();
     setInterval(updateClock, 1000);
+  }
+
+  // 13. Custom Cursor (B3)
+  if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
+    new CustomCursorController('custom-cursor');
+  }
+
+  // 14. 3D Card Tilt on Hover (B3)
+  const addTiltEffect = (selector: string) => {
+    document.querySelectorAll(selector).forEach((card) => {
+      const el = card as HTMLElement;
+      el.addEventListener('mousemove', (e: Event) => {
+        const me = e as MouseEvent;
+        const rect = el.getBoundingClientRect();
+        const x = (me.clientX - rect.left) / rect.width - 0.5;
+        const y = (me.clientY - rect.top) / rect.height - 0.5;
+        gsap.to(el, {
+          rotateY: x * 8,
+          rotateX: -y * 6,
+          duration: 0.3,
+          ease: 'power2.out',
+          transformPerspective: 800
+        });
+      });
+      el.addEventListener('mouseleave', () => {
+        gsap.to(el, {
+          rotateY: 0,
+          rotateX: 0,
+          duration: 0.5,
+          ease: 'power2.out'
+        });
+      });
+    });
+  };
+
+  if (!prefersReducedMotion) {
+    addTiltEffect('.skill-card');
+    addTiltEffect('.arcade-cabinet');
+    addTiltEffect('.comms-conduit-card');
   }
 });

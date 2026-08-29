@@ -21,7 +21,7 @@
   --font-pixel: 'Press Start 2P', monospace;
   --font-terminal: 'VT323', monospace;
 
-  --hud-height: 52px;
+  --hud-height: 56px;
 }
 
 * {
@@ -257,9 +257,12 @@ body.env-act-4 { background-color: #030510; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

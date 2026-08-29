@@ -46,7 +46,22 @@ export class ScrollChoreography {
   }
 
   private setupLenisWithGsap() {
-    this.lenis.on('scroll', ScrollTrigger.update);
+    // Scroll-velocity-driven text skew (B2)
+    const skewTargets = document.querySelectorAll('.zone-title');
+    skewTargets.forEach((el) => el.classList.add('velocity-skew'));
+    let currentSkew = 0;
+
+    this.lenis.on('scroll', (e: any) => {
+      ScrollTrigger.update();
+
+      // Apply velocity-based skew to zone titles
+      const velocity = e.velocity || 0;
+      const targetSkew = Math.max(-3, Math.min(3, velocity * 0.003));
+      currentSkew += (targetSkew - currentSkew) * 0.15;
+      skewTargets.forEach((el) => {
+        (el as HTMLElement).style.transform = `skewX(${currentSkew}deg)`;
+      });
+    });
 
     gsap.ticker.add((time) => {
       this.lenis.raf(time * 1000);
@@ -310,7 +325,15 @@ export class ScrollChoreography {
           return -2050;
         },
         ease: 'none',
-        duration: 2.6
+        duration: 2.6,
+        onUpdate: function() {
+          // A5: Drive the runway progress bar from scrub progress
+          const pulseEl = document.querySelector('.bus-data-pulse') as HTMLElement;
+          if (pulseEl) {
+            const progress = this.progress();
+            pulseEl.style.width = `${progress * 100}%`;
+          }
+        }
       }, 4.2)
 
       // 2. Parabolic hops of the companion robot hopping across all 8 cards (cardStep = 348px)
@@ -371,6 +394,17 @@ export class ScrollChoreography {
         ease: 'power2.in'
       }, 6.9)
       .set(actSkills, { pointerEvents: 'none' }, 7.5)
+
+      // Interstitial "GAME OVER / INSERT COIN" flash moment
+      .fromTo('.interstitial-coin', 
+        { opacity: 0, scale: 0.8 },
+        { opacity: 1, scale: 1.05, duration: 0.25, ease: 'power2.out' },
+        6.95
+      )
+      .to('.interstitial-coin',
+        { opacity: 0, scale: 1.2, duration: 0.25, ease: 'power2.in' },
+        7.25
+      )
 
       // Act 3 (Arcade Runway) enters with 3D Isometric Stagger
       .set(actProjects, { pointerEvents: 'auto' }, 7.2)

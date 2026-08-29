@@ -1,3 +1,4 @@
+import { gsap } from '../motion/customEases';
 import { sounds } from '../audio/soundEngine';
 
 export class RobotFaceController {
@@ -7,12 +8,13 @@ export class RobotFaceController {
   private eyeLeftEl: HTMLElement | null;
   private eyeRightEl: HTMLElement | null;
   private mouthBars: HTMLElement[] = [];
-  private currentPupilX: number = 0;
-  private currentPupilY: number = 0;
-  private targetPupilX: number = 0;
-  private targetPupilY: number = 0;
   private isBlinking: boolean = false;
-  private animFrameId: number | null = null;
+
+  // GSAP quickTo functions for buttery pupil tracking
+  private quickLeftX: gsap.QuickToFunc | null = null;
+  private quickLeftY: gsap.QuickToFunc | null = null;
+  private quickRightX: gsap.QuickToFunc | null = null;
+  private quickRightY: gsap.QuickToFunc | null = null;
 
   constructor(containerId: string = 'about-robot-face') {
     this.containerEl = document.getElementById(containerId);
@@ -26,10 +28,19 @@ export class RobotFaceController {
     // Collect mouth waveform bars
     this.mouthBars = Array.from(this.containerEl.querySelectorAll('.mouth-bar'));
 
+    // Initialize GSAP quickTo for each pupil axis
+    if (this.pupilLeftEl) {
+      this.quickLeftX = gsap.quickTo(this.pupilLeftEl, 'x', { duration: 0.35, ease: 'power2.out' });
+      this.quickLeftY = gsap.quickTo(this.pupilLeftEl, 'y', { duration: 0.35, ease: 'power2.out' });
+    }
+    if (this.pupilRightEl) {
+      this.quickRightX = gsap.quickTo(this.pupilRightEl, 'x', { duration: 0.35, ease: 'power2.out' });
+      this.quickRightY = gsap.quickTo(this.pupilRightEl, 'y', { duration: 0.35, ease: 'power2.out' });
+    }
+
     this.initMouseTracking();
     this.initBlinkingLoop();
     this.initMouthWaveform();
-    this.startRenderLoop();
   }
 
   private initMouseTracking() {
@@ -50,8 +61,14 @@ export class RobotFaceController {
       const angle = Math.atan2(deltaY, deltaX);
       const intensity = Math.min(dist / 350, 1.0);
 
-      this.targetPupilX = Math.cos(angle) * maxTravel * intensity;
-      this.targetPupilY = Math.sin(angle) * maxTravel * intensity;
+      const targetX = Math.cos(angle) * maxTravel * intensity;
+      const targetY = Math.sin(angle) * maxTravel * intensity;
+
+      // Drive both pupils via quickTo — GSAP handles the easing/lag internally
+      this.quickLeftX?.(targetX);
+      this.quickLeftY?.(targetY);
+      this.quickRightX?.(targetX);
+      this.quickRightY?.(targetY);
     });
 
     // When mouse enters face chassis, trigger audio blip & scanline speedup
@@ -62,8 +79,11 @@ export class RobotFaceController {
 
     this.containerEl.addEventListener('mouseleave', () => {
       this.containerEl?.classList.remove('face-active');
-      this.targetPupilX = 0;
-      this.targetPupilY = 0;
+      // Reset pupils to center
+      this.quickLeftX?.(0);
+      this.quickLeftY?.(0);
+      this.quickRightX?.(0);
+      this.quickRightY?.(0);
     });
 
     // Click on face to trigger playful wink and audio chirp
@@ -125,26 +145,5 @@ export class RobotFaceController {
         tempEl.textContent = `TEMP: ${temp}°C`;
       }
     }, 80);
-  }
-
-  private startRenderLoop() {
-    const loop = () => {
-      // Smooth lerp for natural gaze tracking
-      this.currentPupilX += (this.targetPupilX - this.currentPupilX) * 0.12;
-      this.currentPupilY += (this.targetPupilY - this.currentPupilY) * 0.12;
-
-      const transform = `translate(${this.currentPupilX.toFixed(2)}px, ${this.currentPupilY.toFixed(2)}px)`;
-      if (this.pupilLeftEl) this.pupilLeftEl.style.transform = transform;
-      if (this.pupilRightEl) this.pupilRightEl.style.transform = transform;
-
-      this.animFrameId = requestAnimationFrame(loop);
-    };
-    loop();
-  }
-
-  public destroy() {
-    if (this.animFrameId) {
-      cancelAnimationFrame(this.animFrameId);
-    }
   }
 }
