@@ -1437,11 +1437,16 @@
 }
 
 .terminal-body {
-  font-size: 24px;
-  line-height: 1.45;
+  font-family: var(--font-terminal);
+  font-size: 22px;
+  line-height: 1.4;
   color: var(--ink);
-  white-space: pre-wrap;
-  min-height: 140px;
+  white-space: pre-line;
+  word-break: break-word;
+  text-align: left;
+  min-height: 130px;
+  margin: 0;
+  padding: 0;
 }
 
 .terminal-cursor {
@@ -1534,14 +1539,14 @@
 }
 
 .skill-card {
-  width: 290px;
-  min-width: 290px;
-  max-width: 290px;
-  height: 190px;
+  width: 320px;
+  min-width: 320px;
+  max-width: 320px;
+  height: 215px;
   flex-shrink: 0;
   background: rgba(8, 12, 26, 0.94);
   border: 1.5px solid var(--cyan-dim);
-  padding: 18px 20px;
+  padding: 20px 22px;
   position: relative;
   cursor: pointer;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.25s ease;
@@ -1555,7 +1560,7 @@
 
 .skill-card:hover,
 .skill-card.robot-landed {
-  transform: translateY(-6px) scale(1.03);
+  transform: translateY(-6px) scale(1.02);
   border-color: var(--cyan);
   box-shadow: 0 0 32px rgba(79, 227, 255, 0.4), inset 0 0 18px rgba(79, 227, 255, 0.1);
 }
@@ -1577,13 +1582,38 @@
   border-left: 3px solid var(--green);
 }
 
+.skill-card-tier {
+  font-family: var(--font-pixel);
+  font-size: 6.5px;
+  letter-spacing: 0.5px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.skill-card.legendary .skill-card-tier {
+  color: #ffb238;
+}
+.skill-card.common .skill-card-tier {
+  color: var(--green);
+}
+
+.skill-card-name {
+  font-family: var(--font-headline);
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--ink);
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+
 /* Jumping Robot Hopper perched on top of cards in Act 2 */
 .skills-jumping-robot {
   position: absolute;
-  top: -46px;
+  top: -44px;
   left: 0px;
   width: 44px;
-  height: 50px;
+  height: 48px;
   z-index: 50;
   pointer-events: none;
   display: flex;
@@ -1598,7 +1628,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  filter: drop-shadow(0 0 12px rgba(79, 227, 255, 0.95));
+  filter: drop-shadow(0 0 14px rgba(79, 227, 255, 0.95));
 }
 
 .hopper-antenna {
@@ -1682,83 +1712,6 @@
   filter: blur(2px);
 }
 
-/* Center Quantum Laser Scanner Head */
-.runway-laser-scanner {
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 40;
-  pointer-events: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.scanner-optic-head {
-  width: 44px;
-  height: 20px;
-  background: rgba(8, 12, 26, 0.96);
-  border: 1.5px solid var(--cyan);
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  box-shadow: 0 0 16px var(--cyan), inset 0 0 8px rgba(79, 227, 255, 0.4);
-}
-
-.optic-lens {
-  width: 8px;
-  height: 8px;
-  background: #ffffff;
-  border-radius: 50%;
-  box-shadow: 0 0 10px #ffffff, 0 0 18px var(--cyan);
-  animation: pulseDot 0.8s infinite alternate;
-}
-
-.optic-reticle-bracket {
-  position: absolute;
-  top: 2px;
-  bottom: 2px;
-  width: 4px;
-  border: 1px solid var(--cyan);
-}
-.optic-reticle-bracket.left {
-  left: 3px;
-  border-right: none;
-}
-.optic-reticle-bracket.right {
-  right: 3px;
-  border-left: none;
-}
-
-.optic-beam-cone {
-  position: absolute;
-  top: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 140px;
-  height: 260px;
-  background: linear-gradient(180deg, rgba(79, 227, 255, 0.28) 0%, rgba(79, 227, 255, 0.06) 60%, transparent 100%);
-  clip-path: polygon(44% 0%, 56% 0%, 100% 100%, 0% 100%);
-  pointer-events: none;
-  animation: pulseDot 2s infinite alternate;
-}
-
-.scanner-data-readout {
-  font-family: var(--font-pixel);
-  font-size: 6px;
-  color: var(--cyan);
-  letter-spacing: 0.5px;
-  margin-top: 3px;
-  text-shadow: 0 0 8px var(--cyan);
-  background: rgba(5, 8, 16, 0.9);
-  padding: 2px 6px;
-  border-radius: 2px;
-  border: 1px solid rgba(79, 227, 255, 0.3);
-}
-
 /* Runway Circuit Bus Line */
 .runway-circuit-bus {
   position: absolute;
@@ -1790,7 +1743,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 14px;
+  margin-top: 24px;
   flex-wrap: wrap;
   gap: 16px;
 }
