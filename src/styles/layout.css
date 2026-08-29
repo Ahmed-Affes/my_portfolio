@@ -280,21 +280,6 @@
   will-change: transform;
 }
 
-/* Skyward Transmission Uplink Beam (Act 4) */
-.skyward-uplink-beam {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 100vh;
-  background: linear-gradient(to top, var(--cyan), rgba(79, 227, 255, 0.2) 60%, transparent);
-  box-shadow: 0 0 60px var(--cyan);
-  opacity: 0;
-  z-index: 2;
-  pointer-events: none;
-}
-
 /* ==================== WARP SPEED STREAKS & RADAR ==================== */
 .warp-speed-container {
   position: fixed;
@@ -1121,56 +1106,6 @@
   color: var(--muted);
 }
 
-/* ==================== NARRATIVE COMMS RADIO DIALOGUE BAR ==================== */
-.comms-radio-hud {
-  position: fixed;
-  bottom: 18px;
-  left: 24px;
-  max-width: 580px;
-  background: rgba(7, 9, 18, 0.94);
-  border: 1px solid var(--cyan-dim);
-  border-left: 3px solid var(--amber);
-  padding: 8px 16px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  z-index: 800;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-  pointer-events: none;
-}
-
-.comms-sender-badge {
-  font-family: var(--font-pixel);
-  font-size: 7.5px;
-  color: var(--amber);
-  white-space: nowrap;
-  letter-spacing: 0.5px;
-}
-
-.comms-message-text {
-  font-family: var(--font-terminal);
-  font-size: 20px;
-  color: var(--ink);
-  line-height: 1.2;
-  flex: 1;
-}
-
-.comms-signal-meter {
-  display: flex;
-  align-items: flex-end;
-  gap: 2px;
-  height: 12px;
-}
-
-.signal-bar {
-  width: 2px;
-  background: var(--green);
-}
-.bar-1 { height: 25%; }
-.bar-2 { height: 50%; }
-.bar-3 { height: 75%; }
-.bar-4 { height: 100%; }
-
 /* ==================== REUSABLE INTERACTION DRAWER PANEL (§5) ==================== */
 .interaction-backdrop {
   position: fixed;
@@ -1283,9 +1218,6 @@
   }
   .skills-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-  .comms-radio-hud {
-    display: none;
   }
 }
 

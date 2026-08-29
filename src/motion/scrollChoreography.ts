@@ -13,11 +13,8 @@ export class ScrollChoreography {
   private hudRobotController: RobotSpriteController;
   private sceneRobotController: RobotSpriteController;
   private sceneRobotWrapperEl: HTMLElement;
-  private commsSenderEl: HTMLElement | null;
-  private commsMessageEl: HTMLElement | null;
   private hudEnvLabelEl: HTMLElement | null;
   private envSkyTintEl: HTMLElement | null;
-  private skywardBeamEl: HTMLElement | null;
   private currentSectorIndex: number = -1;
   private isTypingDialogue: boolean = false;
   private isDecryptedBeacon: boolean = false;
@@ -34,11 +31,8 @@ export class ScrollChoreography {
     this.hudTrackEl = document.querySelector('.hud-track') as HTMLElement;
     this.sceneRobotWrapperEl = document.querySelector('#scene-robot-container') as HTMLElement;
     this.checkpoints = Array.from(document.querySelectorAll('.hud-track-checkpoint'));
-    this.commsSenderEl = document.querySelector('#comms-sender');
-    this.commsMessageEl = document.querySelector('#comms-message');
     this.hudEnvLabelEl = document.querySelector('#hud-env-label');
     this.envSkyTintEl = document.querySelector('#env-sky-tint');
-    this.skywardBeamEl = document.querySelector('#skyward-beam');
 
     // Initialize Lenis with enhanced smoothness & inertia
     this.lenis = new Lenis({
@@ -325,8 +319,6 @@ export class ScrollChoreography {
         duration: 1.4,
         ease: 'power3.out'
       }, 9.6)
-      // Skyward uplink laser shoots into space
-      .to(this.skywardBeamEl, { opacity: 0.85, duration: 1.2, ease: 'power2.out' }, 10.2)
       .call(() => this.triggerMatrixDecryption(), [], 10.6);
 
     ScrollTrigger.refresh();
@@ -383,44 +375,32 @@ export class ScrollChoreography {
 
   private updateEnvironmentAndStory(progress: number) {
     let sectorIdx = 0;
-    let sender = 'COMMS // OPERATOR';
-    let message = '"UNIT_07 online. System diagnostic complete. Traversal initiated through Sector 00."';
     let envLabel = 'SECTOR: 00 // CITY_SUB';
     let envClass = 'env-act-0';
     let tintColor = 'rgba(79, 227, 255, 0.04)';
 
     if (progress < 0.20) {
       sectorIdx = 0;
-      sender = 'COMMS // OPERATOR';
-      message = '"UNIT_07 online. System diagnostic complete. Traversal initiated through Sector 00."';
       envLabel = 'SECTOR: 00 // CITY_SUB';
       envClass = 'env-act-0';
       tintColor = 'rgba(79, 227, 255, 0.04)';
     } else if (progress < 0.45) {
       sectorIdx = 1;
-      sender = 'COMMS // UNIT_07';
-      message = '"Decrypted memory sector 01. Operator history & engineering logs loaded."';
       envLabel = 'SECTOR: 01 // ARCHIVE_VAULT';
       envClass = 'env-act-1';
       tintColor = 'rgba(57, 255, 136, 0.08)';
     } else if (progress < 0.70) {
       sectorIdx = 2;
-      sender = 'COMMS // AI CORE';
-      message = '"Data Core synchronized. 8 production-grade combat competencies equipped."';
       envLabel = 'SECTOR: 02 // DATA_CORE';
       envClass = 'env-act-2';
       tintColor = 'rgba(79, 227, 255, 0.1)';
     } else if (progress < 0.90) {
       sectorIdx = 3;
-      sender = 'COMMS // ARCADE';
-      message = '"Underground Level Select unlocked. 4 deployed production units online."';
       envLabel = 'SECTOR: 03 // ARCADE_ROW';
       envClass = 'env-act-3';
       tintColor = 'rgba(255, 46, 136, 0.09)';
     } else {
       sectorIdx = 4;
-      sender = 'COMMS // SATELLITE';
-      message = '"Stratosphere Beacon locked. Uplink beam active. Awaiting mission contracts."';
       envLabel = 'SECTOR: 04 // ORBITAL_UPLINK';
       envClass = 'env-act-4';
       tintColor = 'rgba(255, 178, 56, 0.08)';
@@ -430,8 +410,6 @@ export class ScrollChoreography {
       this.currentSectorIndex = sectorIdx;
       document.body.className = envClass;
 
-      if (this.commsSenderEl) this.commsSenderEl.textContent = sender;
-      if (this.commsMessageEl) this.commsMessageEl.textContent = message;
       if (this.hudEnvLabelEl) this.hudEnvLabelEl.textContent = envLabel;
       if (this.envSkyTintEl) this.envSkyTintEl.style.backgroundColor = tintColor;
     }
