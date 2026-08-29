@@ -32,20 +32,24 @@ export class CustomCursorController {
       this.quickY?.(e.clientY);
     });
 
-    // Expand on hover over interactive elements
-    const interactiveSelectors = [
-      'a', 'button', '.skill-card', '.arcade-cabinet',
-      '.comms-conduit-card', '.floating-metric-card',
-      '.bio-tab-btn', '.hud-track-checkpoint',
-      '.cli-pill-btn', '.conduit-btn', '.terminal-interactive-kiosk',
-      '[role="button"]'
-    ];
+    const interactiveSelector = 'a, button, .skill-card, .arcade-cabinet, .comms-conduit-card, .floating-metric-card, .bio-tab-btn, .hud-track-checkpoint, .cli-pill-btn, .conduit-btn, .terminal-interactive-kiosk, [role="button"]';
 
-    interactiveSelectors.forEach((sel) => {
-      document.querySelectorAll(sel).forEach((el) => {
-        el.addEventListener('mouseenter', () => this.enterHover());
-        el.addEventListener('mouseleave', () => this.leaveHover());
-      });
+    // Global Event Delegation for 100% reliable hover detection
+    document.addEventListener('mouseover', (e) => {
+      const target = e.target as HTMLElement;
+      if (target && target.closest(interactiveSelector)) {
+        this.enterHover();
+      }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+      const target = e.target as HTMLElement;
+      if (target && target.closest(interactiveSelector)) {
+        const related = e.relatedTarget as HTMLElement;
+        if (!related || !related.closest(interactiveSelector)) {
+          this.leaveHover();
+        }
+      }
     });
 
     // Magnetic pull on primary CTAs

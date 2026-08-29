@@ -1591,7 +1591,6 @@
   padding: 22px 24px;
   position: relative;
   cursor: pointer;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.25s ease;
   backdrop-filter: blur(10px);
   border-radius: 4px;
   display: flex;
@@ -1599,6 +1598,12 @@
   justify-content: space-between;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
   transform-style: preserve-3d;
+  will-change: transform, box-shadow, border-color;
+  user-select: none;
+}
+
+.skill-card * {
+  pointer-events: none;
 }
 
 /* Varied card sizes by tier (B1) */
@@ -2091,25 +2096,17 @@
   padding: 12px 14px;
   position: relative;
   cursor: pointer;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 270px;
   transform-style: preserve-3d;
+  will-change: transform, box-shadow, border-color;
+  user-select: none;
 }
 
-.arcade-cabinet:nth-child(odd) {
-  transform: rotate(-0.4deg);
-}
-.arcade-cabinet:nth-child(even) {
-  transform: rotate(0.4deg);
-}
-
-.arcade-cabinet:hover {
-  border-color: var(--cyan);
-  transform: translateY(-6px) scale(1.02) rotate(0deg);
-  box-shadow: 0 0 32px var(--cyan-glow);
+.arcade-cabinet * {
+  pointer-events: none;
 }
 
 .cabinet-top-section {

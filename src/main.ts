@@ -563,29 +563,50 @@ document.addEventListener('DOMContentLoaded', () => {
     new CustomCursorController('custom-cursor');
   }
 
-  // 14. 3D Card Tilt on Hover (B3)
+  // 14. 3D Card Elevation & Tilt on Hover (B3)
   const addTiltEffect = (selector: string) => {
     document.querySelectorAll(selector).forEach((card) => {
       const el = card as HTMLElement;
+      el.addEventListener('mouseenter', () => {
+        gsap.to(el, {
+          y: -8,
+          scale: 1.03,
+          boxShadow: '0 16px 36px rgba(79, 227, 255, 0.4)',
+          borderColor: '#4fe3ff',
+          zIndex: 30,
+          duration: 0.25,
+          ease: 'power2.out',
+          overwrite: 'auto'
+        });
+      });
+
       el.addEventListener('mousemove', (e: Event) => {
         const me = e as MouseEvent;
         const rect = el.getBoundingClientRect();
         const x = (me.clientX - rect.left) / rect.width - 0.5;
         const y = (me.clientY - rect.top) / rect.height - 0.5;
         gsap.to(el, {
-          rotateY: x * 8,
-          rotateX: -y * 6,
-          duration: 0.3,
+          rotateY: x * 10,
+          rotateX: -y * 8,
+          duration: 0.2,
           ease: 'power2.out',
-          transformPerspective: 800
+          transformPerspective: 800,
+          overwrite: 'auto'
         });
       });
+
       el.addEventListener('mouseleave', () => {
         gsap.to(el, {
+          y: 0,
+          scale: 1.0,
           rotateY: 0,
           rotateX: 0,
-          duration: 0.5,
-          ease: 'power2.out'
+          boxShadow: '0 0 0px rgba(79, 227, 255, 0)',
+          borderColor: '',
+          zIndex: 1,
+          duration: 0.4,
+          ease: 'power2.out',
+          overwrite: 'auto'
         });
       });
     });
