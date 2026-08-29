@@ -69,8 +69,6 @@ export class ScrollChoreography {
 
     const radarWaves = document.querySelector('#radar-waves');
     const warpStreaks = document.querySelector('#warp-streaks');
-    const skillsGrid = document.querySelector('#skills-grid');
-    const arcadeRunway = document.querySelector('#arcade-runway');
 
     const farSkyline = document.querySelector('.far-skyline-layer');
     const midSkyline = document.querySelector('.mid-skyline-layer');
@@ -153,16 +151,32 @@ export class ScrollChoreography {
       .to(gridFloor, { backgroundPosition: '0 2800px', duration: 12, ease: 'none' }, 0);
 
     // =========================================================================
-    // 🌌 CHAPTER 0 -> 1: ACT 0 RECEDES UP, ACT 1 SWEEPS UP FROM BOTTOM
+    // 🌌 CHAPTER 0 -> 1: 3D VORTEX TEAR (HERO) -> MAINFRAME UNFOLD (ABOUT & ROBOT FACE)
     // =========================================================================
     masterTl
-      // Act 0 recedes upward into distance with 3D tilt & blur
-      .to(actBoot, {
-        yPercent: -75,
-        scale: 0.82,
-        rotateX: -14,
+      // Act 0 peels apart in 3D parallax layers
+      .to('.hero-left-column', {
+        xPercent: -35,
+        yPercent: -50,
+        rotateZ: -6,
+        scale: 0.8,
         opacity: 0,
-        filter: 'blur(10px)',
+        filter: 'blur(8px)',
+        duration: 1.2,
+        ease: 'power2.inOut'
+      }, 0.8)
+      .to('.hero-right-widget', {
+        xPercent: 45,
+        yPercent: -45,
+        rotateZ: 8,
+        scale: 0.75,
+        opacity: 0,
+        filter: 'blur(8px)',
+        duration: 1.2,
+        ease: 'power2.inOut'
+      }, 0.8)
+      .to(actBoot, {
+        opacity: 0,
         duration: 1.2,
         ease: 'power2.inOut'
       }, 0.8)
@@ -171,155 +185,227 @@ export class ScrollChoreography {
       .fromTo(warpStreaks, { opacity: 0, scaleX: 0.5 }, { opacity: 0.8, scaleX: 1.4, duration: 0.6, yoyo: true, repeat: 1 }, 1.0)
       // Robot moves toward center console
       .to(this.sceneRobotWrapperEl, { right: '45%', duration: 1.6, ease: 'power1.inOut' }, 0.8)
-      // Act 1 (Terminal Vault) sweeps majestically up from the bottom!
-      .set(actTerminal, { pointerEvents: 'auto' }, 1.4)
+      // Act 1 (Neural Mainframe) enters via Hologram 3D Unfold
+      .set(actTerminal, { pointerEvents: 'auto' }, 1.3)
       .to(actTerminal, {
         yPercent: 0,
         scale: 1.0,
-        rotateX: 0,
         opacity: 1,
         filter: 'blur(0px)',
-        duration: 1.4,
+        duration: 1.3,
         ease: 'power3.out'
       }, 1.2)
+      .fromTo('.robot-face-chassis', {
+        rotateY: -45,
+        rotateX: 15,
+        scale: 0.7,
+        opacity: 0,
+        filter: 'blur(10px)'
+      }, {
+        rotateY: 0,
+        rotateX: 0,
+        scale: 1.0,
+        opacity: 1,
+        filter: 'blur(0px)',
+        duration: 1.2,
+        ease: 'back.out(1.4)'
+      }, 1.4)
+      .fromTo('.terminal-dossier-column', {
+        xPercent: 40,
+        opacity: 0,
+        filter: 'blur(8px)'
+      }, {
+        xPercent: 0,
+        opacity: 1,
+        filter: 'blur(0px)',
+        duration: 1.2,
+        ease: 'power3.out'
+      }, 1.4)
       .call(() => this.triggerTypewriter(), [], 2.4);
 
     // =========================================================================
-    // 🚪 CHAPTER 1 -> 2: ACT 1 RECEDES UP, ACT 2 SWEEPS UP FROM BOTTOM (3D ORBITAL)
+    // 🚪 CHAPTER 1 -> 2: MAINFRAME SPLIT -> CYLINDRICAL ORBITAL FAN-OUT (SKILLS)
     // =========================================================================
     masterTl
-      // Act 1 recedes upward into matrix mist
-      .to(actTerminal, {
-        yPercent: -75,
-        scale: 0.82,
-        rotateX: -14,
+      // Act 1 Robot Face & Dossier split apart
+      .to('.robot-face-chassis', {
+        xPercent: -60,
+        rotateY: 50,
+        scale: 0.65,
         opacity: 0,
-        filter: 'blur(10px)',
-        duration: 1.2,
-        ease: 'power2.inOut'
+        duration: 1.1,
+        ease: 'power2.in'
+      }, 3.6)
+      .to('.terminal-dossier-column', {
+        xPercent: 60,
+        rotateY: -50,
+        scale: 0.65,
+        opacity: 0,
+        duration: 1.1,
+        ease: 'power2.in'
+      }, 3.6)
+      .to(actTerminal, {
+        opacity: 0,
+        duration: 1.1,
+        ease: 'power2.in'
       }, 3.6)
       .set(actTerminal, { pointerEvents: 'none' }, 4.6)
       // Robot moves to inventory position
       .to(this.sceneRobotWrapperEl, { right: '16%', duration: 1.5, ease: 'power1.inOut' }, 3.6)
-      // Act 2 (Data Core) sweeps up from the bottom!
-      .set(actSkills, { pointerEvents: 'auto' }, 4.0)
+      // Act 2 (Data Core) enters via 3D Cylindrical Orbital Fan-out
+      .set(actSkills, { pointerEvents: 'auto' }, 3.9)
       .to(actSkills, {
         yPercent: 0,
         scale: 1.0,
-        rotateX: 0,
         opacity: 1,
         filter: 'blur(0px)',
-        duration: 1.4,
+        duration: 1.3,
         ease: 'power3.out'
       }, 3.8)
-      // 8 Skill cards fly in via 3D Cylindrical Orbital Spread
+      // 8 Skill cards explode outward from center in a 3D orbital spread
       .fromTo('.skill-card', {
-        rotateY: (idx) => (idx % 2 === 0 ? -40 : 40),
-        z: -320,
-        y: 50,
-        opacity: 0.2
+        x: (idx) => (idx % 2 === 0 ? -180 : 180),
+        y: (idx) => (idx < 4 ? -80 : 80),
+        rotateY: (idx) => (idx % 2 === 0 ? 45 : -45),
+        rotateZ: (idx) => (idx % 2 === 0 ? -12 : 12),
+        scale: 0.45,
+        opacity: 0
       }, {
-        rotateY: 0,
-        z: 0,
+        x: 0,
         y: 0,
+        rotateY: 0,
+        rotateZ: 0,
+        scale: 1.0,
         opacity: 1,
         stagger: 0.04,
-        duration: 1.0,
-        ease: 'power3.out'
-      }, 4.2);
+        duration: 1.2,
+        ease: 'back.out(1.5)'
+      }, 4.0);
 
     // =========================================================================
-    // 🕹️ CHAPTER 2 -> 3: ACT 2 IMPLODES UP, ACT 3 SWEEPS UP (ARCADE ARENA)
+    // 🕹️ CHAPTER 2 -> 3: VORTEX IMPLOSION -> ISOMETRIC NEON HIGHWAY WARP (ARCADE)
     // =========================================================================
     masterTl
-      // Skills collapse & Act 2 recedes upward
-      .to(skillsGrid, {
-        scale: 0.35,
+      // Skill cards implode into spinning singularity
+      .to('.skill-card', {
+        scale: 0.2,
+        rotateZ: 45,
         opacity: 0,
-        rotateZ: 25,
-        duration: 0.9,
+        stagger: 0.02,
+        filter: 'blur(14px)',
+        duration: 0.8,
         ease: 'power3.in'
       }, 6.2)
       .to(actSkills, {
-        yPercent: -75,
-        scale: 0.82,
-        rotateX: -14,
         opacity: 0,
-        filter: 'blur(10px)',
-        duration: 1.2,
-        ease: 'power2.inOut'
-      }, 6.4)
-      .set(actSkills, { pointerEvents: 'none' }, 7.4)
+        duration: 0.9,
+        ease: 'power2.in'
+      }, 6.3)
+      .set(actSkills, { pointerEvents: 'none' }, 7.3)
       // Robot moves to arcade alley
       .to(this.sceneRobotWrapperEl, { right: '55%', duration: 1.5, ease: 'power1.inOut' }, 6.4)
-      // Act 3 (Arcade Alley) sweeps up from the bottom!
-      .set(actProjects, { pointerEvents: 'auto' }, 6.8)
+      // Act 3 (Arcade Runway) sweeps in along isometric 3D speed highway
+      .set(actProjects, { pointerEvents: 'auto' }, 6.7)
       .to(actProjects, {
         yPercent: 0,
         scale: 1.0,
-        rotateX: 0,
         opacity: 1,
         filter: 'blur(0px)',
-        duration: 1.4,
+        duration: 1.3,
         ease: 'power3.out'
       }, 6.6)
-      // 4 Cabinets dock along 3D isometric runway
-      .fromTo('.arcade-cabinet', {
-        rotateX: 25,
-        rotateY: -20,
-        z: -400,
-        y: 80,
-        opacity: 0.2
+      .fromTo('#arcade-runway', {
+        rotateX: 32,
+        rotateY: -15,
+        scale: 0.75,
+        y: 100,
+        opacity: 0
       }, {
         rotateX: 0,
         rotateY: 0,
-        z: 0,
+        scale: 1.0,
         y: 0,
         opacity: 1,
-        stagger: 0.06,
+        duration: 1.2,
+        ease: 'power3.out'
+      }, 6.7)
+      // 4 Cabinets rocket in along runway lanes
+      .fromTo('.arcade-cabinet', {
+        x: (idx) => (idx + 1) * 120,
+        y: 80,
+        rotateY: -25,
+        scale: 0.6,
+        opacity: 0
+      }, {
+        x: 0,
+        y: 0,
+        rotateY: 0,
+        scale: 1.0,
+        opacity: 1,
+        stagger: 0.07,
         duration: 1.1,
         ease: 'back.out(1.3)'
-      }, 7.0);
+      }, 6.9);
 
     // =========================================================================
-    // 📡 CHAPTER 3 -> 4: ACT 3 SINKS, ACT 4 ASCENDS INTO ORBITAL SPACE
+    // 📡 CHAPTER 3 -> 4: HIGHWAY OVERDRIVE -> MATRIX DATA INGESTION (CLI TERMINAL)
     // =========================================================================
     masterTl
-      // Act 3 recedes upward / powers down
-      .to(arcadeRunway, {
-        y: 80,
+      // Cabinets zoom past camera into distance
+      .to('.arcade-cabinet', {
+        yPercent: -110,
+        scale: 1.3,
         opacity: 0,
-        scale: 0.88,
-        duration: 0.9,
+        stagger: 0.03,
+        filter: 'blur(10px)',
+        duration: 0.8,
         ease: 'power2.in'
       }, 9.2)
       .to(actProjects, {
-        yPercent: -75,
-        scale: 0.82,
-        rotateX: -14,
         opacity: 0,
-        filter: 'blur(10px)',
-        duration: 1.2,
-        ease: 'power2.inOut'
-      }, 9.4)
-      .set(actProjects, { pointerEvents: 'none' }, 10.4)
-      // Radar transmission shockwaves pulse
+        duration: 0.9,
+        ease: 'power2.in'
+      }, 9.3)
+      .set(actProjects, { pointerEvents: 'none' }, 10.3)
+      // Radar transmission pulses
       .set(radarWaves, { opacity: 1 }, 9.8)
       .fromTo('.radar-circle', { scale: 0.1, opacity: 1 }, { scale: 2.4, opacity: 0, stagger: 0.15, duration: 1.4, ease: 'power2.out' }, 9.9)
-      // Robot stands beneath orbital beacon
+      // Robot stands beneath orbital uplink
       .to(this.sceneRobotWrapperEl, { right: '40%', duration: 1.5, ease: 'power1.inOut' }, 9.4)
-      // Act 4 (Stratosphere Beacon) sweeps up into the starry ionosphere!
-      .set(actContact, { pointerEvents: 'auto' }, 9.8)
+      // Act 4 (Interactive Cyber CLI Terminal) drops in from orbital space
+      .set(actContact, { pointerEvents: 'auto' }, 9.6)
       .to(actContact, {
         yPercent: 0,
+        scale: 1.0,
+        opacity: 1,
+        filter: 'blur(0px)',
+        duration: 1.3,
+        ease: 'power3.out'
+      }, 9.6)
+      .fromTo('.cli-terminal-window', {
+        scale: 0.7,
+        rotateX: -22,
+        opacity: 0,
+        filter: 'blur(12px)'
+      }, {
         scale: 1.0,
         rotateX: 0,
         opacity: 1,
         filter: 'blur(0px)',
-        duration: 1.4,
+        duration: 1.2,
+        ease: 'back.out(1.2)'
+      }, 9.8)
+      .fromTo('.quick-link-card', {
+        y: 60,
+        opacity: 0
+      }, {
+        y: 0,
+        opacity: 1,
+        stagger: 0.08,
+        duration: 0.9,
         ease: 'power3.out'
-      }, 9.6)
-      .call(() => this.triggerMatrixDecryption(), [], 10.6);
+      }, 10.0)
+      .call(() => this.triggerMatrixDecryption(), [], 10.4);
 
     ScrollTrigger.refresh();
   }

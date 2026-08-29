@@ -6,6 +6,8 @@ import { ScrollChoreography } from './motion/scrollChoreography';
 import { gsap, EASE_UI } from './motion/customEases';
 
 import { WarStarMeteorEngine } from './canvas/meteorEngine';
+import { RobotFaceController } from './interactive/robotFace';
+import { CyberCLITerminal } from './interactive/cliTerminal';
 
 document.addEventListener('DOMContentLoaded', () => {
   // 0. Initialize War Star Shooting Meteor Engine
@@ -250,6 +252,44 @@ document.addEventListener('DOMContentLoaded', () => {
       tags: ['AVAILABLE FOR WORK', 'REMOTE / HYBRID', 'CONTRACT / FULL-TIME'],
       primaryBtn: { text: 'SEND EMAIL ↗', href: 'mailto:alex.developer@example.com' },
       secondaryBtn: { text: 'GITHUB PROFILE ↗', href: 'https://github.com' }
+    });
+  });
+
+  // 6.5 Initialize Interactive Robot Face & Cyber CLI Terminal
+  (window as any).__robotFace = new RobotFaceController('about-robot-face');
+  (window as any).__cliTerminal = new CyberCLITerminal('cli-terminal-window');
+
+  // Bio Dossier Tabs Swapping
+  const bioTabButtons = document.querySelectorAll('#bio-tabs .bio-tab-btn');
+  const terminalBioBody = document.getElementById('terminal-bio-body');
+
+  const bioTabData = [
+    "Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Alex. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads.",
+    "OPERATOR PRODUCTION TIMELINE:\n• 2024–PRESENT: Principal Motion & Full-Stack Architect — NextGen Web & Mobile Ecosystems\n• 2022–2024: Senior Systems Engineer — Distributed Microservices & High-Performance Clients\n• 2020–2022: Creative UI Developer — Pixel-Perfect Motion Engines & Interactive Canvas Apps",
+    "HARDWARE / NEURAL CORE SPECS:\n• ARCHITECTURE: Full-Stack Distributed Engine (TypeScript, React, Node, WebGL)\n• RUNTIME EFFICIENCY: 0ms Input Latency · 60 FPS Locked\n• SECURITY CLEARANCE: 256-Bit Encrypted Uplink · Status: Available For Work"
+  ];
+
+  bioTabButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      sounds.playHoverBlip();
+      bioTabButtons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const tabIdx = parseInt(btn.getAttribute('data-tab') || '0', 10);
+      const text = bioTabData[tabIdx] || bioTabData[0];
+
+      if (terminalBioBody) {
+        terminalBioBody.textContent = '';
+        let charIdx = 0;
+        const typeInterval = setInterval(() => {
+          if (charIdx < text.length) {
+            terminalBioBody.textContent += text[charIdx];
+            charIdx++;
+          } else {
+            clearInterval(typeInterval);
+          }
+        }, 12);
+      }
     });
   });
 
