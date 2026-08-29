@@ -410,34 +410,42 @@
   gap: 4px;
   position: relative;
   overflow: hidden;
-  padding: 4px 10px;
-  background: rgba(15, 95, 115, 0.35);
-  border: 1px solid var(--cyan);
+  padding: 3px 8px;
+  background: rgba(79, 227, 255, 0.08);
+  border: 1px solid rgba(79, 227, 255, 0.35);
   border-radius: 2px;
   font-family: var(--font-pixel);
   font-size: 6px;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.6px;
   color: var(--cyan);
-  text-shadow: 0 0 6px var(--cyan);
-  box-shadow: 0 0 10px rgba(79, 227, 255, 0.25), inset 0 0 6px rgba(79, 227, 255, 0.15);
-  animation: cyberBadgeShine 2.4s ease-in-out infinite;
+  box-shadow: none;
+  animation: cyberBadgeShine 3s ease-in-out infinite;
   cursor: pointer;
   user-select: none;
+  transition: all 0.2s ease;
+}
+
+.shine-badge:hover,
+.walk-up-indicator:hover,
+.skill-expand-hint-badge:hover,
+.terminal-action-hint:hover,
+.face-footer-tag:hover {
+  background: rgba(79, 227, 255, 0.18);
+  border-color: var(--cyan);
+  color: #ffffff;
+  box-shadow: 0 0 8px rgba(79, 227, 255, 0.3);
 }
 
 @keyframes cyberBadgeShine {
   0%, 100% {
-    border-color: rgba(79, 227, 255, 0.45);
-    box-shadow: 0 0 8px rgba(79, 227, 255, 0.25), inset 0 0 4px rgba(79, 227, 255, 0.1);
-    color: var(--cyan);
-    text-shadow: 0 0 4px var(--cyan);
+    border-color: rgba(79, 227, 255, 0.25);
+    color: rgba(79, 227, 255, 0.85);
+    box-shadow: none;
   }
   50% {
-    border-color: #ffffff;
-    box-shadow: 0 0 18px rgba(79, 227, 255, 0.9), 0 0 28px var(--cyan), inset 0 0 10px rgba(79, 227, 255, 0.5);
-    color: #ffffff;
-    text-shadow: 0 0 8px #ffffff, 0 0 16px var(--cyan);
-    transform: scale(1.05);
+    border-color: rgba(79, 227, 255, 0.65);
+    color: #c9f5ff;
+    box-shadow: 0 0 6px rgba(79, 227, 255, 0.2);
   }
 }
 
@@ -452,15 +460,15 @@
   left: -150%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
-  transform: skewX(-25deg);
-  animation: shineSheenSweep 3s infinite ease-in-out;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: skewX(-20deg);
+  animation: shineSheenSweep 4s infinite ease-in-out;
   pointer-events: none;
 }
 
 @keyframes shineSheenSweep {
   0% { left: -150%; }
-  35%, 100% { left: 180%; }
+  25%, 100% { left: 180%; }
 }
 
 /* ==================== CINEMATIC PINNED SCROLL STAGE ==================== */
