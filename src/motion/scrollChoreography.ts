@@ -2,9 +2,11 @@ import Lenis from 'lenis';
 import { gsap, ScrollTrigger } from './customEases';
 import { RobotSpriteController } from '../sprites/robotSprite';
 import { sounds } from '../audio/soundEngine';
+import { WarStarMeteorEngine } from '../canvas/meteorEngine';
 
 export class ScrollChoreography {
   public lenis: Lenis;
+  public meteorEngine: WarStarMeteorEngine;
   private hudRobotEl: HTMLElement;
   private hudTrackEl: HTMLElement;
   private checkpoints: HTMLElement[];
@@ -22,10 +24,12 @@ export class ScrollChoreography {
 
   constructor(
     hudRobotController: RobotSpriteController,
-    sceneRobotController: RobotSpriteController
+    sceneRobotController: RobotSpriteController,
+    meteorEngine: WarStarMeteorEngine
   ) {
     this.hudRobotController = hudRobotController;
     this.sceneRobotController = sceneRobotController;
+    this.meteorEngine = meteorEngine;
     this.hudRobotEl = document.querySelector('.hud-robot-indicator') as HTMLElement;
     this.hudTrackEl = document.querySelector('.hud-track') as HTMLElement;
     this.sceneRobotWrapperEl = document.querySelector('#scene-robot-container') as HTMLElement;
@@ -36,7 +40,7 @@ export class ScrollChoreography {
     this.envSkyTintEl = document.querySelector('#env-sky-tint');
     this.skywardBeamEl = document.querySelector('#skyward-beam');
 
-    // Initialize Lenis with enhanced smoothness
+    // Initialize Lenis with enhanced smoothness & inertia
     this.lenis = new Lenis({
       duration: 1.4,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -46,9 +50,9 @@ export class ScrollChoreography {
     (window as any).__lenis = this.lenis;
 
     this.setupLenisWithGsap();
-    this.setupMasterPinnedTimeline();
+    this.setupMasterFullPageTimeline();
     this.setupCheckpointNavigation();
-    this.setupScrollVelocityWalk();
+    this.setupScrollVelocityWalkAndMeteors();
     this.setup3DMouseParallax();
   }
 
@@ -62,20 +66,15 @@ export class ScrollChoreography {
     gsap.ticker.lagSmoothing(0);
   }
 
-  public setupMasterPinnedTimeline() {
-    const actBoot = document.querySelector('#act-boot');
-    const actTerminal = document.querySelector('#act-terminal');
-    const actSkills = document.querySelector('#act-skills');
-    const actProjects = document.querySelector('#act-projects');
-    const actContact = document.querySelector('#act-contact');
+  public setupMasterFullPageTimeline() {
+    const actBoot = document.querySelector('#act-boot') as HTMLElement;
+    const actTerminal = document.querySelector('#act-terminal') as HTMLElement;
+    const actSkills = document.querySelector('#act-skills') as HTMLElement;
+    const actProjects = document.querySelector('#act-projects') as HTMLElement;
+    const actContact = document.querySelector('#act-contact') as HTMLElement;
 
-    const heroTextBlock = document.querySelector('#hero-text-block');
-    const heroRpgBlock = document.querySelector('#hero-rpg-block');
-    const warpStreaks = document.querySelector('#warp-streaks');
     const radarWaves = document.querySelector('#radar-waves');
-    const blastDoorLeft = document.querySelector('#blast-door-left');
-    const blastDoorRight = document.querySelector('#blast-door-right');
-    const terminalConsole = document.querySelector('#terminal-console-wrapper');
+    const warpStreaks = document.querySelector('#warp-streaks');
     const skillsGrid = document.querySelector('#skills-grid');
     const arcadeRunway = document.querySelector('#arcade-runway');
 
@@ -83,18 +82,63 @@ export class ScrollChoreography {
     const midSkyline = document.querySelector('.mid-skyline-layer');
     const gridFloor = document.querySelector('.perspective-grid-floor');
 
-    // Initial Act visibility states
-    gsap.set(actBoot, { opacity: 1, pointerEvents: 'auto', zIndex: 10 });
-    gsap.set(actTerminal, { opacity: 0, pointerEvents: 'none', zIndex: 9 });
-    gsap.set(actSkills, { opacity: 0, pointerEvents: 'none', zIndex: 8 });
-    gsap.set(actProjects, { opacity: 0, pointerEvents: 'none', zIndex: 7 });
-    gsap.set(actContact, { opacity: 0, pointerEvents: 'none', zIndex: 6 });
+    // Initial Full-Page 3D spatial staging positions
+    // Act 0 starts active in viewport center
+    gsap.set(actBoot, {
+      yPercent: 0,
+      scale: 1.0,
+      rotateX: 0,
+      opacity: 1,
+      filter: 'blur(0px)',
+      pointerEvents: 'auto',
+      zIndex: 10
+    });
 
-    gsap.set(terminalConsole, { rotateX: 55, yPercent: 35, opacity: 0, transformOrigin: 'bottom center' });
+    // Acts 1, 2, 3, 4 start primed below the viewport ready to sweep up
+    gsap.set(actTerminal, {
+      yPercent: 110,
+      scale: 0.85,
+      rotateX: 20,
+      opacity: 0,
+      filter: 'blur(6px)',
+      pointerEvents: 'none',
+      zIndex: 9
+    });
+
+    gsap.set(actSkills, {
+      yPercent: 110,
+      scale: 0.85,
+      rotateX: 20,
+      opacity: 0,
+      filter: 'blur(6px)',
+      pointerEvents: 'none',
+      zIndex: 8
+    });
+
+    gsap.set(actProjects, {
+      yPercent: 110,
+      scale: 0.85,
+      rotateX: 20,
+      opacity: 0,
+      filter: 'blur(6px)',
+      pointerEvents: 'none',
+      zIndex: 7
+    });
+
+    gsap.set(actContact, {
+      yPercent: 110,
+      scale: 0.85,
+      rotateX: 20,
+      opacity: 0,
+      filter: 'blur(6px)',
+      pointerEvents: 'none',
+      zIndex: 6
+    });
+
     gsap.set(warpStreaks, { opacity: 0 });
     gsap.set(radarWaves, { opacity: 0 });
 
-    // Master Timeline with 10 units total duration
+    // Master Timeline with 12 units total duration (Full-Page Continuous Staging)
     const masterTl = gsap.timeline({
       scrollTrigger: {
         trigger: '#scroll-track',
@@ -110,63 +154,75 @@ export class ScrollChoreography {
 
     // Continuous world parallax & speed
     masterTl
-      .to(farSkyline, { xPercent: -20, duration: 10, ease: 'none' }, 0)
-      .to(midSkyline, { xPercent: -40, duration: 10, ease: 'none' }, 0)
-      .to(gridFloor, { backgroundPosition: '0 2400px', duration: 10, ease: 'none' }, 0);
+      .to(farSkyline, { xPercent: -20, duration: 12, ease: 'none' }, 0)
+      .to(midSkyline, { xPercent: -40, duration: 12, ease: 'none' }, 0)
+      .to(gridFloor, { backgroundPosition: '0 2800px', duration: 12, ease: 'none' }, 0);
 
     // =========================================================================
-    // 🌌 ARCHETYPE 1: 3D WARP SPEED ZOOM & CONSOLE UNFOLD (Act 0 -> Act 1)
+    // 🌌 CHAPTER 0 -> 1: ACT 0 RECEDES UP, ACT 1 SWEEPS UP FROM BOTTOM
     // =========================================================================
-    // Hero texts scale through the camera lens with warp streaks
     masterTl
-      .to(heroTextBlock, {
-        scale: 2.2,
+      // Act 0 recedes upward into distance with 3D tilt & blur
+      .to(actBoot, {
+        yPercent: -75,
+        scale: 0.82,
+        rotateX: -14,
         opacity: 0,
         filter: 'blur(10px)',
-        duration: 0.9,
-        ease: 'power2.in'
+        duration: 1.2,
+        ease: 'power2.inOut'
       }, 0.8)
-      .to(heroRpgBlock, {
-        x: 180,
-        opacity: 0,
-        duration: 0.7,
-        ease: 'power2.in'
-      }, 0.8)
-      .set(actBoot, { pointerEvents: 'none' }, 1.2)
+      .set(actBoot, { pointerEvents: 'none' }, 1.8)
       // Warp speed lines flash
-      .fromTo(warpStreaks, { opacity: 0, scaleX: 0.5 }, { opacity: 0.8, scaleX: 1.4, duration: 0.5, yoyo: true, repeat: 1 }, 1.0)
-      // Robot walks toward center
+      .fromTo(warpStreaks, { opacity: 0, scaleX: 0.5 }, { opacity: 0.8, scaleX: 1.4, duration: 0.6, yoyo: true, repeat: 1 }, 1.0)
+      // Robot moves toward center console
       .to(this.sceneRobotWrapperEl, { right: '45%', duration: 1.6, ease: 'power1.inOut' }, 0.8)
-      // Act 1 Terminal unfolds in 3D perspective
-      .set(actTerminal, { opacity: 1, pointerEvents: 'auto' }, 1.4)
-      .to(terminalConsole, {
-        rotateX: 0,
+      // Act 1 (Terminal Vault) sweeps majestically up from the bottom!
+      .set(actTerminal, { pointerEvents: 'auto' }, 1.4)
+      .to(actTerminal, {
         yPercent: 0,
+        scale: 1.0,
+        rotateX: 0,
         opacity: 1,
-        duration: 1.0,
+        filter: 'blur(0px)',
+        duration: 1.4,
         ease: 'power3.out'
-      }, 1.5)
-      .call(() => this.triggerTypewriter(), [], 2.2);
+      }, 1.2)
+      .call(() => this.triggerTypewriter(), [], 2.4);
 
     // =========================================================================
-    // 🚪 ARCHETYPE 2: MECHANICAL BLAST DOOR WIPE & 3D ORBITAL MATRIX (Act 1 -> Act 2)
+    // 🚪 CHAPTER 1 -> 2: ACT 1 RECEDES UP, ACT 2 SWEEPS UP FROM BOTTOM (3D ORBITAL)
     // =========================================================================
-    // Blast doors slam shut and open
     masterTl
-      .fromTo([blastDoorLeft, blastDoorRight], { opacity: 0 }, { opacity: 1, duration: 0.1 }, 3.3)
-      .fromTo(blastDoorLeft, { xPercent: -100 }, { xPercent: 0, duration: 0.5, ease: 'power2.inOut' }, 3.3)
-      .fromTo(blastDoorRight, { xPercent: 100 }, { xPercent: 0, duration: 0.5, ease: 'power2.inOut' }, 3.3)
-      // Hide Act 1 & reveal Act 2 behind doors
-      .set(actTerminal, { opacity: 0, pointerEvents: 'none' }, 3.8)
-      .set(actSkills, { opacity: 1, pointerEvents: 'auto' }, 3.8)
-      .to(blastDoorLeft, { xPercent: -100, duration: 0.55, ease: 'power3.out' }, 3.85)
-      .to(blastDoorRight, { xPercent: 100, duration: 0.55, ease: 'power3.out' }, 3.85)
-      .to([blastDoorLeft, blastDoorRight], { opacity: 0, duration: 0.2 }, 4.3)
+      // Act 1 recedes upward into matrix mist
+      .to(actTerminal, {
+        yPercent: -75,
+        scale: 0.82,
+        rotateX: -14,
+        opacity: 0,
+        filter: 'blur(10px)',
+        duration: 1.2,
+        ease: 'power2.inOut'
+      }, 3.6)
+      .set(actTerminal, { pointerEvents: 'none' }, 4.6)
+      // Robot moves to inventory position
+      .to(this.sceneRobotWrapperEl, { right: '16%', duration: 1.5, ease: 'power1.inOut' }, 3.6)
+      // Act 2 (Data Core) sweeps up from the bottom!
+      .set(actSkills, { pointerEvents: 'auto' }, 4.0)
+      .to(actSkills, {
+        yPercent: 0,
+        scale: 1.0,
+        rotateX: 0,
+        opacity: 1,
+        filter: 'blur(0px)',
+        duration: 1.4,
+        ease: 'power3.out'
+      }, 3.8)
       // 8 Skill cards fly in via 3D Cylindrical Orbital Spread
       .fromTo('.skill-card', {
-        rotateY: (idx) => (idx % 2 === 0 ? -45 : 45),
-        z: -350,
-        y: 40,
+        rotateY: (idx) => (idx % 2 === 0 ? -40 : 40),
+        z: -320,
+        y: 50,
         opacity: 0.2
       }, {
         rotateY: 0,
@@ -174,31 +230,50 @@ export class ScrollChoreography {
         y: 0,
         opacity: 1,
         stagger: 0.04,
-        duration: 0.9,
+        duration: 1.0,
         ease: 'power3.out'
-      }, 3.9)
-      // Robot moves to inventory position
-      .to(this.sceneRobotWrapperEl, { right: '16%', duration: 1.5, ease: 'power1.inOut' }, 3.6);
+      }, 4.2);
 
     // =========================================================================
-    // 🕹️ ARCHETYPE 3: DATA CORE IMPLOSION & ISOMETRIC RUNWAY DOCK (Act 2 -> Act 3)
+    // 🕹️ CHAPTER 2 -> 3: ACT 2 IMPLODES UP, ACT 3 SWEEPS UP (ARCADE ARENA)
     // =========================================================================
-    // Skills collapse inward into a data core point
     masterTl
+      // Skills collapse & Act 2 recedes upward
       .to(skillsGrid, {
         scale: 0.35,
         opacity: 0,
         rotateZ: 25,
-        duration: 0.8,
+        duration: 0.9,
         ease: 'power3.in'
-      }, 5.8)
-      .set(actSkills, { opacity: 0, pointerEvents: 'none' }, 6.5)
-      // Act 3 Arcade Runway unmasks and 4 cabinets fly in along isometric runway
-      .set(actProjects, { opacity: 1, pointerEvents: 'auto' }, 6.2)
+      }, 6.2)
+      .to(actSkills, {
+        yPercent: -75,
+        scale: 0.82,
+        rotateX: -14,
+        opacity: 0,
+        filter: 'blur(10px)',
+        duration: 1.2,
+        ease: 'power2.inOut'
+      }, 6.4)
+      .set(actSkills, { pointerEvents: 'none' }, 7.4)
+      // Robot moves to arcade alley
+      .to(this.sceneRobotWrapperEl, { right: '55%', duration: 1.5, ease: 'power1.inOut' }, 6.4)
+      // Act 3 (Arcade Alley) sweeps up from the bottom!
+      .set(actProjects, { pointerEvents: 'auto' }, 6.8)
+      .to(actProjects, {
+        yPercent: 0,
+        scale: 1.0,
+        rotateX: 0,
+        opacity: 1,
+        filter: 'blur(0px)',
+        duration: 1.4,
+        ease: 'power3.out'
+      }, 6.6)
+      // 4 Cabinets dock along 3D isometric runway
       .fromTo('.arcade-cabinet', {
         rotateX: 25,
         rotateY: -20,
-        z: -450,
+        z: -400,
         y: 80,
         opacity: 0.2
       }, {
@@ -208,46 +283,51 @@ export class ScrollChoreography {
         y: 0,
         opacity: 1,
         stagger: 0.06,
-        duration: 1.0,
+        duration: 1.1,
         ease: 'back.out(1.3)'
-      }, 6.3)
-      // Robot moves to arcade alley
-      .to(this.sceneRobotWrapperEl, { right: '55%', duration: 1.5, ease: 'power1.inOut' }, 5.8);
+      }, 7.0);
 
     // =========================================================================
-    // 📡 ARCHETYPE 4: RADAR SHOCKWAVES & MATRIX WIREFRAME DECRYPTION (Act 3 -> Act 4)
+    // 📡 CHAPTER 3 -> 4: ACT 3 SINKS, ACT 4 ASCENDS INTO ORBITAL SPACE
     // =========================================================================
-    // Cabinets power down and sink
     masterTl
+      // Act 3 recedes upward / powers down
       .to(arcadeRunway, {
-        y: 100,
+        y: 80,
         opacity: 0,
         scale: 0.88,
-        duration: 0.8,
-        ease: 'power2.in'
-      }, 8.2)
-      .set(actProjects, { opacity: 0, pointerEvents: 'none' }, 8.9)
-      // Radar transmission shockwaves expand from center beacon
-      .set(radarWaves, { opacity: 1 }, 8.4)
-      .fromTo('.radar-circle', { scale: 0.1, opacity: 1 }, { scale: 2.4, opacity: 0, stagger: 0.15, duration: 1.4, ease: 'power2.out' }, 8.5)
-      // Act 4 Contact ascends
-      .set(actContact, { opacity: 1, pointerEvents: 'auto' }, 8.6)
-      .fromTo('#beacon-kiosk', {
-        scale: 0.9,
-        opacity: 0,
-        y: 40
-      }, {
-        scale: 1,
-        opacity: 1,
-        y: 0,
         duration: 0.9,
+        ease: 'power2.in'
+      }, 9.2)
+      .to(actProjects, {
+        yPercent: -75,
+        scale: 0.82,
+        rotateX: -14,
+        opacity: 0,
+        filter: 'blur(10px)',
+        duration: 1.2,
+        ease: 'power2.inOut'
+      }, 9.4)
+      .set(actProjects, { pointerEvents: 'none' }, 10.4)
+      // Radar transmission shockwaves pulse
+      .set(radarWaves, { opacity: 1 }, 9.8)
+      .fromTo('.radar-circle', { scale: 0.1, opacity: 1 }, { scale: 2.4, opacity: 0, stagger: 0.15, duration: 1.4, ease: 'power2.out' }, 9.9)
+      // Robot stands beneath orbital beacon
+      .to(this.sceneRobotWrapperEl, { right: '40%', duration: 1.5, ease: 'power1.inOut' }, 9.4)
+      // Act 4 (Stratosphere Beacon) sweeps up into the starry ionosphere!
+      .set(actContact, { pointerEvents: 'auto' }, 9.8)
+      .to(actContact, {
+        yPercent: 0,
+        scale: 1.0,
+        rotateX: 0,
+        opacity: 1,
+        filter: 'blur(0px)',
+        duration: 1.4,
         ease: 'power3.out'
-      }, 8.7)
-      .call(() => this.triggerMatrixDecryption(), [], 9.1)
-      // Skyward uplink beam activates in Act 4
-      .to(this.skywardBeamEl, { opacity: 0.8, duration: 1.2, ease: 'power2.out' }, 8.6)
-      // Robot stands beneath the beacon
-      .to(this.sceneRobotWrapperEl, { right: '40%', duration: 1.5, ease: 'power1.inOut' }, 8.2);
+      }, 9.6)
+      // Skyward uplink laser shoots into space
+      .to(this.skywardBeamEl, { opacity: 0.85, duration: 1.2, ease: 'power2.out' }, 10.2)
+      .call(() => this.triggerMatrixDecryption(), [], 10.6);
 
     ScrollTrigger.refresh();
   }
@@ -372,14 +452,17 @@ export class ScrollChoreography {
     });
   }
 
-  private setupScrollVelocityWalk() {
+  private setupScrollVelocityWalkAndMeteors() {
     let scrollTimeout: number | null = null;
     let lastScrollY = window.scrollY;
 
-    this.lenis.on('scroll', (e: { scroll: number }) => {
+    this.lenis.on('scroll', (e: { scroll: number; velocity: number }) => {
       const currentScroll = e.scroll;
       const direction = currentScroll >= lastScrollY ? 'right' : 'left';
       lastScrollY = currentScroll;
+
+      // Feed scroll velocity into Meteor Engine for hyperdrive shooting stars!
+      this.meteorEngine.setScrollVelocity(e.velocity);
 
       this.hudRobotController.startWalking(direction);
       this.sceneRobotController.startWalking(direction);

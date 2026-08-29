@@ -405,6 +405,15 @@
   z-index: 3;
 }
 
+.meteors-canvas-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 2;
+}
+
 /* ==================== ROBOT AVATAR & HOLOGRAM EMITTER ==================== */
 .scene-robot-wrapper {
   position: fixed;

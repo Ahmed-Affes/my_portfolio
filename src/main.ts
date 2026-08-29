@@ -5,7 +5,11 @@ import { InteractionSystem } from './motion/interactionSystem';
 import { ScrollChoreography } from './motion/scrollChoreography';
 import { gsap, EASE_UI } from './motion/customEases';
 
+import { WarStarMeteorEngine } from './canvas/meteorEngine';
+
 document.addEventListener('DOMContentLoaded', () => {
+  // 0. Initialize War Star Shooting Meteor Engine
+  const meteorEngine = new WarStarMeteorEngine();
   // 1. Render Skills Cards (Data Core) FIRST
   const skillsGrid = document.getElementById('skills-grid');
   if (skillsGrid) {
@@ -252,7 +256,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. Initialize Scroll Choreography AFTER DOM is fully rendered
   const scrollChoreography = new ScrollChoreography(
     hudRobotController,
-    sceneRobotController
+    sceneRobotController,
+    meteorEngine
   );
 
   // 8. Run Preloader Boot Sequence (Screenshots 1 & 2)

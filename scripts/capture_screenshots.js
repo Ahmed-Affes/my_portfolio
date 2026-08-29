@@ -15,9 +15,10 @@ async function capture() {
   // Wait for preloader to finish
   await page.waitForTimeout(2000);
 
-  // 1. Capture Rich Story Hero
-  await page.screenshot({ path: path.join(outDir, '10_story_hero_rich.png') });
-  console.log('Captured 10_story_hero_rich.png');
+  // 1. Capture Hero with War Star Shooting Meteors
+  await page.waitForTimeout(800); // Allow meteors to streak
+  await page.screenshot({ path: path.join(outDir, '15_hero_war_stars.png') });
+  console.log('Captured 15_hero_war_stars.png');
 
   // Get max scroll distance
   const maxScroll = await page.evaluate(() => {
@@ -25,30 +26,60 @@ async function capture() {
     return track ? track.offsetHeight - window.innerHeight : 4500;
   });
 
-  const scrollScenarios = [
-    { name: '11_story_terminal_comms.png', progress: 0.25 },
-    { name: '12_story_skills_comms.png', progress: 0.50 },
-    { name: '13_story_arcade_comms.png', progress: 0.75 },
-    { name: '14_story_beacon_uplink.png', progress: 1.00 }
-  ];
+  // 2. Capture Chapter 0 -> 1 Transition (Act 0 receding up, Act 1 rising from bottom)
+  console.log('Scrubbing to Chapter 0->1 transition (progress 0.16)...');
+  await page.evaluate((scrollPos) => {
+    if (window.__lenis) {
+      window.__lenis.scrollTo(scrollPos, { immediate: true });
+    } else {
+      window.scrollTo(0, scrollPos);
+    }
+  }, maxScroll * 0.16);
+  await page.waitForTimeout(800);
+  await page.screenshot({ path: path.join(outDir, '16_fullpage_rise_act1.png') });
+  console.log('Captured 16_fullpage_rise_act1.png');
 
-  for (const item of scrollScenarios) {
-    console.log(`Scrubbing to progress ${item.progress}...`);
-    await page.evaluate((scrollPos) => {
-      if (window.__lenis) {
-        window.__lenis.scrollTo(scrollPos, { immediate: true });
-      } else {
-        window.scrollTo(0, scrollPos);
-      }
-    }, maxScroll * item.progress);
+  // 3. Capture Chapter 1 -> 2 Transition (Act 1 receding up, Act 2 rising from bottom)
+  console.log('Scrubbing to Chapter 1->2 transition (progress 0.40)...');
+  await page.evaluate((scrollPos) => {
+    if (window.__lenis) {
+      window.__lenis.scrollTo(scrollPos, { immediate: true });
+    } else {
+      window.scrollTo(0, scrollPos);
+    }
+  }, maxScroll * 0.40);
+  await page.waitForTimeout(800);
+  await page.screenshot({ path: path.join(outDir, '17_fullpage_rise_act2.png') });
+  console.log('Captured 17_fullpage_rise_act2.png');
 
-    await page.waitForTimeout(1000);
-    await page.screenshot({ path: path.join(outDir, item.name) });
-    console.log(`Captured ${item.name}`);
-  }
+  // 4. Capture Chapter 2 -> 3 Transition (Act 2 receding, Act 3 rising from bottom)
+  console.log('Scrubbing to Chapter 2->3 transition (progress 0.66)...');
+  await page.evaluate((scrollPos) => {
+    if (window.__lenis) {
+      window.__lenis.scrollTo(scrollPos, { immediate: true });
+    } else {
+      window.scrollTo(0, scrollPos);
+    }
+  }, maxScroll * 0.66);
+  await page.waitForTimeout(800);
+  await page.screenshot({ path: path.join(outDir, '18_fullpage_rise_act3.png') });
+  console.log('Captured 18_fullpage_rise_act3.png');
+
+  // 5. Capture Chapter 3 -> 4 Transition (Act 3 receding, Act 4 rising into cosmic space)
+  console.log('Scrubbing to Chapter 3->4 transition (progress 0.96)...');
+  await page.evaluate((scrollPos) => {
+    if (window.__lenis) {
+      window.__lenis.scrollTo(scrollPos, { immediate: true });
+    } else {
+      window.scrollTo(0, scrollPos);
+    }
+  }, maxScroll * 0.96);
+  await page.waitForTimeout(800);
+  await page.screenshot({ path: path.join(outDir, '19_fullpage_rise_act4.png') });
+  console.log('Captured 19_fullpage_rise_act4.png');
 
   await browser.close();
-  console.log('All narrative environment screenshots captured successfully!');
+  console.log('All full-page bottom-to-up motion screenshots captured successfully!');
 }
 
 capture().catch(err => {
