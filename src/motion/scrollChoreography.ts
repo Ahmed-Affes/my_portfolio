@@ -408,16 +408,6 @@ export class ScrollChoreography {
       }, 6.9)
       .set(actSkills, { pointerEvents: 'none' }, 7.5)
 
-      // Interstitial "GAME OVER / INSERT COIN" flash moment
-      .fromTo('.interstitial-coin', 
-        { opacity: 0, scale: 0.8 },
-        { opacity: 1, scale: 1.05, duration: 0.25, ease: 'power2.out' },
-        6.95
-      )
-      .to('.interstitial-coin',
-        { opacity: 0, scale: 1.2, duration: 0.25, ease: 'power2.in' },
-        7.25
-      )
 
       // Act 3 (Arcade Runway) enters and settles
       .set(actProjects, { pointerEvents: 'auto' }, 7.1)
