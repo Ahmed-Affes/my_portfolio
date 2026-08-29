@@ -34,7 +34,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const skillsGrid = document.getElementById('skills-grid');
   if (skillsGrid) {
-    skillsGrid.innerHTML = PORTFOLIO_DATA.skills
+    const robotHopperHtml = `
+      <div class="skills-jumping-robot" id="skills-jumping-robot" aria-hidden="true">
+        <div class="hopper-pixel-body">
+          <div class="hopper-antenna"><span class="antenna-bulb"></span></div>
+          <div class="hopper-head"><div class="hopper-visor-glow"></div></div>
+          <div class="hopper-torso"><div class="hopper-core"></div></div>
+          <div class="hopper-thruster">
+            <span class="thruster-spark left"></span>
+            <span class="thruster-spark right"></span>
+          </div>
+        </div>
+        <div class="hopper-shadow"></div>
+      </div>
+    `;
+
+    skillsGrid.innerHTML = robotHopperHtml + PORTFOLIO_DATA.skills
       .map(
         (skill) => `
         <article class="skill-card ${skill.rarity}" data-skill-id="${skill.id}" tabindex="0" role="button" aria-label="${skill.name}">

@@ -230,63 +230,68 @@ export class ScrollChoreography {
     // 🚪 CHAPTER 1 -> 2: MAINFRAME OUT -> DATA CORE (SKILLS)
     // =========================================================================
     masterTl
-      // Act 1 Robot Face & Dossier split apart
-      .to('.robot-face-chassis', {
-        xPercent: -40,
-        scale: 0.8,
+      // Act 1 Robot Face & Dossier cleanly exit early (NO OVERLAP)
+      .to('.biometric-avatar-pod', {
+        yPercent: -30,
         opacity: 0,
-        duration: 1.1,
+        filter: 'blur(6px)',
+        duration: 0.6,
         ease: 'power2.in'
-      }, 3.6)
-      .to('.terminal-dossier-column', {
-        xPercent: 40,
-        scale: 0.8,
+      }, 2.8)
+      .to('.holographic-dossier-pod', {
+        yPercent: -30,
         opacity: 0,
-        duration: 1.1,
+        filter: 'blur(6px)',
+        duration: 0.6,
         ease: 'power2.in'
-      }, 3.6)
+      }, 2.8)
       .to(actTerminal, {
         opacity: 0,
-        duration: 1.1,
+        duration: 0.6,
         ease: 'power2.in'
-      }, 3.6)
-      .set(actTerminal, { pointerEvents: 'none' }, 4.6)
+      }, 2.8)
+      .set(actTerminal, { pointerEvents: 'none' }, 3.4)
+
       // Robot moves to inventory position
-      .to(this.sceneRobotWrapperEl, { right: '16%', duration: 1.5, ease: 'power1.inOut' }, 3.6)
-      // Act 2 (Data Core) enters cleanly
-      .set(actSkills, { pointerEvents: 'auto' }, 3.9)
+      .to(this.sceneRobotWrapperEl, { right: '16%', duration: 1.2, ease: 'power1.inOut' }, 3.0)
+
+      // Act 2 (Data Core Runway) enters completely cleanly
+      .set(actSkills, { pointerEvents: 'auto' }, 3.4)
       .to(actSkills, {
         yPercent: 0,
         scale: 1.0,
         opacity: 1,
         filter: 'blur(0px)',
-        duration: 1.3,
+        duration: 0.6,
         ease: 'power3.out'
-      }, 3.8)
-      // Initial appearance of horizontal runway track & jumping robot
+      }, 3.4)
+      // Initial appearance of runway and jumping robot perched on Card 0 (JS/TS)
+      .set('.skills-horizontal-track', { x: 0 }, 3.4)
       .fromTo('.skills-horizontal-track', {
-        x: 100,
+        scale: 0.95,
         opacity: 0
       }, {
-        x: 0,
+        scale: 1.0,
         opacity: 1,
-        duration: 0.8,
-        ease: 'power2.out'
-      }, 3.9)
+        duration: 0.6,
+        ease: 'power3.out'
+      }, 3.4)
+      .set('#skills-jumping-robot', { x: 161, y: 0, scale: 1.0, opacity: 1 }, 3.4)
       .fromTo('#skills-jumping-robot', {
-        y: -120,
+        y: -90,
         opacity: 0,
-        scale: 0.5
+        scale: 0.4
       }, {
         y: 0,
         opacity: 1,
         scale: 1.0,
-        duration: 0.6,
+        duration: 0.5,
         ease: 'back.out(1.7)'
-      }, 4.0)
+      }, 3.5)
 
       // =========================================================================
       // 🚀 ACT 2 KINETIC SCRUB: HORIZONTAL RUNWAY + SYNCHRONIZED JUMPING ROBOT
+      // (Scroll window 4.2 to 6.8 gives clear pause at start + full scrub of all 8 cards)
       // =========================================================================
       // 1. Horizontal track scrubs across the screen from right to left
       .to('.skills-horizontal-track', {
@@ -294,82 +299,78 @@ export class ScrollChoreography {
           const track = document.getElementById('skills-grid');
           const viewport = document.getElementById('skills-runway-viewport');
           if (track && viewport) {
-            return -(track.scrollWidth - viewport.clientWidth + 80);
+            return -(track.scrollWidth - viewport.clientWidth + 180);
           }
-          return -1550;
+          return -1850;
         },
         ease: 'none',
-        duration: 2.2
-      }, 4.1)
+        duration: 2.6
+      }, 4.2)
 
-      // 2. Parabolic jumps of the companion robot hopping across the 8 cards
-      // Hop 1: Card 0 -> Card 1
-      .to('#skills-jumping-robot', { y: -70, scaleY: 1.2, scaleX: 0.85, duration: 0.15, ease: 'power2.out' }, 4.15)
-      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.15, ease: 'power2.in' }, 4.30)
-      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.05 }, 4.45)
+      // 2. Parabolic jumps of the companion robot hopping across all 8 cards
+      // Hop 1: Card 0 (JS/TS) -> Card 1 (React)
+      .to('#skills-jumping-robot', { x: 475, y: -75, scaleY: 1.25, scaleX: 0.85, duration: 0.16, ease: 'power2.out' }, 4.30)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.16, ease: 'power2.in' }, 4.46)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.04 }, 4.62)
 
-      // Hop 2: Card 1 -> Card 2
-      .to('#skills-jumping-robot', { y: -70, scaleY: 1.2, scaleX: 0.85, duration: 0.15, ease: 'power2.out' }, 4.46)
-      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.15, ease: 'power2.in' }, 4.61)
-      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.05 }, 4.76)
+      // Hop 2: Card 1 (React) -> Card 2 (Node.js)
+      .to('#skills-jumping-robot', { x: 789, y: -75, scaleY: 1.25, scaleX: 0.85, duration: 0.16, ease: 'power2.out' }, 4.65)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.16, ease: 'power2.in' }, 4.81)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.04 }, 4.97)
 
-      // Hop 3: Card 2 -> Card 3
-      .to('#skills-jumping-robot', { y: -70, scaleY: 1.2, scaleX: 0.85, duration: 0.15, ease: 'power2.out' }, 4.77)
-      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.15, ease: 'power2.in' }, 4.92)
-      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.05 }, 5.07)
+      // Hop 3: Card 2 (Node.js) -> Card 3 (Flutter)
+      .to('#skills-jumping-robot', { x: 1103, y: -75, scaleY: 1.25, scaleX: 0.85, duration: 0.16, ease: 'power2.out' }, 5.00)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.16, ease: 'power2.in' }, 5.16)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.04 }, 5.32)
 
-      // Hop 4: Card 3 -> Card 4
-      .to('#skills-jumping-robot', { y: -70, scaleY: 1.2, scaleX: 0.85, duration: 0.15, ease: 'power2.out' }, 5.08)
-      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.15, ease: 'power2.in' }, 5.23)
-      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.05 }, 5.38)
+      // Hop 4: Card 3 (Flutter) -> Card 4 (PostgreSQL)
+      .to('#skills-jumping-robot', { x: 1417, y: -75, scaleY: 1.25, scaleX: 0.85, duration: 0.16, ease: 'power2.out' }, 5.35)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.16, ease: 'power2.in' }, 5.51)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.04 }, 5.67)
 
-      // Hop 5: Card 4 -> Card 5
-      .to('#skills-jumping-robot', { y: -70, scaleY: 1.2, scaleX: 0.85, duration: 0.15, ease: 'power2.out' }, 5.39)
-      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.15, ease: 'power2.in' }, 5.54)
-      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.05 }, 5.69)
+      // Hop 5: Card 4 (PostgreSQL) -> Card 5 (Electron)
+      .to('#skills-jumping-robot', { x: 1731, y: -75, scaleY: 1.25, scaleX: 0.85, duration: 0.16, ease: 'power2.out' }, 5.70)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.16, ease: 'power2.in' }, 5.86)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.04 }, 6.02)
 
-      // Hop 6: Card 5 -> Card 6
-      .to('#skills-jumping-robot', { y: -70, scaleY: 1.2, scaleX: 0.85, duration: 0.15, ease: 'power2.out' }, 5.70)
-      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.15, ease: 'power2.in' }, 5.85)
-      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.05 }, 6.00)
+      // Hop 6: Card 5 (Electron) -> Card 6 (Docker)
+      .to('#skills-jumping-robot', { x: 2045, y: -75, scaleY: 1.25, scaleX: 0.85, duration: 0.16, ease: 'power2.out' }, 6.05)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.16, ease: 'power2.in' }, 6.21)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.04 }, 6.37)
 
-      // Hop 7: Card 6 -> Card 7
-      .to('#skills-jumping-robot', { y: -70, scaleY: 1.2, scaleX: 0.85, duration: 0.15, ease: 'power2.out' }, 6.01)
-      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.15, ease: 'power2.in' }, 6.16)
-      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.05 }, 6.25);
+      // Hop 7: Card 6 (Docker) -> Card 7 (Figma - Final Card!)
+      .to('#skills-jumping-robot', { x: 2359, y: -75, scaleY: 1.25, scaleX: 0.85, duration: 0.16, ease: 'power2.out' }, 6.40)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.8, scaleX: 1.2, duration: 0.16, ease: 'power2.in' }, 6.56)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.04 }, 6.65)
+      .to('#skills-jumping-robot', { y: -10, duration: 0.1, yoyo: true, repeat: 2 }, 6.66);
 
     // =========================================================================
     // 🕹️ CHAPTER 2 -> 3: DATA CORE OUT -> ARCADE LEVEL SELECT (PROJECTS)
     // =========================================================================
     masterTl
-      // Skill cards fade out cleanly
-      .to('.skill-card', {
-        scale: 0.8,
-        y: -40,
-        opacity: 0,
-        stagger: 0.02,
-        filter: 'blur(8px)',
-        duration: 0.8,
-        ease: 'power2.in'
-      }, 6.2)
+      // Act 2 slides up cleanly
       .to(actSkills, {
         opacity: 0,
-        duration: 0.9,
+        yPercent: -25,
+        filter: 'blur(8px)',
+        duration: 0.6,
         ease: 'power2.in'
-      }, 6.3)
-      .set(actSkills, { pointerEvents: 'none' }, 7.3)
+      }, 6.9)
+      .set(actSkills, { pointerEvents: 'none' }, 7.5)
+
       // Robot moves to arcade alley
-      .to(this.sceneRobotWrapperEl, { right: '55%', duration: 1.5, ease: 'power1.inOut' }, 6.4)
+      .to(this.sceneRobotWrapperEl, { right: '55%', duration: 1.2, ease: 'power1.inOut' }, 7.0)
+
       // Act 3 (Arcade Runway) enters level and crisp
-      .set(actProjects, { pointerEvents: 'auto' }, 6.7)
+      .set(actProjects, { pointerEvents: 'auto' }, 7.3)
       .to(actProjects, {
         yPercent: 0,
         scale: 1.0,
         opacity: 1,
         filter: 'blur(0px)',
-        duration: 1.3,
+        duration: 0.8,
         ease: 'power3.out'
-      }, 6.6)
+      }, 7.2)
       .fromTo('#arcade-runway', {
         scale: 0.9,
         y: 60,
@@ -378,9 +379,9 @@ export class ScrollChoreography {
         scale: 1.0,
         y: 0,
         opacity: 1,
-        duration: 1.2,
+        duration: 0.8,
         ease: 'power3.out'
-      }, 6.7)
+      }, 7.3)
       // 4 Cabinets rise in smoothly
       .fromTo('.arcade-cabinet', {
         y: 60,
@@ -391,9 +392,9 @@ export class ScrollChoreography {
         scale: 1.0,
         opacity: 1,
         stagger: 0.07,
-        duration: 1.0,
+        duration: 0.8,
         ease: 'power3.out'
-      }, 6.9);
+      }, 7.4);
 
     // =========================================================================
     // 📡 CHAPTER 3 -> 4: ARCADE OUT -> SECURE UPLINK TERMINAL (CONTACT)

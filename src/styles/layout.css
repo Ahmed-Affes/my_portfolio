@@ -1491,14 +1491,13 @@
 .skills-runway-viewport {
   position: relative;
   width: 100%;
-  overflow: hidden;
-  padding: 48px 0 24px 0;
+  overflow: visible;
+  padding: 55px 0 24px 0;
   margin-top: 10px;
-  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,1) 4%, rgba(0,0,0,1) 96%, transparent 100%);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,1) 4%, rgba(0,0,0,1) 96%, transparent 100%);
 }
 
 .skills-horizontal-track {
+  position: relative;
   display: flex;
   flex-direction: row;
   gap: 24px;
@@ -1554,8 +1553,8 @@
 /* Jumping Robot Hopper on top of cards */
 .skills-jumping-robot {
   position: absolute;
-  top: 6px;
-  left: 240px;
+  top: -48px;
+  left: 0px;
   width: 48px;
   height: 52px;
   z-index: 40;
