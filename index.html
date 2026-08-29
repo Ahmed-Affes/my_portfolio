@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNIT_07 // Cyberpunk Motion Portfolio</title>
+  <meta name="description" content="An immersive, cinematic scroll-driven cyberpunk portfolio powered by GSAP ScrollTrigger scrub, Lenis, and code-driven SVG pixel sprites.">
+  <link rel="stylesheet" href="/src/styles/theme.css">
+  <link rel="stylesheet" href="/src/styles/layout.css">
+</head>
+<body>
+  <!-- Retro CRT Boot Preloader (Screenshots 1 & 2) -->
+  <div id="preloader-screen" class="preloader-overlay" role="dialog" aria-modal="true" aria-label="System Initializer">
+    <div class="preloader-box">
+      <div class="preloader-title glitch-text">UNIT_07 SYSTEMS</div>
+      <div class="preloader-status" id="preloader-status-text">CALIBRATING NEON...</div>
+      <div class="preloader-bar-track">
+        <div class="preloader-bar-fill" id="preloader-bar-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRT Scanline & Vignette Overlays -->
+  <div class="scanlines-overlay" aria-hidden="true"></div>
+  <div class="crt-vignette" aria-hidden="true"></div>
+
+  <!-- Warp Speed Streaks Layer (Act 0 -> 1 Warp Zoom) -->
+  <div class="warp-speed-container" id="warp-streaks" aria-hidden="true">
+    <div class="warp-streak" style="top: 15%; animation-delay: 0.1s;"></div>
+    <div class="warp-streak" style="top: 35%; animation-delay: 0.4s;"></div>
+    <div class="warp-streak" style="top: 60%; animation-delay: 0.2s;"></div>
+    <div class="warp-streak" style="top: 80%; animation-delay: 0.5s;"></div>
+  </div>
+
+  <!-- Radar Transmission Waves (Act 3 -> 4 Beacon) -->
+  <div class="radar-waves-container" id="radar-waves" aria-hidden="true">
+    <div class="radar-circle radar-c1"></div>
+    <div class="radar-circle radar-c2"></div>
+    <div class="radar-circle radar-c3"></div>
+  </div>
+
+  <!-- Portal Energy Tunnel Overlay (Card Click Zoom Portal) -->
+  <div class="portal-tunnel-overlay" id="portal-tunnel" aria-hidden="true">
+    <div class="portal-beam-slit" id="portal-beam"></div>
+    <div class="portal-ring portal-r1"></div>
+    <div class="portal-ring portal-r2"></div>
+    <div class="portal-ring portal-r3"></div>
+  </div>
+
+  <!-- Fixed HUD Header -->
+  <header class="hud-header" role="banner">
+    <div class="hud-brand">
+      <span class="hud-brand-tag glitch-text">UNIT_07</span>
+    </div>
+
+    <!-- Progress Track with Mini-Robot and Checkpoints -->
+    <div class="hud-track-container" aria-label="Game Stage Navigator">
+      <div class="hud-track">
+        <button class="hud-track-checkpoint active" data-progress="0" title="Stage 00: Boot" id="cp-0">0</button>
+        <button class="hud-track-checkpoint" data-progress="0.25" title="Stage 01: System Log" id="cp-1">1</button>
+        <button class="hud-track-checkpoint" data-progress="0.50" title="Stage 02: Inventory" id="cp-2">2</button>
+        <button class="hud-track-checkpoint" data-progress="0.75" title="Stage 03: Level Select" id="cp-3">3</button>
+        <button class="hud-track-checkpoint" data-progress="1.00" title="Stage 04: Save Point" id="cp-4">4</button>
+        
+        <!-- Animated Mini Robot Avatar riding the track -->
+        <div class="hud-robot-indicator" id="hud-robot-avatar" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- HUD Status & Audio Toggle -->
+    <div class="hud-meta">
+      <div class="hud-status-badge">
+        <span>LVL 04</span>
+        <span>|</span>
+        <span class="status-dot"></span>
+        <span style="color: var(--green);">ONLINE</span>
+      </div>
+      <button class="audio-btn muted" id="audio-toggle" aria-label="Toggle Sound Effects">
+        <span id="audio-icon">🔇</span>
+        <span id="audio-label">AUDIO: OFF</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Multi-Layer Atmospheric Parallax Background -->
+  <div class="parallax-bg-wrapper" aria-hidden="true">
+    <div class="stars-layer"></div>
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Far Skyline Silhouettes -->
+    <svg class="far-skyline-layer" viewBox="0 0 1600 360" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="20" y="80" width="100" height="280" fill="#080c18"/>
+      <rect x="140" y="140" width="110" height="220" fill="#060914"/>
+      <rect x="1340" y="100" width="120" height="260" fill="#080c18"/>
+      <rect x="1480" y="60" width="100" height="300" fill="#060914"/>
+    </svg>
+
+    <!-- Mid Skyline Towers with Cyberpunk Windows (Matching Screenshot 3) -->
+    <svg class="mid-skyline-layer" viewBox="0 0 1600 420" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Left Buildings -->
+      <rect x="20" y="180" width="90" height="240" fill="#0b1022" stroke="#121a36" stroke-width="1"/>
+      <rect x="45" y="230" width="10" height="10" fill="#4fe3ff" opacity="0.4"/>
+      <rect x="45" y="270" width="10" height="10" fill="#ff2e88" opacity="0.35"/>
+      <rect x="68" y="290" width="10" height="10" fill="#4fe3ff" opacity="0.3"/>
+      <rect x="45" y="330" width="10" height="10" fill="#4fe3ff" opacity="0.3"/>
+
+      <rect x="130" y="120" width="80" height="300" fill="#0e142b" stroke="#162244" stroke-width="1"/>
+      <rect x="150" y="180" width="12" height="12" fill="#ff2e88" opacity="0.5"/>
+      <rect x="175" y="260" width="12" height="12" fill="#4fe3ff" opacity="0.4"/>
+
+      <!-- Center-Right Towers with Light Shafts -->
+      <rect x="1050" y="140" width="80" height="280" fill="#0c1328" stroke="#142042" stroke-width="1"/>
+      <rect x="1075" y="190" width="10" height="10" fill="#ffb238" opacity="0.5"/>
+      <rect x="1075" y="240" width="10" height="10" fill="#4fe3ff" opacity="0.4"/>
+
+      <!-- Right Towers -->
+      <rect x="1380" y="100" width="90" height="320" fill="#0e142b" stroke="#162244" stroke-width="1"/>
+      <rect x="1410" y="160" width="12" height="12" fill="#ffb238" opacity="0.5"/>
+      <rect x="1410" y="230" width="12" height="12" fill="#4fe3ff" opacity="0.4"/>
+      <rect x="1490" y="190" width="90" height="230" fill="#0b1022" stroke="#121a36" stroke-width="1"/>
+      <rect x="1515" y="240" width="10" height="10" fill="#4fe3ff" opacity="0.35"/>
+    </svg>
+  </div>
+
+  <!-- Perspective Neon Grid Floor -->
+  <div class="perspective-grid-floor" aria-hidden="true"></div>
+
+  <!-- Walkable Robot Sprite Avatar with Hologram Emitter (Screenshot 3) -->
+  <div class="scene-robot-wrapper" id="scene-robot-container" aria-hidden="true">
+    <!-- Floating Hologram Projector Badge -->
+    <div class="hologram-emitter">
+      <div class="hologram-beam"></div>
+      <div class="hologram-badge">
+        <div class="holo-pink-square"></div>
+        <div class="holo-cyan-strip"></div>
+      </div>
+    </div>
+    <!-- Robot Avatar Sprite -->
+    <div class="scene-robot-avatar" id="scene-robot"></div>
+  </div>
+
+  <!-- Master Cinematic Pinned Stage (motion.zajno.com Style) -->
+  <div class="cinematic-scroll-track" id="scroll-track">
+    <div class="cinematic-pinned-viewport" id="pinned-viewport">
+      <div class="camera-parallax-rig" id="camera-parallax-rig">
+        <div class="scene-camera" id="scene-camera">
+
+          <!-- ==================== ACT 0: BOOT (Hero) ==================== -->
+          <section class="stage-act act-boot" id="act-boot" aria-labelledby="hero-title">
+            <div class="act-inner hero-grid-layout" id="hero-grid-container">
+              <!-- Left Hero Content -->
+              <div class="hero-left-content" id="hero-text-block">
+                <div class="system-online-badge">
+                  <span class="system-online-box"></span>
+                  <span>SYSTEM ONLINE</span>
+                </div>
+                <div class="hero-tag">
+                  <span class="stage-label-box"></span>
+                  <span>BOOT // PORTFOLIO.EXE</span>
+                </div>
+                <h1 class="hero-headline glitch-text" id="hero-title">
+                  YOUR NAME<br>HERE
+                </h1>
+                <p class="hero-sub" id="hero-sub">
+                  Full-stack builder. I ship web, mobile & desktop apps — then talk about it in first person through a robot, apparently.
+                </p>
+                <div class="hero-actions">
+                  <button class="btn-pixel primary" id="hero-view-projects-btn">
+                    VIEW PROJECTS
+                  </button>
+                  <button class="btn-pixel secondary" id="hero-open-channel-btn">
+                    OPEN CHANNEL
+                  </button>
+                </div>
+              </div>
+
+              <!-- Right RPG Character Status Card (Screenshot 3) -->
+              <div class="hero-right-widget" id="hero-rpg-block">
+                <div class="rpg-status-card">
+                  <div class="rpg-card-header">
+                    <span class="rpg-status-box"></span>
+                    <span class="rpg-card-title">UNIT_07 STATUS</span>
+                  </div>
+                  <div class="rpg-row">
+                    <span class="rpg-label">CLASS</span>
+                    <span class="rpg-val cyan-val">FULL-STACK</span>
+                  </div>
+                  <div class="rpg-row">
+                    <span class="rpg-label">HP</span>
+                    <div class="hp-bar-track">
+                      <div class="hp-bar-fill"></div>
+                    </div>
+                  </div>
+                  <div class="rpg-row">
+                    <span class="rpg-label">PROJECTS</span>
+                    <span class="rpg-val green-val">12 SHIPPED</span>
+                  </div>
+                  <div class="rpg-row">
+                    <span class="rpg-label">CORE</span>
+                    <span class="rpg-val amber-val">ONLINE // 100%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ==================== ACT 1: TERMINAL (About / Log) ==================== -->
+          <section class="stage-act act-terminal" id="act-terminal" aria-labelledby="terminal-title">
+            <!-- Blast Doors Wrapper (Splits apart when leaving Act 1) -->
+            <div class="blast-door-left" id="blast-door-left"></div>
+            <div class="blast-door-right" id="blast-door-right"></div>
+
+            <div class="act-inner terminal-console-3d" id="terminal-console-wrapper">
+              <div class="stage-label">
+                <span class="stage-label-box"></span>
+                <span>STAGE 01 — SYSTEM LOG</span>
+              </div>
+              <h2 class="zone-title" id="terminal-title">Operator dialogue log</h2>
+              <p class="zone-subtitle">
+                Walk up and click the terminal console to initiate decrypted memory sectors.
+              </p>
+
+              <div class="terminal-interactive-kiosk" id="terminal-kiosk" role="button" tabindex="0" aria-label="Interactive Terminal Console">
+                <div class="walk-up-indicator">WALK UP ▲ [CLICK]</div>
+                <div class="terminal-screen">
+                  <div class="screen-mask"></div>
+                  <p class="terminal-text-body font-terminal" data-full-text="Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Alex. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads. Step into the Data Core or approach an Arcade Cabinet to inspect live archives."></p>
+                  <span class="terminal-cursor"></span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ==================== ACT 2: DATA CORE (Skills 3D Orbital Matrix) ==================== -->
+          <section class="stage-act act-skills" id="act-skills" aria-labelledby="skills-title">
+            <div class="act-inner">
+              <div class="stage-label">
+                <span class="stage-label-box"></span>
+                <span>STAGE 02 — INVENTORY</span>
+              </div>
+              <h2 class="zone-title" id="skills-title">Equipped skills</h2>
+              <p class="zone-subtitle">
+                Border color = depth of production experience. Interactive 3D matrix responds to cursor and scroll velocity. Click any card to inspect telemetry.
+              </p>
+
+              <!-- Skills Cards 3D Container -->
+              <div class="skills-3d-scene" id="skills-3d-scene">
+                <div class="skills-grid" id="skills-grid"></div>
+              </div>
+
+              <!-- Skills Legend -->
+              <div class="skill-legend">
+                <div class="legend-item">
+                  <span class="legend-color-box" style="background: var(--muted);"></span>
+                  <span>COMMON — working knowledge</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-color-box" style="background: var(--cyan);"></span>
+                  <span>RARE — shipped production work</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-color-box" style="background: var(--amber);"></span>
+                  <span>LEGENDARY — go-to, daily driver</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ==================== ACT 3: ARCADE ROW (Projects Isometric Runway) ==================== -->
+          <section class="stage-act act-projects" id="act-projects" aria-labelledby="projects-title">
+            <div class="act-inner">
+              <div class="stage-label">
+                <span class="stage-label-box"></span>
+                <span>STAGE 03 — LEVEL SELECT</span>
+              </div>
+              <h2 class="zone-title" id="projects-title">Projects cleared</h2>
+              <p class="zone-subtitle">
+                Four interactive arcade units docked along the isometric cyber runway. Click any unit to enter inspection mode.
+              </p>
+
+              <!-- Arcade Cabinet 3D Runway -->
+              <div class="arcade-runway-3d" id="arcade-runway">
+                <div class="arcade-row" id="arcade-row"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ==================== ACT 4: BEACON (Save Point / Terminal Decryption) ==================== -->
+          <section class="stage-act act-contact" id="act-contact" aria-labelledby="contact-title">
+            <div class="act-inner">
+              <div class="stage-label">
+                <span class="stage-label-box"></span>
+                <span>STAGE 04 — SAVE POINT</span>
+              </div>
+              <h2 class="zone-title" id="contact-title">Continue the session</h2>
+
+              <!-- Terminal Box with SVG Wireframe Tracing -->
+              <div class="beacon-terminal-box wireframe-border-box" id="beacon-kiosk" role="region" aria-label="Terminal Uplink">
+                <div class="screen-mask"></div>
+                <div class="beacon-command-list" id="beacon-commands"></div>
+                <div style="font-size: 25px; color: var(--cyan); display: flex; align-items: center; gap: 10px;">
+                  <span class="cmd-prefix">&gt;</span>
+                  <span id="beacon-cursor-label">awaiting input</span>
+                  <span class="terminal-cursor"></span>
+                </div>
+              </div>
+
+              <!-- Footer Area -->
+              <footer class="beacon-footer-area" role="contentinfo">
+                <div class="insert-coin-text">GAME OVER — INSERT COIN TO CONTINUE</div>
+                <div class="copyright-text">© 2026 YOUR NAME · built pixel by pixel, not by template</div>
+              </footer>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reusable Interaction Drawer Panel & Backdrop (§5) -->
+  <div class="interaction-backdrop" id="interaction-backdrop" aria-hidden="true"></div>
+  <aside class="interaction-drawer" id="interaction-drawer" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="drawer-header stagger-item">
+      <div class="drawer-badge-container"></div>
+      <button class="drawer-close-btn" aria-label="Close Panel">✕ CLOSE [ESC]</button>
+    </div>
+    <h3 class="drawer-title stagger-item"></h3>
+    <div class="drawer-tagline stagger-item"></div>
+    <div class="drawer-metrics stagger-item"></div>
+    <p class="drawer-description stagger-item"></p>
+    <div class="drawer-tags stagger-item"></div>
+    <div class="drawer-footer-actions stagger-item"></div>
+  </aside>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

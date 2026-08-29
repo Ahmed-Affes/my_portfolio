@@ -1,0 +1,1043 @@
+/* Fixed HUD Header */
+.hud-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--hud-height);
+  background: rgba(7, 9, 18, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--cyan-dim);
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.hud-brand {
+  display: flex;
+  align-items: center;
+}
+
+.hud-brand-tag {
+  color: var(--magenta);
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+/* HUD Progress Track */
+.hud-track-container {
+  flex: 1;
+  max-width: 640px;
+  margin: 0 32px;
+  position: relative;
+}
+
+.hud-track {
+  width: 100%;
+  height: 18px;
+  border: 1px solid var(--cyan-dim);
+  background: rgba(10, 15, 30, 0.5);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.hud-track-checkpoint {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: var(--muted);
+  background: var(--bg2);
+  border: 1px solid var(--cyan-dim);
+  width: 18px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.hud-track-checkpoint:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.hud-track-checkpoint.active {
+  border-color: var(--amber);
+  color: var(--amber);
+  background: rgba(255, 178, 56, 0.15);
+  box-shadow: 0 0 6px var(--amber-glow);
+}
+
+.hud-robot-indicator {
+  position: absolute;
+  top: -12px;
+  left: 12px;
+  width: 20px;
+  height: 22px;
+  pointer-events: none;
+  z-index: 3;
+  transform: translateX(-50%);
+  transition: left 0.05s linear;
+}
+
+/* HUD Status & Controls */
+.hud-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--font-pixel);
+  font-size: 8.5px;
+  color: var(--muted);
+}
+
+.hud-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  border-radius: 50%;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.audio-btn {
+  background: transparent;
+  border: 1px solid var(--cyan-dim);
+  color: var(--cyan);
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.audio-btn:hover {
+  border-color: var(--cyan);
+  background: rgba(79, 227, 255, 0.08);
+}
+
+.audio-btn.muted {
+  color: var(--muted);
+  border-color: rgba(111, 131, 163, 0.25);
+}
+
+/* Multi-Layer Parallax Background */
+.parallax-bg-wrapper {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.stars-layer {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(1px 1px at 25px 35px, #cdeaff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 80px 110px, #4fe3ff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 150px 50px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 280px 160px, #ff2e88, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 390px 70px, #ffb238, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 400px 300px;
+  opacity: 0.35;
+}
+
+.far-skyline-layer {
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  width: 100%;
+  height: 360px;
+  opacity: 0.45;
+  will-change: transform;
+}
+
+.mid-skyline-layer {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  width: 100%;
+  height: 420px;
+  opacity: 0.6;
+  will-change: transform;
+}
+
+/* ==================== WARP SPEED STREAKS (Act 0 -> Act 1) ==================== */
+.warp-speed-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.warp-streak {
+  position: absolute;
+  left: -20%;
+  width: 140%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), #ffffff, var(--magenta), transparent);
+  box-shadow: 0 0 14px var(--cyan);
+  opacity: 0.7;
+}
+
+/* ==================== RADAR SHOCKWAVE WAVES (Act 3 -> Act 4) ==================== */
+.radar-waves-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 800px;
+  pointer-events: none;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.radar-circle {
+  position: absolute;
+  border: 1px solid var(--cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 18px var(--cyan-glow);
+  opacity: 0.8;
+}
+.radar-c1 { width: 200px; height: 200px; }
+.radar-c2 { width: 420px; height: 420px; }
+.radar-c3 { width: 680px; height: 680px; }
+
+/* ==================== PORTAL TUNNEL EXPANSION (Card Click Fly-Through) ==================== */
+.portal-tunnel-overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 920;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.portal-beam-slit {
+  position: absolute;
+  width: 100vw;
+  height: 3px;
+  background: #ffffff;
+  box-shadow: 0 0 20px var(--cyan), 0 0 40px var(--magenta);
+  transform: scaleX(0);
+  opacity: 0;
+}
+
+.portal-ring {
+  position: absolute;
+  border: 2px solid var(--cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 30px var(--cyan), inset 0 0 30px var(--cyan);
+}
+.portal-r1 { width: 140px; height: 140px; border-color: var(--cyan); }
+.portal-r2 { width: 320px; height: 320px; border-color: var(--magenta); box-shadow: 0 0 40px var(--magenta); }
+.portal-r3 { width: 560px; height: 560px; border-color: var(--amber); box-shadow: 0 0 50px var(--amber); }
+
+/* Perspective Floor */
+.perspective-grid-floor {
+  position: fixed;
+  bottom: 0;
+  left: -20%;
+  width: 140%;
+  height: 140px;
+  pointer-events: none;
+  z-index: 2;
+  background: 
+    linear-gradient(to bottom, transparent, var(--bg) 95%),
+    linear-gradient(rgba(79, 227, 255, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 227, 255, 0.15) 1px, transparent 1px);
+  background-size: 100% 100%, 48px 24px, 48px 24px;
+  transform: perspective(300px) rotateX(55deg);
+  transform-origin: bottom center;
+  mask-image: linear-gradient(to top, rgba(0,0,0,1) 40%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 40%, transparent 100%);
+}
+
+#particles-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ==================== ROBOT AVATAR & HOLOGRAM EMITTER (Screenshot 3) ==================== */
+.scene-robot-wrapper {
+  position: fixed;
+  bottom: 24px;
+  right: 12%;
+  z-index: 50;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+  will-change: left, transform;
+}
+
+.scene-robot-avatar {
+  width: 56px;
+  height: 64px;
+  filter: drop-shadow(0 0 12px var(--cyan-glow));
+}
+
+.hologram-emitter {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 8px;
+  animation: floatHolo 3s ease-in-out infinite;
+}
+
+@keyframes floatHolo {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.hologram-beam {
+  width: 2px;
+  height: 24px;
+  background: linear-gradient(to top, rgba(79, 227, 255, 0.6), transparent);
+  box-shadow: 0 0 8px var(--cyan);
+}
+
+.hologram-badge {
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--magenta);
+  background: rgba(255, 46, 136, 0.15);
+  box-shadow: 0 0 12px var(--magenta-glow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.holo-pink-square {
+  width: 14px;
+  height: 8px;
+  background: var(--magenta);
+}
+
+.holo-cyan-strip {
+  width: 14px;
+  height: 3px;
+  background: var(--cyan);
+}
+
+/* ==================== CINEMATIC PINNED SCROLL STAGE ==================== */
+.cinematic-scroll-track {
+  position: relative;
+  width: 100%;
+  height: 600vh; /* Long rich scroll track */
+}
+
+.cinematic-pinned-viewport {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  perspective: 1200px;
+}
+
+.camera-parallax-rig {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.scene-camera {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+/* Stage Acts */
+.stage-act {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--hud-height) + 20px) 48px 80px 48px;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.act-inner {
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+}
+
+/* ==================== ACT 0: HERO (Screenshot 3) ==================== */
+.hero-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 40px;
+  align-items: center;
+  transform-style: preserve-3d;
+}
+
+.system-online-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--green);
+  font-family: var(--font-pixel);
+  font-size: 8.5px;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.system-online-box {
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+}
+
+.hero-tag {
+  font-family: var(--font-terminal);
+  font-size: 24px;
+  color: var(--ink);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stage-label-box {
+  width: 7px;
+  height: 7px;
+  background: var(--amber);
+  box-shadow: 0 0 6px var(--amber);
+}
+
+.hero-headline {
+  font-family: var(--font-terminal);
+  font-size: clamp(60px, 8.5vw, 96px);
+  line-height: 0.95;
+  color: var(--ink);
+  margin-bottom: 24px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transform-style: preserve-3d;
+}
+
+.hero-sub {
+  font-size: 26px;
+  color: var(--muted);
+  margin-bottom: 32px;
+  line-height: 1.35;
+  max-width: 580px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* RPG Character Status Card (Screenshot 3) */
+.rpg-status-card {
+  background: var(--bg2);
+  border: 1px solid var(--cyan-dim);
+  padding: 20px 24px;
+  box-shadow: 0 0 24px rgba(79, 227, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rpg-status-card:hover {
+  transform: perspective(600px) rotateY(-5deg) rotateX(4deg);
+  box-shadow: 0 0 32px rgba(79, 227, 255, 0.15);
+}
+
+.rpg-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(15, 95, 115, 0.3);
+  padding-bottom: 10px;
+}
+
+.rpg-status-box {
+  width: 6px;
+  height: 6px;
+  background: var(--amber);
+  box-shadow: 0 0 6px var(--amber);
+}
+
+.rpg-card-title {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: var(--amber);
+  letter-spacing: 1px;
+}
+
+.rpg-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-terminal);
+  font-size: 20px;
+}
+
+.rpg-label {
+  color: var(--muted);
+}
+
+.rpg-val {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  letter-spacing: 0.5px;
+}
+
+.cyan-val { color: var(--cyan); }
+.green-val { color: var(--green); }
+.amber-val { color: var(--amber); }
+
+.hp-bar-track {
+  width: 120px;
+  height: 8px;
+  background: var(--bg3);
+  border: 1px solid var(--cyan-dim);
+  padding: 1px;
+}
+
+.hp-bar-fill {
+  width: 85%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--green));
+  box-shadow: 0 0 6px var(--cyan);
+}
+
+/* ==================== COMMON STAGE ELEMENTS ==================== */
+.stage-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--amber);
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.zone-title {
+  font-family: var(--font-terminal);
+  font-size: 48px;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.zone-subtitle {
+  font-family: var(--font-terminal);
+  font-size: 24px;
+  color: var(--muted);
+  max-width: 760px;
+  line-height: 1.35;
+  margin-bottom: 28px;
+}
+
+/* ==================== ACT 1: TERMINAL & BLAST DOORS ==================== */
+.blast-door-left, .blast-door-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: rgba(7, 9, 18, 0.96);
+  border-right: 2px solid var(--cyan-dim);
+  z-index: 12;
+  pointer-events: none;
+  opacity: 0;
+}
+.blast-door-left { left: 0; }
+.blast-door-right { right: 0; border-left: 2px solid var(--cyan-dim); border-right: none; }
+
+.terminal-console-3d {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.terminal-interactive-kiosk {
+  background: var(--bg2);
+  border: 1px solid var(--cyan-dim);
+  padding: 28px;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  max-width: 860px;
+  transform-style: preserve-3d;
+}
+
+.terminal-interactive-kiosk:hover {
+  border-color: var(--cyan);
+  box-shadow: 0 0 24px rgba(79, 227, 255, 0.15);
+}
+
+.terminal-screen {
+  background: var(--bg3);
+  border: 1px solid rgba(79, 227, 255, 0.2);
+  padding: 24px;
+  position: relative;
+  min-height: 180px;
+}
+
+.terminal-text-body {
+  font-size: 24px;
+  line-height: 1.45;
+  color: var(--ink);
+  white-space: pre-wrap;
+}
+
+.terminal-cursor {
+  display: inline-block;
+  width: 10px;
+  height: 20px;
+  background: var(--cyan);
+  vertical-align: middle;
+  margin-left: 4px;
+  animation: cursorBlink 0.8s infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.walk-up-indicator {
+  position: absolute;
+  top: -24px;
+  right: 20px;
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: var(--amber);
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ==================== ACT 2: DATA CORE 3D ORBITAL MATRIX ==================== */
+.skills-3d-scene {
+  perspective: 1400px;
+  transform-style: preserve-3d;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+  transform-style: preserve-3d;
+}
+
+.skill-card {
+  background: var(--bg2);
+  border: 1px solid var(--cyan-dim);
+  padding: 16px 20px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+  min-height: 100px;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.skill-card:hover {
+  transform: translateZ(28px) scale(1.04);
+}
+
+.skill-card.legendary { border-color: var(--amber); }
+.skill-card.legendary:hover { box-shadow: 0 0 20px var(--amber-glow); }
+.skill-card.rare { border-color: var(--cyan); }
+.skill-card.rare:hover { box-shadow: 0 0 20px var(--cyan-glow); }
+.skill-card.common { border-color: var(--cyan-dim); }
+.skill-card.common:hover { border-color: var(--muted); box-shadow: 0 0 14px rgba(111, 131, 163, 0.2); }
+
+.skill-card-tier {
+  font-family: var(--font-pixel);
+  font-size: 7.5px;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+.skill-card.legendary .skill-card-tier { color: var(--amber); }
+.skill-card.rare .skill-card-tier { color: var(--cyan); }
+.skill-card.common .skill-card-tier { color: var(--muted); }
+
+.skill-card-name {
+  font-family: var(--font-terminal);
+  font-size: 28px;
+  color: var(--ink);
+  line-height: 1.1;
+  white-space: pre-line;
+}
+
+.skill-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  font-family: var(--font-terminal);
+  font-size: 19px;
+  color: var(--muted);
+  padding-top: 14px;
+  border-top: 1px solid rgba(15, 95, 115, 0.25);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-color-box {
+  width: 8px;
+  height: 8px;
+}
+
+/* ==================== ACT 3: ARCADE ROW ISOMETRIC RUNWAY ==================== */
+.arcade-runway-3d {
+  perspective: 1600px;
+  transform-style: preserve-3d;
+}
+
+.arcade-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  transform-style: preserve-3d;
+}
+
+.arcade-cabinet {
+  background: var(--bg2);
+  border: 1px solid var(--cyan-dim);
+  padding: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 320px;
+  transform-style: preserve-3d;
+}
+
+.arcade-cabinet:hover {
+  border-color: var(--cyan);
+  transform: translateZ(36px) translateY(-6px);
+  box-shadow: 0 0 32px var(--cyan-glow);
+}
+
+.cabinet-level-tag {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.cabinet-title {
+  font-family: var(--font-terminal);
+  font-size: 28px;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.cabinet-screen {
+  background: var(--bg3);
+  border: 1px solid rgba(79, 227, 255, 0.2);
+  height: 120px;
+  margin: 12px 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.cabinet-pixel-canvas {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+.cabinet-desc {
+  font-size: 21px;
+  color: var(--muted);
+  line-height: 1.35;
+  margin-bottom: 14px;
+}
+
+.cabinet-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-chip {
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  padding: 3px 6px;
+  background: rgba(15, 95, 115, 0.2);
+  border: 1px solid var(--cyan-dim);
+  color: var(--cyan);
+}
+
+/* ==================== ACT 4: BEACON WIREFRAME BOX ==================== */
+.beacon-terminal-box {
+  background: var(--bg2);
+  border: 1px solid var(--cyan);
+  padding: 28px 32px;
+  max-width: 720px;
+  position: relative;
+  box-shadow: 0 0 28px rgba(79, 227, 255, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.beacon-terminal-box:hover {
+  transform: perspective(600px) rotateX(2deg);
+  box-shadow: 0 0 36px rgba(79, 227, 255, 0.22);
+}
+
+.beacon-command-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.beacon-command-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 25px;
+}
+
+.cmd-prefix {
+  color: var(--green);
+}
+
+.cmd-link {
+  color: var(--cyan);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.15s ease, text-shadow 0.15s ease;
+}
+
+.cmd-link:hover {
+  color: #ffffff;
+  text-shadow: 0 0 8px var(--cyan);
+}
+
+.beacon-footer-area {
+  margin-top: 24px;
+  text-align: center;
+  padding: 12px 0;
+}
+
+.insert-coin-text {
+  font-family: var(--font-pixel);
+  font-size: 9.5px;
+  color: var(--magenta);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  text-shadow: 0 0 8px var(--magenta-glow);
+}
+
+.copyright-text {
+  font-family: var(--font-terminal);
+  font-size: 20px;
+  color: var(--muted);
+}
+
+/* ==================== REUSABLE INTERACTION DRAWER PANEL (§5) ==================== */
+.interaction-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 6, 14, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 950;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.interaction-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.interaction-drawer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: min(92vw, 760px);
+  max-height: 82vh;
+  background: var(--bg2);
+  border: 1px solid var(--cyan);
+  border-bottom: none;
+  box-shadow: 0 -8px 36px rgba(79, 227, 255, 0.25);
+  z-index: 960;
+  overflow-y: auto;
+  padding: 32px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--cyan-dim);
+  padding-bottom: 12px;
+}
+
+.drawer-close-btn {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: var(--magenta);
+  background: transparent;
+  border: 1px solid var(--magenta);
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.drawer-close-btn:hover {
+  background: var(--magenta);
+  color: var(--bg);
+  box-shadow: 0 0 10px var(--magenta);
+}
+
+.drawer-title {
+  font-family: var(--font-terminal);
+  font-size: 38px;
+  color: var(--ink);
+}
+
+.drawer-tagline {
+  font-size: 24px;
+  color: var(--cyan);
+  margin-top: -8px;
+}
+
+.drawer-metrics {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: var(--amber);
+  background: rgba(255, 178, 56, 0.06);
+  border: 1px solid var(--amber);
+  padding: 8px 12px;
+  line-height: 1.5;
+}
+
+.drawer-description {
+  font-size: 22px;
+  color: var(--ink);
+  line-height: 1.45;
+}
+
+.drawer-footer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--cyan-dim);
+}
+
+.stagger-item {
+  will-change: transform, opacity;
+}
+
+@media (max-width: 900px) {
+  .hero-grid-layout {
+    grid-template-columns: 1fr;
+  }
+  .hero-right-widget {
+    display: none;
+  }
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .hud-header {
+    padding: 0 12px;
+  }
+  .hud-track-container {
+    margin: 0 8px;
+  }
+  .stage-act {
+    padding: calc(var(--hud-height) + 16px) 16px 60px 16px;
+  }
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+  .interaction-drawer {
+    padding: 20px 16px;
+    width: 100vw;
+  }
+}
