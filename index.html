@@ -165,104 +165,128 @@
       <div class="camera-parallax-rig" id="camera-parallax-rig">
         <div class="scene-camera" id="scene-camera">
 
-          <!-- ==================== ACT 0: BOOT (Hero) ==================== -->
+          <!-- ==================== ACT 0: BOOT (Modern Cyberpunk Centerpiece) ==================== -->
           <section class="stage-act act-boot" id="act-boot" aria-labelledby="hero-title">
-            <div class="act-inner hero-grid-layout" id="hero-grid-container">
-              <!-- Left Hero Content -->
-              <div class="hero-left-content" id="hero-text-block">
-                <div class="hero-header-row">
-                  <div class="system-online-badge">
-                    <span class="system-online-box"></span>
-                    <span>SYSTEM ONLINE</span>
-                  </div>
-                  <div class="hero-live-clock" id="hero-live-clock">
-                    SYS_TIME: 2026.08.29 // 20:35:00 UTC
-                  </div>
-                </div>
+            <div class="act-inner hero-modern-stage" id="hero-modern-stage">
+              
+              <!-- 4-Corner Target Reticles (Reference Screenshot) -->
+              <div class="hero-corner-bracket top-left"></div>
+              <div class="hero-corner-bracket top-right"></div>
+              <div class="hero-corner-bracket bottom-left"></div>
+              <div class="hero-corner-bracket bottom-right"></div>
 
-                <div class="hero-tag">
-                  <span class="stage-label-box"></span>
-                  <span>BOOT // PORTFOLIO.EXE</span>
+              <!-- Top Status Bar -->
+              <div class="hero-modern-header">
+                <div class="hero-brand-tag">
+                  <span class="hero-brand-dot"></span>
+                  <span>AHMED AFFES // ARCHITECT</span>
                 </div>
-                <h1 class="hero-headline glitch-text" id="hero-title">
-                  YOUR NAME<br>HERE
+                <div class="hero-live-clock" id="hero-live-clock">
+                  SYS_TIME: 2026.08.29 // 20:45:00 UTC
+                </div>
+                <div class="hero-status-pill">
+                  <span class="status-pulse-dot"></span>
+                  <span>AVAILABLE FOR WORK</span>
+                </div>
+              </div>
+
+              <!-- Giant Futuristic Headline -->
+              <div class="hero-giant-headline-wrapper">
+                <h1 class="hero-giant-headline glitch-text" id="hero-title">
+                  CYBERPUNK
                 </h1>
-                <p class="hero-sub" id="hero-sub">
-                  Full-stack builder. I engineer high-performance web systems, responsive mobile tools & microsecond clients — navigating through a cyberpunk game world.
-                </p>
+              </div>
 
-                <!-- Hero Mission Objective Card -->
-                <div class="mission-objective-card">
-                  <div class="objective-header">
-                    <span class="objective-pulse"></span>
-                    <span class="objective-title">CURRENT DIRECTIVE</span>
+              <!-- Central Cyber Operator Centerpiece with Interactive HUD Callouts -->
+              <div class="hero-centerpiece-container">
+                
+                <!-- Left HUD Callout: Stories & Lore -->
+                <div class="hero-hud-callout left-callout" id="hud-callout-left">
+                  <div class="hud-callout-header">
+                    <span class="hud-callout-bullet"></span>
+                    <span class="hud-callout-title">STORIES & LORE</span>
                   </div>
-                  <div class="objective-desc">
-                    Explore sectors 01 through 04. Walk up and decrypt live archives.
-                  </div>
-                  <!-- Audio Equalizer Visualizer Bars -->
-                  <div class="hero-audio-visualizer">
-                    <span class="eq-bar eq-1"></span>
-                    <span class="eq-bar eq-2"></span>
-                    <span class="eq-bar eq-3"></span>
-                    <span class="eq-bar eq-4"></span>
-                    <span class="eq-bar eq-5"></span>
-                    <span class="eq-bar eq-6"></span>
-                    <span class="eq-label">TELEMETRY STREAM // 60 FPS</span>
+                  <p class="hud-callout-desc">
+                    Full-stack systems architect engineering high-performance web applications, distributed clients & real-time canvas worlds.
+                  </p>
+                  <div class="hud-pointer-line left-line">
+                    <span class="hud-pin-target"></span>
                   </div>
                 </div>
 
-                <div class="hero-actions">
-                  <button class="btn-pixel primary" id="hero-view-projects-btn">
-                    VIEW PROJECTS
+                <!-- Central Illuminated Cyberpunk Character Frame -->
+                <div class="hero-character-frame" id="hero-character-frame">
+                  <div class="hero-character-glow-ring"></div>
+                  <img
+                    src="/assets/cyber_operator_portrait.jpg"
+                    alt="Cyberpunk Humanoid Operator"
+                    class="hero-character-image"
+                    id="hero-character-img"
+                  />
+                  <div class="hero-scanline-laser"></div>
+                  <div class="hero-character-hud-overlay">
+                    <div class="char-hud-tag">OPERATOR // UNIT_07</div>
+                    <div class="char-hud-status">SCAN: ACTIVE</div>
+                  </div>
+                </div>
+
+                <!-- Right HUD Callout: Events & Updates -->
+                <div class="hero-hud-callout right-callout" id="hud-callout-right">
+                  <div class="hud-callout-header">
+                    <span class="hud-callout-bullet"></span>
+                    <span class="hud-callout-title">EVENTS AND UPDATES</span>
+                  </div>
+                  <p class="hud-callout-desc">
+                    Explore high-velocity projects where modern full-stack engineering meets cutting-edge motion choreography.
+                  </p>
+                  <button class="hero-cta-orange-btn" id="hero-view-projects-btn">
+                    EXPLORE WORK ↗
                   </button>
-                  <button class="btn-pixel secondary" id="hero-open-channel-btn">
-                    OPEN CHANNEL
-                  </button>
+                  <div class="hud-pointer-line right-line">
+                    <span class="hud-pin-target"></span>
+                  </div>
                 </div>
               </div>
 
-              <!-- Right RPG Character Status Card (Screenshot 3) -->
-              <div class="hero-right-widget" id="hero-rpg-block">
-                <div class="rpg-status-card">
-                  <div class="rpg-card-header">
-                    <span class="rpg-status-box"></span>
-                    <span class="rpg-card-title">UNIT_07 STATUS</span>
+              <!-- Bottom Row: Floating Metric Cards (Reference Screenshot) -->
+              <div class="hero-bottom-floating-row">
+                
+                <!-- Left Floating Glass Card: Experience & Avatar -->
+                <div class="floating-metric-card left-card" id="hero-metric-left">
+                  <div class="metric-avatar-wrapper">
+                    <img src="/assets/operator_card_avatar.jpg" alt="Soldier Avatar" class="metric-avatar-img" />
+                    <span class="avatar-online-badge"></span>
                   </div>
-                  <div class="rpg-row">
-                    <span class="rpg-label">CLASS</span>
-                    <span class="rpg-val cyan-val">FULL-STACK</span>
-                  </div>
-                  <div class="rpg-row">
-                    <span class="rpg-label">HP</span>
-                    <div class="hp-bar-track">
-                      <div class="hp-bar-fill"></div>
-                    </div>
-                  </div>
-                  <div class="rpg-row">
-                    <span class="rpg-label">EXP</span>
-                    <span class="rpg-val amber-val">6+ YRS PROD</span>
-                  </div>
-                  <div class="rpg-row">
-                    <span class="rpg-label">PROJECTS</span>
-                    <span class="rpg-val green-val">12 SHIPPED</span>
-                  </div>
-                  <div class="rpg-row">
-                    <span class="rpg-label">CORE</span>
-                    <span class="rpg-val cyan-val">ONLINE // 100%</span>
+                  <div class="metric-text-block">
+                    <div class="metric-number-highlight">76,285K+</div>
+                    <div class="metric-heading">Experience the Future</div>
+                    <div class="metric-sub">Distributed systems & pixel-perfect clients</div>
                   </div>
                 </div>
+
+                <!-- Center Prompt -->
+                <div class="hero-scroll-directive">
+                  <span class="scroll-directive-arrow">▼</span>
+                  <span class="scroll-directive-text">SCROLL TO COMMENCE MISSION</span>
+                </div>
+
+                <!-- Right Floating Glass Card: Years of Experience -->
+                <div class="floating-metric-card right-card" id="hero-metric-right">
+                  <div class="metric-big-stat">6+</div>
+                  <div class="metric-text-block">
+                    <div class="metric-heading">Years of Experience</div>
+                    <div class="metric-sub">100% Hand-tuned · Zero runtime errors</div>
+                  </div>
+                </div>
+
               </div>
+
             </div>
           </section>
 
-          <!-- ==================== ACT 1: TERMINAL (About / Log / Robot Face) ==================== -->
+          <!-- ==================== ACT 1: TERMINAL (Neural Mainframe / About & Robot Face) ==================== -->
           <section class="stage-act act-terminal" id="act-terminal" aria-labelledby="terminal-title">
-            <!-- Blast Doors Wrapper (Splits apart when leaving Act 1) -->
-            <div class="blast-door-left" id="blast-door-left"></div>
-            <div class="blast-door-right" id="blast-door-right"></div>
-
-            <div class="act-inner terminal-console-3d" id="terminal-console-wrapper">
+            <div class="act-inner">
               <div class="stage-label">
                 <span class="stage-label-box"></span>
                 <span>STAGE 01 — NEURAL MAINFRAME</span>
@@ -272,49 +296,41 @@
                 Interactive biometric avatar tracks your cursor. Select memory sectors or click the terminal to inspect logs.
               </p>
 
-              <!-- Two-Column About Layout: Left Robot Face | Right Terminal & Dossier -->
+              <!-- Mainframe Layout: Left Robot Face + Right Bio Dossier Console -->
               <div class="about-grid-layout">
-                <!-- Left Column: Interactive Mouse-Tracking Cyber Robot Head -->
-                <div class="robot-face-wrapper">
-                  <div class="robot-face-chassis" id="about-robot-face" role="region" aria-label="Interactive Robot Avatar Head">
+                
+                <!-- Interactive Robot Face with Vector Mouse Eye-Tracking -->
+                <div class="robot-face-wrapper" id="robot-face-container">
+                  <div class="robot-face-chassis" id="about-robot-face" role="region" aria-label="Interactive Mouse Tracking Robot Face">
                     <div class="face-corner-bracket top-left"></div>
                     <div class="face-corner-bracket top-right"></div>
-                    <div class="face-corner-bracket btm-left"></div>
-                    <div class="face-corner-bracket btm-right"></div>
-
-                    <!-- HUD Visor Laser Scanline -->
-                    <div class="robot-visor-scanline"></div>
+                    <div class="face-corner-bracket bottom-left"></div>
+                    <div class="face-corner-bracket bottom-right"></div>
 
                     <!-- Face Header Telemetry -->
-                    <div class="face-telemetry-header">
+                    <div class="face-header-bar">
                       <span class="face-status-dot"></span>
-                      <span class="face-tag">UNIT_07 // GAZE_TRACKER</span>
+                      <span class="face-telemetry-label">UNIT_07 // GAZE_TRACKER</span>
                       <span class="face-fps">60 FPS</span>
                     </div>
 
-                    <!-- Eye Sockets Container -->
+                    <!-- Robot Eye Sockets & Interactive Pupils -->
                     <div class="robot-eyes-row">
-                      <!-- Left Eye Socket -->
                       <div class="robot-eye-socket" id="robot-eye-left">
-                        <div class="eye-grid-bg"></div>
-                        <div class="robot-pupil" id="robot-pupil-left">
-                          <div class="pupil-core"></div>
-                          <div class="pupil-glow"></div>
-                        </div>
+                        <div class="eye-grid-lines"></div>
+                        <div class="robot-pupil" id="robot-pupil-left"></div>
                       </div>
-
-                      <!-- Right Eye Socket -->
                       <div class="robot-eye-socket" id="robot-eye-right">
-                        <div class="eye-grid-bg"></div>
-                        <div class="robot-pupil" id="robot-pupil-right">
-                          <div class="pupil-core"></div>
-                          <div class="pupil-glow"></div>
-                        </div>
+                        <div class="eye-grid-lines"></div>
+                        <div class="robot-pupil" id="robot-pupil-right"></div>
                       </div>
                     </div>
 
-                    <!-- Audio Waveform Mouth Equalizer -->
-                    <div class="robot-mouth-visualizer" id="robot-mouth">
+                    <!-- Laser Scanline Visor Sweeping Animation -->
+                    <div class="robot-visor-scanline"></div>
+
+                    <!-- Animated Audio Voice Equalizer Mouth -->
+                    <div class="robot-mouth-equalizer" id="robot-mouth">
                       <span class="mouth-bar bar-1"></span>
                       <span class="mouth-bar bar-2"></span>
                       <span class="mouth-bar bar-3"></span>
@@ -322,40 +338,49 @@
                       <span class="mouth-bar bar-5"></span>
                       <span class="mouth-bar bar-6"></span>
                       <span class="mouth-bar bar-7"></span>
-                      <span class="mouth-bar bar-8"></span>
                     </div>
 
-                    <!-- Face Bottom Status -->
-                    <div class="face-bottom-tag">
-                      [MOUSE OVER TO ENGAGE · CLICK TO WINK]
-                    </div>
+                    <div class="face-footer-tag">[MOUSE OVER TO ENGAGE · CLICK TO WINK]</div>
                   </div>
                 </div>
 
-                <!-- Right Column: Interactive Terminal Screen & Memory Dossier -->
+                <!-- Right Terminal Bio Dossier Console -->
                 <div class="terminal-dossier-column">
-                  <!-- Memory Sector Tabs -->
-                  <div class="bio-tabs-row" id="bio-tabs">
+                  
+                  <!-- Bio Dossier Memory Tabs -->
+                  <div class="bio-tabs-header" id="bio-tabs">
                     <button class="bio-tab-btn active" data-tab="0">01 // OPERATOR LOG</button>
                     <button class="bio-tab-btn" data-tab="1">02 // TIMELINE</button>
                     <button class="bio-tab-btn" data-tab="2">03 // NEURAL SPECS</button>
                   </div>
 
-                  <!-- Terminal Interactive Kiosk -->
-                  <div class="terminal-interactive-kiosk" id="terminal-kiosk" role="button" tabindex="0" aria-label="Interactive Terminal Console">
-                    <div class="walk-up-indicator">WALK UP ▲ [CLICK TO EXPAND]</div>
-                    <div class="terminal-screen">
-                      <div class="screen-mask"></div>
-                      <p class="terminal-text-body font-terminal" id="terminal-bio-body" data-full-text="Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Alex. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads. Step into the Data Core or approach an Arcade Cabinet to inspect live archives."></p>
-                      <span class="terminal-cursor"></span>
+                  <!-- Dossier Display Screen -->
+                  <div class="terminal-interactive-kiosk" id="terminal-kiosk" role="region" aria-label="Interactive Terminal Log Screen">
+                    <div class="terminal-kiosk-scanlines" aria-hidden="true"></div>
+                    <div class="terminal-kiosk-header">
+                      <div class="terminal-dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                      </div>
+                      <div class="terminal-status">TELEMETRY_PORT // 2026</div>
+                      <div class="terminal-action-hint">[CLICK TO EXPAND]</div>
                     </div>
+                    
+                    <div class="terminal-body" id="terminal-bio-body">
+                      Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Alex. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads. Step into the Data Core or approach an Arcade Cabinet to inspect live archives.
+                    </div>
+                    <span class="terminal-cursor" aria-hidden="true"></span>
                   </div>
+
                 </div>
+
               </div>
+
             </div>
           </section>
 
-          <!-- ==================== ACT 2: DATA CORE (Skills 3D Orbital Matrix) ==================== -->
+          <!-- ==================== ACT 2: INVENTORY (Skills 3D Orbital Matrix) ==================== -->
           <section class="stage-act act-skills" id="act-skills" aria-labelledby="skills-title">
             <div class="act-inner">
               <div class="stage-label">
@@ -367,30 +392,30 @@
                 Border color = depth of production experience. Interactive 3D matrix responds to cursor and scroll velocity. Click any card to inspect telemetry.
               </p>
 
-              <!-- Skills Cards 3D Container -->
+              <!-- Skills 3D Orbital Matrix -->
               <div class="skills-3d-scene" id="skills-3d-scene">
                 <div class="skills-grid" id="skills-grid"></div>
               </div>
 
-              <!-- Skills Legend -->
-              <div class="skill-legend">
+              <!-- Legend -->
+              <div class="skill-legend" id="skill-legend">
                 <div class="legend-item">
-                  <span class="legend-color-box" style="background: var(--muted);"></span>
+                  <span class="legend-color-box" style="background: var(--cyan-dim); border: 1px solid var(--muted);"></span>
                   <span>COMMON — working knowledge</span>
                 </div>
                 <div class="legend-item">
-                  <span class="legend-color-box" style="background: var(--cyan);"></span>
+                  <span class="legend-color-box" style="background: var(--cyan); box-shadow: 0 0 6px var(--cyan);"></span>
                   <span>RARE — shipped production work</span>
                 </div>
                 <div class="legend-item">
-                  <span class="legend-color-box" style="background: var(--amber);"></span>
+                  <span class="legend-color-box" style="background: var(--amber); box-shadow: 0 0 6px var(--amber);"></span>
                   <span>LEGENDARY — go-to, daily driver</span>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- ==================== ACT 3: ARCADE ROW (Projects Isometric Runway) ==================== -->
+          <!-- ==================== ACT 3: ARCADE ROW (Projects Level Select) ==================== -->
           <section class="stage-act act-projects" id="act-projects" aria-labelledby="projects-title">
             <div class="act-inner">
               <div class="stage-label">
@@ -402,100 +427,121 @@
                 Four interactive arcade units docked along the isometric cyber runway. Click any unit to enter inspection mode.
               </p>
 
-              <!-- Arcade Cabinet 3D Runway -->
+              <!-- Arcade Cabinet Runway -->
               <div class="arcade-runway-3d" id="arcade-runway">
                 <div class="arcade-row" id="arcade-row"></div>
               </div>
             </div>
           </section>
 
-          <!-- ==================== ACT 4: BEACON (Save Point / Interactive Cyber CLI Terminal) ==================== -->
+          <!-- ==================== ACT 4: BEACON (Save Point / Deep Space Neural Uplink) ==================== -->
           <section class="stage-act act-contact" id="act-contact" aria-labelledby="contact-title">
             <div class="act-inner">
               <div class="stage-label">
                 <span class="stage-label-box"></span>
                 <span>STAGE 04 — SECURE UPLINK</span>
               </div>
-              <h2 class="zone-title" id="contact-title">Interactive Terminal Console</h2>
+              <h2 class="zone-title" id="contact-title">Direct Neural Uplink</h2>
               <p class="zone-subtitle">
-                Type commands or click quick action pills below to execute system queries, unlock secrets, or initiate transmission.
+                Deep-space transmission channels are open. Transmit for full-stack contracts, creative architecture, or technical collaboration.
               </p>
 
-              <!-- Interactive Cyber CLI Terminal Window -->
-              <div class="cli-terminal-window" id="cli-terminal-window" role="region" aria-label="Interactive Hacker CLI Terminal">
-                <!-- Terminal Title Bar -->
-                <div class="cli-header-bar">
-                  <div class="cli-window-dots">
-                    <span class="dot red-dot"></span>
-                    <span class="dot yellow-dot"></span>
-                    <span class="dot green-dot"></span>
-                  </div>
-                  <div class="cli-window-title">UNIT_07_BASH // TTY1 [SECURE UPLINK]</div>
-                  <div class="cli-window-status">ONLINE · 256-BIT</div>
-                </div>
-
-                <!-- CLI Output Buffer Log -->
-                <div class="cli-output-log" id="cli-output-log"></div>
-
-                <!-- CLI Input Line -->
-                <div class="cli-input-line">
-                  <span class="cli-prompt-label">visitor@unit07:~$</span>
-                  <input
-                    type="text"
-                    class="cli-input-field"
-                    id="cli-input"
-                    autocomplete="off"
-                    spellcheck="false"
-                    placeholder="Type command (e.g. help, skills, projects, contact, matrix, game)..."
-                    aria-label="Terminal Command Input"
-                  />
-                  <span class="terminal-cursor"></span>
-                </div>
-
-                <!-- Quick-Click Command Pills -->
-                <div class="cli-pills-bar">
-                  <span class="pills-label">QUICK EXEC:</span>
-                  <button class="cli-pill-btn" data-cmd="help">help</button>
-                  <button class="cli-pill-btn" data-cmd="about">about</button>
-                  <button class="cli-pill-btn" data-cmd="skills">skills</button>
-                  <button class="cli-pill-btn" data-cmd="projects">projects</button>
-                  <button class="cli-pill-btn" data-cmd="contact">contact</button>
-                  <button class="cli-pill-btn" data-cmd="hire">hire</button>
-                  <button class="cli-pill-btn" data-cmd="matrix">matrix</button>
-                  <button class="cli-pill-btn" data-cmd="game">game</button>
-                  <button class="cli-pill-btn" data-cmd="secret">secret</button>
-                  <button class="cli-pill-btn" data-cmd="clear">clear</button>
-                </div>
-              </div>
-
-              <!-- Quick Transmission Links Cards -->
+              <!-- Direct Transmission Cards Grid -->
               <div class="beacon-quick-links" id="beacon-kiosk">
                 <a href="mailto:alex.developer@example.com" class="quick-link-card" id="beacon-email-link">
                   <span class="card-icon">✉</span>
                   <span class="card-title">DIRECT EMAIL</span>
                   <span class="card-sub">alex.developer@example.com</span>
+                  <span class="card-status-tag">FAST RESPONSE</span>
                 </a>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="quick-link-card" id="beacon-github-link">
+                <a href="https://github.com/Ahmed-Affes" target="_blank" rel="noopener noreferrer" class="quick-link-card" id="beacon-github-link">
                   <span class="card-icon">⚡</span>
                   <span class="card-title">GITHUB PROFILE</span>
-                  <span class="card-sub">github.com/yourname</span>
+                  <span class="card-sub">github.com/Ahmed-Affes</span>
+                  <span class="card-status-tag">SOURCE CODE ↗</span>
                 </a>
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="quick-link-card" id="beacon-linkedin-link">
                   <span class="card-icon">◈</span>
                   <span class="card-title">LINKEDIN UPLINK</span>
-                  <span class="card-sub">linkedin.com/in/yourname</span>
+                  <span class="card-sub">linkedin.com/in/ahmed-affes</span>
+                  <span class="card-status-tag">CONNECT ↗</span>
+                </a>
+                <a href="#" class="quick-link-card" id="beacon-resume-link">
+                  <span class="card-icon">📜</span>
+                  <span class="card-title">DOSSIER / RESUME</span>
+                  <span class="card-sub">curriculum_vitae_2026.pdf</span>
+                  <span class="card-status-tag">DOWNLOAD ↗</span>
                 </a>
               </div>
 
               <!-- Footer Area -->
               <footer class="beacon-footer-area" role="contentinfo">
                 <div class="insert-coin-text">GAME OVER — INSERT COIN TO CONTINUE</div>
-                <div class="copyright-text">© 2026 YOUR NAME · built pixel by pixel, not by template</div>
+                <div class="copyright-text">© 2026 AHMED AFFES · built pixel by pixel, not by template</div>
               </footer>
             </div>
           </section>
 
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Persistent Floating Bottom-Right Cyber CLI & Help Center Widget -->
+  <div class="floating-help-center" id="floating-help-center">
+    <button class="floating-help-btn" id="floating-help-toggle" aria-label="Open Command & Help Center">
+      <span class="help-btn-pulse"></span>
+      <span class="help-btn-icon">>_</span>
+      <span class="help-btn-text">TERMINAL & HELP</span>
+    </button>
+  </div>
+
+  <!-- Floating Terminal Modal & Hacker Drawer -->
+  <div class="floating-cli-modal" id="floating-cli-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="floating-cli-backdrop" id="floating-cli-backdrop"></div>
+    <div class="floating-cli-container" id="cli-terminal-window" role="region" aria-label="Interactive Hacker CLI Terminal">
+      <!-- Terminal Header -->
+      <div class="cli-header-bar">
+        <div class="cli-window-dots">
+          <span class="dot red-dot" id="cli-close-dot" title="Close Terminal"></span>
+          <span class="dot yellow-dot"></span>
+          <span class="dot green-dot"></span>
+        </div>
+        <div class="cli-window-title">UNIT_07_BASH // TTY1 [COMMAND & HELP CENTER]</div>
+        <button class="cli-close-btn" id="cli-modal-close" aria-label="Close Terminal">✕ CLOSE [ESC]</button>
+      </div>
+
+      <!-- CLI Output Buffer Log -->
+      <div class="cli-output-log" id="cli-output-log"></div>
+
+      <!-- CLI Input Line -->
+      <div class="cli-input-line">
+        <span class="cli-prompt-label">visitor@unit07:~$</span>
+        <input
+          type="text"
+          class="cli-input-field"
+          id="cli-input"
+          autocomplete="off"
+          spellcheck="false"
+          placeholder="Type command (e.g. help, about, skills, projects, contact, matrix, game)..."
+          aria-label="Terminal Command Input"
+        />
+        <span class="terminal-cursor"></span>
+      </div>
+
+      <!-- Quick-Click Command Pills -->
+      <div class="cli-pills-bar">
+        <span class="pills-label">QUICK EXEC:</span>
+        <button class="cli-pill-btn" data-cmd="help">help</button>
+        <button class="cli-pill-btn" data-cmd="about">about</button>
+        <button class="cli-pill-btn" data-cmd="skills">skills</button>
+        <button class="cli-pill-btn" data-cmd="projects">projects</button>
+        <button class="cli-pill-btn" data-cmd="contact">contact</button>
+        <button class="cli-pill-btn" data-cmd="hire">hire</button>
+        <button class="cli-pill-btn" data-cmd="matrix">matrix</button>
+        <button class="cli-pill-btn" data-cmd="game">game</button>
+        <button class="cli-pill-btn" data-cmd="secret">secret</button>
+        <button class="cli-pill-btn" data-cmd="clear">clear</button>
       </div>
     </div>
   </div>

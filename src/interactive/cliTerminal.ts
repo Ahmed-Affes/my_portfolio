@@ -2,6 +2,7 @@ import { sounds } from '../audio/soundEngine';
 import { PORTFOLIO_DATA } from '../data/portfolioData';
 
 export class CyberCLITerminal {
+  private modalEl: HTMLElement | null;
   private terminalEl: HTMLElement | null;
   private outputEl: HTMLElement | null;
   private inputEl: HTMLInputElement | null;
@@ -9,17 +10,86 @@ export class CyberCLITerminal {
   private historyIndex: number = -1;
   private isMatrixRunning: boolean = false;
   private matrixAnimId: number | null = null;
+  private isOpen: boolean = false;
 
   constructor(terminalId: string = 'cli-terminal-window') {
+    this.modalEl = document.getElementById('floating-cli-modal');
     this.terminalEl = document.getElementById(terminalId);
     this.outputEl = document.getElementById('cli-output-log');
     this.inputEl = document.getElementById('cli-input') as HTMLInputElement;
 
-    if (!this.terminalEl || !this.outputEl || !this.inputEl) return;
-
+    this.initModalControls();
     this.initEventListeners();
     this.initQuickPills();
     this.printWelcomeMessage();
+  }
+
+  private initModalControls() {
+    const launcherBtn = document.getElementById('floating-help-toggle');
+    const closeBtn = document.getElementById('cli-modal-close');
+    const closeDot = document.getElementById('cli-close-dot');
+    const backdrop = document.getElementById('floating-cli-backdrop');
+
+    launcherBtn?.addEventListener('click', () => {
+      this.toggleModal();
+    });
+
+    closeBtn?.addEventListener('click', () => {
+      this.closeModal();
+    });
+
+    closeDot?.addEventListener('click', () => {
+      this.closeModal();
+    });
+
+    backdrop?.addEventListener('click', () => {
+      this.closeModal();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.isOpen) {
+        this.closeModal();
+      } else if ((e.key === '`' || e.key === '~') && !this.isTypingInInput(e.target)) {
+        e.preventDefault();
+        this.toggleModal();
+      } else if (e.ctrlKey && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        this.toggleModal();
+      }
+    });
+  }
+
+  private isTypingInInput(target: EventTarget | null): boolean {
+    if (!target) return false;
+    const tag = (target as HTMLElement).tagName;
+    return tag === 'INPUT' || tag === 'TEXTAREA';
+  }
+
+  public openModal() {
+    if (!this.modalEl) return;
+    this.isOpen = true;
+    sounds.playPanelOpen();
+    this.modalEl.classList.add('open');
+    this.modalEl.setAttribute('aria-hidden', 'false');
+    setTimeout(() => {
+      this.inputEl?.focus();
+    }, 100);
+  }
+
+  public closeModal() {
+    if (!this.modalEl) return;
+    this.isOpen = false;
+    sounds.playClose();
+    this.modalEl.classList.remove('open');
+    this.modalEl.setAttribute('aria-hidden', 'true');
+  }
+
+  public toggleModal() {
+    if (this.isOpen) {
+      this.closeModal();
+    } else {
+      this.openModal();
+    }
   }
 
   private initEventListeners() {
@@ -66,8 +136,9 @@ export class CyberCLITerminal {
   private printWelcomeMessage() {
     this.appendOutput(`
 <div class="cli-system-msg">
-  <span class="cli-cyan">UNIT_07 SECURE TERMINAL v2.6.0</span> [AUTHENTICATED]<br>
-  Type <span class="cli-amber">help</span> to view available system routines, or click the quick pills below.
+  <span class="cli-cyan">UNIT_07 COMMAND & HELP CENTER v2.6.0</span> [AUTHENTICATED]<br>
+  Type <span class="cli-amber">help</span> to view system routines, or click the quick pills below.<br>
+  <span class="cli-dim">Shortcut: Press <kbd class="cli-amber">~</kbd> or <kbd class="cli-amber">Ctrl+K</kbd> anywhere to toggle this terminal.</span>
 </div>
     `);
   }

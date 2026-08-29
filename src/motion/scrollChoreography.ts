@@ -151,22 +151,31 @@ export class ScrollChoreography {
     // =========================================================================
     masterTl
       // Act 0 peels apart in parallax layers
-      .to('.hero-left-column', {
-        xPercent: -35,
-        yPercent: -40,
-        scale: 0.85,
+      .to('.hero-hud-callout.left-callout', {
+        xPercent: -40,
         opacity: 0,
         filter: 'blur(8px)',
+        duration: 1.1,
+        ease: 'power2.inOut'
+      }, 0.8)
+      .to('.hero-hud-callout.right-callout', {
+        xPercent: 40,
+        opacity: 0,
+        filter: 'blur(8px)',
+        duration: 1.1,
+        ease: 'power2.inOut'
+      }, 0.8)
+      .to('.hero-character-frame', {
+        scale: 0.7,
+        opacity: 0,
+        filter: 'blur(10px)',
         duration: 1.2,
         ease: 'power2.inOut'
       }, 0.8)
-      .to('.hero-right-widget', {
-        xPercent: 35,
-        yPercent: -40,
-        scale: 0.85,
+      .to('.hero-bottom-floating-row', {
+        y: 40,
         opacity: 0,
-        filter: 'blur(8px)',
-        duration: 1.2,
+        duration: 1.0,
         ease: 'power2.inOut'
       }, 0.8)
       .to(actBoot, {
@@ -352,7 +361,7 @@ export class ScrollChoreography {
       .fromTo('.radar-circle', { scale: 0.1, opacity: 1 }, { scale: 2.4, opacity: 0, stagger: 0.15, duration: 1.4, ease: 'power2.out' }, 9.9)
       // Robot stands beneath orbital uplink
       .to(this.sceneRobotWrapperEl, { right: '40%', duration: 1.5, ease: 'power1.inOut' }, 9.4)
-      // Act 4 (Interactive Cyber CLI Terminal) drops in straight and crisp
+      // Act 4 (Direct Neural Uplink) drops in straight and crisp
       .set(actContact, { pointerEvents: 'auto' }, 9.6)
       .to(actContact, {
         yPercent: 0,
@@ -362,29 +371,18 @@ export class ScrollChoreography {
         duration: 1.3,
         ease: 'power3.out'
       }, 9.6)
-      .fromTo('.cli-terminal-window', {
-        scale: 0.88,
-        y: 50,
-        opacity: 0,
-        filter: 'blur(8px)'
-      }, {
-        scale: 1.0,
-        y: 0,
-        opacity: 1,
-        filter: 'blur(0px)',
-        duration: 1.2,
-        ease: 'power3.out'
-      }, 9.8)
       .fromTo('.quick-link-card', {
-        y: 40,
+        y: 45,
+        scale: 0.92,
         opacity: 0
       }, {
         y: 0,
+        scale: 1.0,
         opacity: 1,
         stagger: 0.08,
-        duration: 0.9,
+        duration: 1.0,
         ease: 'power3.out'
-      }, 10.0)
+      }, 9.8)
       .call(() => this.triggerMatrixDecryption(), [], 10.4);
 
     ScrollTrigger.refresh();
