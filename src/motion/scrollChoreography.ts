@@ -381,8 +381,8 @@ export class ScrollChoreography {
       .to('#skills-jumping-robot', { y: -12, duration: 0.08, yoyo: true, repeat: 2 }, 6.75);
 
     // =========================================================================
-    // 🕹️ CHAPTER 2 -> 3: DATA CORE OUT -> 3D ISOMETRIC ARCADE ALLEY (PROJECTS)
-    // Motion: 3D Isometric Drop & CRT Phosphor Ignition
+    // 🕹️ CHAPTER 2 -> 3: DATA CORE OUT -> 🛸 CYBER UFO TRACTOR BEAM DROP (PROJECTS)
+    // Motion: Orbital Dropship flight across 4 stations, beaming down each cabinet
     // =========================================================================
     masterTl
       // Act 2 slides into digital floor
@@ -406,8 +406,8 @@ export class ScrollChoreography {
         7.25
       )
 
-      // Act 3 (Arcade Runway) enters with 3D Isometric Stagger
-      .set(actProjects, { pointerEvents: 'auto' }, 7.2)
+      // Act 3 (Arcade Runway) enters
+      .set(actProjects, { pointerEvents: 'auto' }, 7.1)
       .to(actProjects, {
         yPercent: 0,
         scale: 1.0,
@@ -415,22 +415,103 @@ export class ScrollChoreography {
         filter: 'blur(0px)',
         duration: 0.8,
         ease: 'power3.out'
-      }, 7.2)
-      // 4 Cabinets drop down from 3D space with isometric rotation
-      .fromTo('.arcade-cabinet', {
-        y: -140,
-        rotateX: 45,
+      }, 7.1)
+
+      // 🛸 1. Cyber UFO Swoops in from upper orbit to Station 1 (left)
+      .fromTo('#projects-ufo-beamer', 
+        { y: -140, opacity: 0, scale: 0.5, xPercent: -150 },
+        { y: 0, opacity: 1, scale: 1.0, xPercent: -150, duration: 0.35, ease: 'power2.out' },
+        7.15
+      )
+
+      // Station 1: Tractor Beam fires -> Cabinet 1 drops from sky
+      .call(() => sounds.playUfoBeam(), [], 7.25)
+      .fromTo('#ufo-tractor-beam',
+        { opacity: 0, scaleY: 0 },
+        { opacity: 1, scaleY: 1, duration: 0.15, ease: 'power2.out' },
+        7.25
+      )
+      .fromTo('#arcade-row .arcade-cabinet:nth-child(1)',
+        { y: -130, opacity: 0, scale: 0.75, rotateX: 35 },
+        { 
+          y: 0, 
+          opacity: 1, 
+          scale: 1.0, 
+          rotateX: 0, 
+          duration: 0.35, 
+          ease: 'back.out(1.8)',
+          onStart: () => sounds.playCabinetLand()
+        },
+        7.30
+      )
+      .to('#ufo-tractor-beam', { opacity: 0, duration: 0.12 }, 7.50)
+
+      // 🛸 2. UFO flies to Station 2 (mid-left)
+      .to('#projects-ufo-beamer', { xPercent: -50, duration: 0.3, ease: 'power1.inOut' }, 7.55)
+      .call(() => sounds.playUfoBeam(), [], 7.65)
+      .to('#ufo-tractor-beam', { opacity: 1, duration: 0.12 }, 7.65)
+      .fromTo('#arcade-row .arcade-cabinet:nth-child(2)',
+        { y: -130, opacity: 0, scale: 0.75, rotateX: 35 },
+        { 
+          y: 0, 
+          opacity: 1, 
+          scale: 1.0, 
+          rotateX: 0, 
+          duration: 0.35, 
+          ease: 'back.out(1.8)',
+          onStart: () => sounds.playCabinetLand()
+        },
+        7.70
+      )
+      .to('#ufo-tractor-beam', { opacity: 0, duration: 0.12 }, 7.90)
+
+      // 🛸 3. UFO flies to Station 3 (mid-right)
+      .to('#projects-ufo-beamer', { xPercent: 50, duration: 0.3, ease: 'power1.inOut' }, 7.95)
+      .call(() => sounds.playUfoBeam(), [], 8.05)
+      .to('#ufo-tractor-beam', { opacity: 1, duration: 0.12 }, 8.05)
+      .fromTo('#arcade-row .arcade-cabinet:nth-child(3)',
+        { y: -130, opacity: 0, scale: 0.75, rotateX: 35 },
+        { 
+          y: 0, 
+          opacity: 1, 
+          scale: 1.0, 
+          rotateX: 0, 
+          duration: 0.35, 
+          ease: 'back.out(1.8)',
+          onStart: () => sounds.playCabinetLand()
+        },
+        8.10
+      )
+      .to('#ufo-tractor-beam', { opacity: 0, duration: 0.12 }, 8.30)
+
+      // 🛸 4. UFO flies to Station 4 (far-right)
+      .to('#projects-ufo-beamer', { xPercent: 150, duration: 0.3, ease: 'power1.inOut' }, 8.35)
+      .call(() => sounds.playUfoBeam(), [], 8.45)
+      .to('#ufo-tractor-beam', { opacity: 1, duration: 0.12 }, 8.45)
+      .fromTo('#arcade-row .arcade-cabinet:nth-child(4)',
+        { y: -130, opacity: 0, scale: 0.75, rotateX: 35 },
+        { 
+          y: 0, 
+          opacity: 1, 
+          scale: 1.0, 
+          rotateX: 0, 
+          duration: 0.35, 
+          ease: 'back.out(1.8)',
+          onStart: () => sounds.playCabinetLand()
+        },
+        8.50
+      )
+      .to('#ufo-tractor-beam', { opacity: 0, duration: 0.12 }, 8.70)
+
+      // 🛸 5. All Cabinets deployed -> UFO powers up warp drive and zooms away into upper right
+      .to('#projects-ufo-beamer', {
+        xPercent: 280,
+        y: -180,
+        scale: 0.3,
         opacity: 0,
-        scale: 0.8
-      }, {
-        y: 0,
-        rotateX: 0,
-        opacity: 1,
-        scale: 1.0,
-        stagger: 0.09,
-        duration: 0.9,
-        ease: 'back.out(1.5)'
-      }, 7.3);
+        duration: 0.45,
+        ease: 'power3.in'
+      }, 8.78);
 
     // =========================================================================
     // 📡 CHAPTER 3 -> 4: ARCADE OUT -> DEEP SPACE QUANTUM COMMS STATION (CONTACT)

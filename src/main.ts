@@ -106,6 +106,12 @@ document.addEventListener('DOMContentLoaded', () => {
               ${proj.tags.map((t) => `<span class="tag-chip">${t}</span>`).join('')}
             </div>
           </div>
+
+          <div class="cabinet-landing-dock" aria-hidden="true">
+            <span class="dock-light left"></span>
+            <span class="dock-beam-pad"></span>
+            <span class="dock-light right"></span>
+          </div>
         </article>
       `
       )

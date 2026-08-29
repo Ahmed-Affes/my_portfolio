@@ -1,3 +1,5 @@
+import { sounds } from '../audio/soundEngine';
+
 export class HeroQuantumReactor {
   private canvas: HTMLCanvasElement | null = null;
   private ctx: CanvasRenderingContext2D | null = null;
@@ -6,6 +8,7 @@ export class HeroQuantumReactor {
   private frame: number = 0;
   private mouseX: number = 0;
   private mouseY: number = 0;
+  private surgeEnergy: number = 1.0;
   private particles: Array<{
     x: number;
     y: number;
@@ -60,7 +63,7 @@ export class HeroQuantumReactor {
     const cx = (rect.width || 280) / 2;
     const cy = (rect.height || 280) / 2;
     const angle = Math.random() * Math.PI * 2;
-    const speed = 0.4 + Math.random() * 1.2;
+    const speed = (0.4 + Math.random() * 1.2) * this.surgeEnergy;
     const colors = ['#4fe3ff', '#ffb238', '#39ff88', '#ff2e88'];
 
     this.particles.push({
@@ -76,6 +79,52 @@ export class HeroQuantumReactor {
     });
   }
 
+  public triggerSurge() {
+    sounds.playQuantumSurge();
+    this.surgeEnergy = 3.5;
+
+    // Burst 40 particles outwards
+    if (this.canvas) {
+      const rect = this.canvas.getBoundingClientRect();
+      const cx = (rect.width || 280) / 2;
+      const cy = (rect.height || 280) / 2;
+      const colors = ['#4fe3ff', '#ff2e88', '#ffffff', '#ffb238'];
+
+      for (let i = 0; i < 40; i++) {
+        const angle = (i / 40) * Math.PI * 2 + Math.random() * 0.2;
+        const speed = 2.5 + Math.random() * 3.5;
+        this.particles.push({
+          x: cx,
+          y: cy,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          size: 2.0 + Math.random() * 3.0,
+          alpha: 1.0,
+          life: 0,
+          maxLife: 40 + Math.random() * 30,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
+    }
+
+    // Temporary HUD status reaction
+    const statusEl = document.querySelector('.reactor-hud-status');
+    if (statusEl) {
+      statusEl.textContent = 'FLUX: SURGE ⚡';
+      (statusEl as HTMLElement).style.color = '#ff2e88';
+      setTimeout(() => {
+        statusEl.textContent = 'FLUX: OPTIMAL';
+        (statusEl as HTMLElement).style.color = 'var(--cyan)';
+      }, 1600);
+    }
+
+    const frameEl = document.getElementById('hero-reactor-frame');
+    if (frameEl) {
+      frameEl.classList.add('reactor-pulsing');
+      setTimeout(() => frameEl.classList.remove('reactor-pulsing'), 600);
+    }
+  }
+
   private initEventListeners() {
     if (!this.canvas) return;
 
@@ -89,6 +138,17 @@ export class HeroQuantumReactor {
       this.mouseX = 0;
       this.mouseY = 0;
     });
+
+    this.canvas.addEventListener('click', () => {
+      this.triggerSurge();
+    });
+
+    const parentFrame = document.getElementById('hero-reactor-frame');
+    if (parentFrame) {
+      parentFrame.addEventListener('click', () => {
+        this.triggerSurge();
+      });
+    }
 
     window.addEventListener('resize', () => {
       this.initCanvasSize();
@@ -113,6 +173,12 @@ export class HeroQuantumReactor {
     if (!this.isRunning || !this.ctx || !this.canvas) return;
     this.frame++;
 
+    // Decay surge energy back to baseline 1.0
+    if (this.surgeEnergy > 1.0) {
+      this.surgeEnergy -= 0.04;
+      if (this.surgeEnergy < 1.0) this.surgeEnergy = 1.0;
+    }
+
     const rect = this.canvas.getBoundingClientRect();
     const width = rect.width || 280;
     const height = rect.height || 280;
@@ -129,11 +195,11 @@ export class HeroQuantumReactor {
     this.ctx.translate(cx + tiltX, cy + tiltY);
 
     // 1. Ambient Background Core Glow
-    const pulseGlow = Math.sin(this.frame * 0.05) * 10;
+    const pulseGlow = Math.sin(this.frame * 0.05) * 10 * this.surgeEnergy;
     const dynamicRadius = 100 + pulseGlow;
     const radialGrad = this.ctx.createRadialGradient(0, 0, 5, 0, 0, dynamicRadius);
-    radialGrad.addColorStop(0, 'rgba(79, 227, 255, 0.45)');
-    radialGrad.addColorStop(0.4, 'rgba(255, 178, 56, 0.18)');
+    radialGrad.addColorStop(0, this.surgeEnergy > 1.5 ? 'rgba(255, 46, 136, 0.65)' : 'rgba(79, 227, 255, 0.45)');
+    radialGrad.addColorStop(0.4, 'rgba(255, 178, 56, 0.2)');
     radialGrad.addColorStop(0.8, 'rgba(15, 95, 115, 0.08)');
     radialGrad.addColorStop(1, 'transparent');
 
@@ -144,8 +210,8 @@ export class HeroQuantumReactor {
 
     // 2. Outer Segmented Reticle Ring with Ticks
     this.ctx.save();
-    this.ctx.rotate(this.frame * 0.008);
-    this.ctx.strokeStyle = 'rgba(79, 227, 255, 0.4)';
+    this.ctx.rotate(this.frame * 0.008 * this.surgeEnergy);
+    this.ctx.strokeStyle = this.surgeEnergy > 1.5 ? 'rgba(255, 46, 136, 0.7)' : 'rgba(79, 227, 255, 0.4)';
     this.ctx.lineWidth = 1.5;
     this.ctx.setLineDash([14, 8, 4, 8]);
     this.ctx.beginPath();
@@ -172,12 +238,12 @@ export class HeroQuantumReactor {
 
     // 3. Counter-Rotating Hexagonal Matrix Core
     this.ctx.save();
-    this.ctx.rotate(-this.frame * 0.012);
+    this.ctx.rotate(-this.frame * 0.012 * this.surgeEnergy);
     this.ctx.strokeStyle = 'rgba(255, 178, 56, 0.6)';
     this.ctx.lineWidth = 1.5;
     this.ctx.beginPath();
     const hexSides = 6;
-    const hexRadius = 72 + Math.sin(this.frame * 0.04) * 4;
+    const hexRadius = 72 + Math.sin(this.frame * 0.04) * 4 * this.surgeEnergy;
     for (let i = 0; i < hexSides; i++) {
       const angle = (i * 2 * Math.PI) / hexSides;
       const x = Math.cos(angle) * hexRadius;
@@ -203,9 +269,9 @@ export class HeroQuantumReactor {
     // 4. Multi-Axis 3D Gyroscopic Rings
     // Gyro Ring A
     this.ctx.save();
-    this.ctx.rotate(this.frame * 0.015);
-    this.ctx.scale(1, Math.cos(this.frame * 0.02) * 0.8 + 0.2);
-    this.ctx.strokeStyle = '#4fe3ff';
+    this.ctx.rotate(this.frame * 0.015 * this.surgeEnergy);
+    this.ctx.scale(1, Math.cos(this.frame * 0.02 * this.surgeEnergy) * 0.8 + 0.2);
+    this.ctx.strokeStyle = this.surgeEnergy > 1.5 ? '#ffffff' : '#4fe3ff';
     this.ctx.lineWidth = 2;
     this.ctx.shadowColor = '#4fe3ff';
     this.ctx.shadowBlur = 8;
@@ -216,8 +282,8 @@ export class HeroQuantumReactor {
 
     // Gyro Ring B (Perpendicular)
     this.ctx.save();
-    this.ctx.rotate(-this.frame * 0.02 + Math.PI / 4);
-    this.ctx.scale(Math.sin(this.frame * 0.025) * 0.8 + 0.2, 1);
+    this.ctx.rotate(-this.frame * 0.02 * this.surgeEnergy + Math.PI / 4);
+    this.ctx.scale(Math.sin(this.frame * 0.025 * this.surgeEnergy) * 0.8 + 0.2, 1);
     this.ctx.strokeStyle = '#ff2e88';
     this.ctx.lineWidth = 1.5;
     this.ctx.shadowColor = '#ff2e88';
@@ -229,18 +295,18 @@ export class HeroQuantumReactor {
 
     // 5. Central Plasma Singularity / Micro-Core
     this.ctx.save();
-    this.ctx.shadowColor = '#39ff88';
-    this.ctx.shadowBlur = 16;
+    this.ctx.shadowColor = this.surgeEnergy > 1.5 ? '#ff2e88' : '#39ff88';
+    this.ctx.shadowBlur = 16 * this.surgeEnergy;
     this.ctx.fillStyle = '#ffffff';
     this.ctx.beginPath();
-    const corePulse = 12 + Math.sin(this.frame * 0.1) * 3;
+    const corePulse = (12 + Math.sin(this.frame * 0.1) * 3) * (this.surgeEnergy > 1.5 ? 1.4 : 1.0);
     this.ctx.arc(0, 0, corePulse, 0, Math.PI * 2);
     this.ctx.fill();
 
     // Diamond Cross Energy Flares
-    this.ctx.strokeStyle = '#39ff88';
+    this.ctx.strokeStyle = this.surgeEnergy > 1.5 ? '#ff2e88' : '#39ff88';
     this.ctx.lineWidth = 2;
-    const flareLen = 22 + Math.sin(this.frame * 0.15) * 8;
+    const flareLen = (22 + Math.sin(this.frame * 0.15) * 8) * this.surgeEnergy;
     this.ctx.beginPath();
     this.ctx.moveTo(-flareLen, 0);
     this.ctx.lineTo(flareLen, 0);
@@ -269,7 +335,9 @@ export class HeroQuantumReactor {
 
       if (p.life >= p.maxLife) {
         this.particles.splice(i, 1);
-        this.spawnParticle();
+        if (this.particles.length < 36) {
+          this.spawnParticle();
+        }
       }
     }
     this.ctx.globalAlpha = 1.0;
