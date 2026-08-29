@@ -1,5 +1,4 @@
-import { gsap, EASE_CAMERA, EASE_UI, EASE_SNAP } from './customEases';
-import { RobotSpriteController } from '../sprites/robotSprite';
+import { gsap, EASE_UI, EASE_SNAP } from './customEases';
 import { sounds } from '../audio/soundEngine';
 
 export interface InteractionContent {
@@ -17,8 +16,6 @@ export class InteractionSystem {
   private cameraEl: HTMLElement;
   private backdropEl: HTMLElement;
   private drawerEl: HTMLElement;
-  private robotController: RobotSpriteController;
-  private sceneRobotEl: HTMLElement;
   private farLayerEl: HTMLElement | null;
   private midLayerEl: HTMLElement | null;
   private portalTunnelEl: HTMLElement | null;
@@ -44,15 +41,11 @@ export class InteractionSystem {
   constructor(
     cameraSelector: string = '#scene-camera',
     backdropSelector: string = '#interaction-backdrop',
-    drawerSelector: string = '#interaction-drawer',
-    sceneRobotSelector: string = '#scene-robot-container',
-    robotController: RobotSpriteController
+    drawerSelector: string = '#interaction-drawer'
   ) {
     this.cameraEl = document.querySelector(cameraSelector) as HTMLElement;
     this.backdropEl = document.querySelector(backdropSelector) as HTMLElement;
     this.drawerEl = document.querySelector(drawerSelector) as HTMLElement;
-    this.sceneRobotEl = document.querySelector(sceneRobotSelector) as HTMLElement;
-    this.robotController = robotController;
     this.farLayerEl = document.querySelector('.far-skyline-layer');
     this.midLayerEl = document.querySelector('.mid-skyline-layer');
     this.portalTunnelEl = document.querySelector('#portal-tunnel');
@@ -109,12 +102,6 @@ export class InteractionSystem {
       targetElement.appendChild(this.activeMaskEl);
     }
 
-    // Determine robot walking direction
-    const robotRect = this.sceneRobotEl.getBoundingClientRect();
-    const robotCurrentX = robotRect.left + robotRect.width / 2;
-    const walkDirection = targetCenterX > robotCurrentX ? 'right' : 'left';
-    const targetRobotX = targetCenterX + (walkDirection === 'right' ? -70 : 70);
-
     // Build the master Portal Fly-Through timeline
     const tl = gsap.timeline();
 
@@ -130,23 +117,7 @@ export class InteractionSystem {
       0
     );
 
-    // 2. Robot steps over
-    this.robotController.startWalking(walkDirection);
-    sounds.playStep();
-    tl.to(
-      this.sceneRobotEl,
-      {
-        left: `${targetRobotX}px`,
-        duration: 0.95,
-        ease: EASE_CAMERA,
-        onComplete: () => {
-          this.robotController.interact();
-        }
-      },
-      0
-    );
-
-    // 3. Laser Beam Slit-Scan & Portal Shockwave Rings
+    // 2. Laser Beam Slit-Scan & Portal Shockwave Rings
     if (this.portalBeamEl) {
       tl.fromTo(
         this.portalBeamEl,
@@ -247,7 +218,6 @@ export class InteractionSystem {
     const tl = gsap.timeline({
       onComplete: () => {
         this.backdropEl.classList.remove('open');
-        this.robotController.resetToIdle();
         this.activeTargetEl = null;
         if (this.activeMaskEl) {
           gsap.set(this.activeMaskEl, { scaleY: 0 });

@@ -59,8 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="skill-card-tier">${skill.level}</div>
           <div class="skill-card-name">${skill.name}</div>
           <div style="font-family: var(--font-pixel); font-size: 6px; color: ${skill.rarity === 'legendary' ? '#ffb238' : skill.rarity === 'rare' ? 'var(--cyan)' : 'var(--green)'}; margin-bottom: 6px; letter-spacing: 0.5px;">${skillPowerMap[skill.id] || '████████░░ 85%'}</div>
-          <div style="font-size: 16.5px; color: var(--muted); line-height: 1.35; margin-bottom: 6px;">${skill.detail}</div>
-          <div style="font-family: var(--font-pixel); font-size: 5.5px; color: var(--cyan); letter-spacing: 0.5px;">[CLICK TO EXPAND] ↗</div>
+          <div style="font-size: 16.5px; color: var(--muted); line-height: 1.35; margin-bottom: 8px;">${skill.detail}</div>
+          <div class="skill-expand-hint-badge shine-badge">[CLICK TO EXPAND] ↗</div>
         </article>
       `
       )
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .map(
         (proj) => `
         <article class="arcade-cabinet" id="cabinet-${proj.id}" data-project-id="${proj.id}" tabindex="0" role="button" aria-label="${proj.title}">
-          <div class="walk-up-indicator">WALK UP ▲ [CLICK]</div>
+          <div class="walk-up-indicator shine-badge">WALK UP ▲ [CLICK]</div>
           <div>
             <div class="cabinet-level-tag">${proj.levelTitle}</div>
             <div style="margin-bottom: 8px;">
@@ -181,25 +181,15 @@ document.addEventListener('DOMContentLoaded', () => {
       .join('');
   }
 
-  // 4. Initialize Robot Sprite Controllers
+  // 4. Initialize HUD Drone Robot Sprite Controller
   const hudAvatarEl = document.getElementById('hud-robot-avatar');
-  const sceneAvatarEl = document.getElementById('scene-robot');
-
-  if (!hudAvatarEl || !sceneAvatarEl) {
-    console.error('Robot avatar containers not found');
-    return;
-  }
-
-  const hudRobotController = new RobotSpriteController(hudAvatarEl, 1.25);
-  const sceneRobotController = new RobotSpriteController(sceneAvatarEl, 3.5);
+  const hudRobotController = hudAvatarEl ? new RobotSpriteController(hudAvatarEl, 1.25) : (null as any);
 
   // 5. Initialize Interaction System (§5)
   const interactionSystem = new InteractionSystem(
     '.scene-camera',
     '#interaction-backdrop',
-    '#interaction-drawer',
-    '#scene-robot-container',
-    sceneRobotController
+    '#interaction-drawer'
   );
 
   // 6. Bind Interactivity to Rendered Elements
@@ -386,7 +376,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. Initialize Scroll Choreography AFTER DOM is fully rendered
   const scrollChoreography = new ScrollChoreography(
     hudRobotController,
-    sceneRobotController,
     meteorEngine
   );
 

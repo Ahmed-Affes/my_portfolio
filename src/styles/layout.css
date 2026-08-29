@@ -399,70 +399,68 @@
   z-index: 2;
 }
 
-/* ==================== ROBOT AVATAR & HOLOGRAM EMITTER ==================== */
-.scene-robot-wrapper {
-  position: fixed;
-  bottom: 24px;
-  right: 12%;
-  z-index: 50;
-  pointer-events: none;
-  display: flex;
-  flex-direction: column;
+/* ==================== INTERACTIVE CLICK SHINE & GLOW BADGES ==================== */
+.shine-badge,
+.walk-up-indicator,
+.skill-expand-hint-badge,
+.terminal-action-hint,
+.face-footer-tag {
+  display: inline-flex;
   align-items: center;
-  transform: translateX(-50%);
-  will-change: left, transform;
-}
-
-.scene-robot-avatar {
-  width: 56px;
-  height: 64px;
-  filter: drop-shadow(0 0 12px var(--cyan-glow));
-}
-
-.hologram-emitter {
+  gap: 4px;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 8px;
-  animation: floatHolo 3s ease-in-out infinite;
+  overflow: hidden;
+  padding: 4px 10px;
+  background: rgba(15, 95, 115, 0.35);
+  border: 1px solid var(--cyan);
+  border-radius: 2px;
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  letter-spacing: 0.8px;
+  color: var(--cyan);
+  text-shadow: 0 0 6px var(--cyan);
+  box-shadow: 0 0 10px rgba(79, 227, 255, 0.25), inset 0 0 6px rgba(79, 227, 255, 0.15);
+  animation: cyberBadgeShine 2.4s ease-in-out infinite;
+  cursor: pointer;
+  user-select: none;
 }
 
-@keyframes floatHolo {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+@keyframes cyberBadgeShine {
+  0%, 100% {
+    border-color: rgba(79, 227, 255, 0.45);
+    box-shadow: 0 0 8px rgba(79, 227, 255, 0.25), inset 0 0 4px rgba(79, 227, 255, 0.1);
+    color: var(--cyan);
+    text-shadow: 0 0 4px var(--cyan);
+  }
+  50% {
+    border-color: #ffffff;
+    box-shadow: 0 0 18px rgba(79, 227, 255, 0.9), 0 0 28px var(--cyan), inset 0 0 10px rgba(79, 227, 255, 0.5);
+    color: #ffffff;
+    text-shadow: 0 0 8px #ffffff, 0 0 16px var(--cyan);
+    transform: scale(1.05);
+  }
 }
 
-.hologram-beam {
-  width: 2px;
-  height: 24px;
-  background: linear-gradient(to top, rgba(79, 227, 255, 0.6), transparent);
-  box-shadow: 0 0 8px var(--cyan);
+.shine-badge::after,
+.walk-up-indicator::after,
+.skill-expand-hint-badge::after,
+.terminal-action-hint::after,
+.face-footer-tag::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  transform: skewX(-25deg);
+  animation: shineSheenSweep 3s infinite ease-in-out;
+  pointer-events: none;
 }
 
-.hologram-badge {
-  width: 24px;
-  height: 24px;
-  border: 1px solid var(--magenta);
-  background: rgba(255, 46, 136, 0.15);
-  box-shadow: 0 0 12px var(--magenta-glow);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-}
-
-.holo-pink-square {
-  width: 14px;
-  height: 8px;
-  background: var(--magenta);
-}
-
-.holo-cyan-strip {
-  width: 14px;
-  height: 3px;
-  background: var(--cyan);
+@keyframes shineSheenSweep {
+  0% { left: -150%; }
+  35%, 100% { left: 180%; }
 }
 
 /* ==================== CINEMATIC PINNED SCROLL STAGE ==================== */
@@ -1514,7 +1512,7 @@
   width: 100%;
   margin: 0 auto;
   position: relative;
-  padding: 10px 16px;
+  padding: 24px 16px 10px 16px;
   background: transparent;
   display: flex;
   flex-direction: column;
@@ -1524,15 +1522,15 @@
   position: relative;
   width: 100%;
   overflow: visible;
-  padding: 55px 0 24px 0;
-  margin-top: 10px;
+  padding: 60px 0 24px 0;
+  margin-top: 20px;
 }
 
 .skills-horizontal-track {
   position: relative;
   display: flex;
   flex-direction: row;
-  gap: 24px;
+  gap: 28px;
   width: max-content;
   padding: 0 40px;
   will-change: transform;
@@ -1542,11 +1540,11 @@
   width: 320px;
   min-width: 320px;
   max-width: 320px;
-  height: 215px;
+  height: 230px;
   flex-shrink: 0;
   background: rgba(8, 12, 26, 0.94);
   border: 1.5px solid var(--cyan-dim);
-  padding: 20px 22px;
+  padding: 22px 24px;
   position: relative;
   cursor: pointer;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.25s ease;

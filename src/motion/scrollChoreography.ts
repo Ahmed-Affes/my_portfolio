@@ -10,9 +10,7 @@ export class ScrollChoreography {
   private hudRobotEl: HTMLElement;
   private hudTrackEl: HTMLElement;
   private checkpoints: HTMLElement[];
-  private hudRobotController: RobotSpriteController;
-  private sceneRobotController: RobotSpriteController;
-  private sceneRobotWrapperEl: HTMLElement;
+  private hudRobotController: RobotSpriteController | null;
   private hudEnvLabelEl: HTMLElement | null;
   private envSkyTintEl: HTMLElement | null;
   private currentSectorIndex: number = -1;
@@ -21,15 +19,12 @@ export class ScrollChoreography {
 
   constructor(
     hudRobotController: RobotSpriteController,
-    sceneRobotController: RobotSpriteController,
     meteorEngine: WarStarMeteorEngine
   ) {
     this.hudRobotController = hudRobotController;
-    this.sceneRobotController = sceneRobotController;
     this.meteorEngine = meteorEngine;
     this.hudRobotEl = document.querySelector('.hud-robot-indicator') as HTMLElement;
     this.hudTrackEl = document.querySelector('.hud-track') as HTMLElement;
-    this.sceneRobotWrapperEl = document.querySelector('#scene-robot-container') as HTMLElement;
     this.checkpoints = Array.from(document.querySelectorAll('.hud-track-checkpoint'));
     this.hudEnvLabelEl = document.querySelector('#hud-env-label');
     this.envSkyTintEl = document.querySelector('#env-sky-tint');
@@ -181,8 +176,6 @@ export class ScrollChoreography {
 
       // Warp speed lines flash
       .fromTo(warpStreaks, { opacity: 0, scaleX: 0.5 }, { opacity: 0.8, scaleX: 1.4, duration: 0.6, yoyo: true, repeat: 1 }, 1.0)
-      // Robot moves toward center console
-      .to(this.sceneRobotWrapperEl, { right: '45%', duration: 1.6, ease: 'power1.inOut' }, 0.8)
 
       // Act 1 (Neural Mainframe) enters: 3D Holographic Unfold
       .set(actTerminal, { pointerEvents: 'auto' }, 1.2)
@@ -254,10 +247,6 @@ export class ScrollChoreography {
         ease: 'power2.in'
       }, 2.8)
       .set(actTerminal, { pointerEvents: 'none' }, 3.4)
-
-      // Scene robot hides during Act 2 so ONLY the runway hopping robot is active
-      .to(this.sceneRobotWrapperEl, { autoAlpha: 0, scale: 0.4, duration: 0.4, ease: 'power2.in' }, 2.8)
-      .set(this.sceneRobotWrapperEl, { display: 'none' }, 3.2)
 
       // Act 2 (Data Core Runway) enters with Mag-Lev Extrusion
       .set(actSkills, { pointerEvents: 'auto' }, 3.4)
@@ -383,10 +372,6 @@ export class ScrollChoreography {
       }, 6.9)
       .set(actSkills, { pointerEvents: 'none' }, 7.5)
 
-      // Robot re-materializes at arcade alley
-      .set(this.sceneRobotWrapperEl, { display: 'flex' }, 6.9)
-      .fromTo(this.sceneRobotWrapperEl, { autoAlpha: 0, scale: 0.5, right: '55%' }, { autoAlpha: 1, scale: 1.0, duration: 0.8, ease: 'power2.out', immediateRender: false }, 7.0)
-
       // Act 3 (Arcade Runway) enters with 3D Isometric Stagger
       .set(actProjects, { pointerEvents: 'auto' }, 7.2)
       .to(actProjects, {
@@ -434,9 +419,6 @@ export class ScrollChoreography {
         ease: 'power2.in'
       }, 9.3)
       .set(actProjects, { pointerEvents: 'none' }, 10.3)
-
-      // Robot stands beneath orbital uplink
-      .to(this.sceneRobotWrapperEl, { right: '40%', duration: 1.4, ease: 'power1.inOut' }, 9.4)
 
       // Act 4 (Direct Neural Uplink) enters with Quantum Aperture Expansion
       .set(actContact, { pointerEvents: 'auto' }, 9.4)
@@ -590,17 +572,6 @@ export class ScrollChoreography {
 
       if (this.hudEnvLabelEl) this.hudEnvLabelEl.textContent = envLabel;
       if (this.envSkyTintEl) this.envSkyTintEl.style.backgroundColor = tintColor;
-
-      // In Act 2 (Data Core / Skills Runway), hide the background scene robot so ONLY the runway jumping robot is active
-      if (this.sceneRobotWrapperEl) {
-        if (sectorIdx === 2) {
-          this.sceneRobotWrapperEl.style.display = 'none';
-          this.sceneRobotWrapperEl.style.opacity = '0';
-        } else {
-          this.sceneRobotWrapperEl.style.display = 'flex';
-          this.sceneRobotWrapperEl.style.opacity = '1';
-        }
-      }
     }
   }
 
@@ -631,16 +602,14 @@ export class ScrollChoreography {
       // Feed scroll velocity into Meteor Engine for hyperdrive shooting stars!
       this.meteorEngine.setScrollVelocity(e.velocity);
 
-      this.hudRobotController.startWalking(direction);
-      this.sceneRobotController.startWalking(direction);
+      this.hudRobotController?.startWalking(direction);
 
       if (scrollTimeout !== null) {
         clearTimeout(scrollTimeout);
       }
 
       scrollTimeout = window.setTimeout(() => {
-        this.hudRobotController.stopWalking();
-        this.sceneRobotController.stopWalking();
+        this.hudRobotController?.stopWalking();
       }, 150);
     });
   }
