@@ -266,7 +266,7 @@ export class ScrollChoreography {
         duration: 0.6,
         ease: 'power3.out'
       }, 3.4)
-      // Initial appearance of runway and laser scanner
+      // Initial appearance of runway, laser scanner and jumping companion robot perched on Card 0
       .set('.skills-horizontal-track', { x: 0 }, 3.4)
       .fromTo('.skills-horizontal-track', {
         scale: 0.95,
@@ -288,12 +288,24 @@ export class ScrollChoreography {
         duration: 0.6,
         ease: 'back.out(1.5)'
       }, 3.5)
+      .set('#skills-jumping-robot', { x: 145, y: 0, scale: 1.0, opacity: 1 }, 3.4)
+      .fromTo('#skills-jumping-robot', {
+        y: -80,
+        opacity: 0,
+        scale: 0.4
+      }, {
+        y: 0,
+        opacity: 1,
+        scale: 1.0,
+        duration: 0.5,
+        ease: 'back.out(1.7)'
+      }, 3.5)
 
       // =========================================================================
-      // 🚀 ACT 2 KINETIC SCRUB: SILKY-SMOOTH HORIZONTAL RUNWAY
+      // 🚀 ACT 2 KINETIC SCRUB: HORIZONTAL RUNWAY + COMPANION JUMPING ROBOT
       // (Scroll window 4.2 to 6.8 gives clear pause at start + full scrub of all 8 cards)
       // =========================================================================
-      // Horizontal track scrubs smoothly across the screen from right to left
+      // 1. Horizontal track scrubs smoothly across the screen from right to left
       .to('.skills-horizontal-track', {
         x: () => {
           const track = document.getElementById('skills-grid');
@@ -305,7 +317,51 @@ export class ScrollChoreography {
         },
         ease: 'none',
         duration: 2.6
-      }, 4.2);
+      }, 4.2)
+
+      // 2. Parabolic hops of the companion robot hopping across all 8 cards
+      // Hop 1: Card 0 (JS/TS - 145px) -> Card 1 (React - 459px)
+      .to('#skills-jumping-robot', { x: 459, duration: 0.32, ease: 'power1.inOut' }, 4.26)
+      .to('#skills-jumping-robot', { y: -75, scaleY: 1.25, scaleX: 0.85, duration: 0.16, ease: 'power2.out' }, 4.26)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.85, scaleX: 1.15, duration: 0.16, ease: 'power2.in' }, 4.42)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.04 }, 4.58)
+
+      // Hop 2: Card 1 (React - 459px) -> Card 2 (Node.js - 773px)
+      .to('#skills-jumping-robot', { x: 773, duration: 0.32, ease: 'power1.inOut' }, 4.62)
+      .to('#skills-jumping-robot', { y: -75, scaleY: 1.25, scaleX: 0.85, duration: 0.16, ease: 'power2.out' }, 4.62)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.85, scaleX: 1.15, duration: 0.16, ease: 'power2.in' }, 4.78)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.04 }, 4.94)
+
+      // Hop 3: Card 2 (Node.js - 773px) -> Card 3 (Flutter - 1087px)
+      .to('#skills-jumping-robot', { x: 1087, duration: 0.32, ease: 'power1.inOut' }, 4.98)
+      .to('#skills-jumping-robot', { y: -75, scaleY: 1.25, scaleX: 0.85, duration: 0.16, ease: 'power2.out' }, 4.98)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.85, scaleX: 1.15, duration: 0.16, ease: 'power2.in' }, 5.14)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.04 }, 5.30)
+
+      // Hop 4: Card 3 (Flutter - 1087px) -> Card 4 (PostgreSQL - 1401px)
+      .to('#skills-jumping-robot', { x: 1401, duration: 0.32, ease: 'power1.inOut' }, 5.34)
+      .to('#skills-jumping-robot', { y: -75, scaleY: 1.25, scaleX: 0.85, duration: 0.16, ease: 'power2.out' }, 5.34)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.85, scaleX: 1.15, duration: 0.16, ease: 'power2.in' }, 5.50)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.04 }, 5.66)
+
+      // Hop 5: Card 4 (PostgreSQL - 1401px) -> Card 5 (Electron - 1715px)
+      .to('#skills-jumping-robot', { x: 1715, duration: 0.32, ease: 'power1.inOut' }, 5.70)
+      .to('#skills-jumping-robot', { y: -75, scaleY: 1.25, scaleX: 0.85, duration: 0.16, ease: 'power2.out' }, 5.70)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.85, scaleX: 1.15, duration: 0.16, ease: 'power2.in' }, 5.86)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.04 }, 6.02)
+
+      // Hop 6: Card 5 (Electron - 1715px) -> Card 6 (Docker - 2029px)
+      .to('#skills-jumping-robot', { x: 2029, duration: 0.32, ease: 'power1.inOut' }, 6.06)
+      .to('#skills-jumping-robot', { y: -75, scaleY: 1.25, scaleX: 0.85, duration: 0.16, ease: 'power2.out' }, 6.06)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.85, scaleX: 1.15, duration: 0.16, ease: 'power2.in' }, 6.22)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.04 }, 6.38)
+
+      // Hop 7: Card 6 (Docker - 2029px) -> Card 7 (Figma - 2343px - Final Card!)
+      .to('#skills-jumping-robot', { x: 2343, duration: 0.32, ease: 'power1.inOut' }, 6.42)
+      .to('#skills-jumping-robot', { y: -75, scaleY: 1.25, scaleX: 0.85, duration: 0.16, ease: 'power2.out' }, 6.42)
+      .to('#skills-jumping-robot', { y: 0, scaleY: 0.85, scaleX: 1.15, duration: 0.16, ease: 'power2.in' }, 6.58)
+      .to('#skills-jumping-robot', { scaleY: 1.0, scaleX: 1.0, duration: 0.04 }, 6.74)
+      .to('#skills-jumping-robot', { y: -10, duration: 0.08, yoyo: true, repeat: 2 }, 6.75);
 
     // =========================================================================
     // 🕹️ CHAPTER 2 -> 3: DATA CORE OUT -> ARCADE LEVEL SELECT (PROJECTS)
@@ -599,20 +655,11 @@ export class ScrollChoreography {
     sounds.playCrtPower();
 
     const fullText = dialogueEl.getAttribute('data-full-text') || dialogueEl.textContent || '';
-    dialogueEl.textContent = '';
-
-    let charIndex = 0;
-    const interval = window.setInterval(() => {
-      if (charIndex < fullText.length) {
-        dialogueEl.textContent = fullText.slice(0, charIndex + 1);
-        if (charIndex % 3 === 0) {
-          sounds.playKeyType();
-        }
-        charIndex++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 16);
+    if (typeof (window as any).__typeBioText === 'function') {
+      (window as any).__typeBioText(fullText);
+    } else {
+      dialogueEl.textContent = fullText;
+    }
   }
 
   private triggerMatrixDecryption() {

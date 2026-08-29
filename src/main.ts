@@ -10,14 +10,17 @@ import { RobotFaceController } from './interactive/robotFace';
 import { CyberCLITerminal } from './interactive/cliTerminal';
 import { HeroQuantumReactor } from './interactive/heroReactor';
 import { RadarTransmitterEngine } from './interactive/radarTransmitter';
+import { HeroSubtitleMorpher } from './interactive/heroSubtitleMorpher';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 0. Initialize War Star Shooting Meteor Engine, Hero Quantum Reactor, Robot Face, Radar & CLI Help Center
+  // 0. Initialize War Star Shooting Meteor Engine, Hero Quantum Reactor, Robot Face, Radar, Subtitle Morpher & CLI Help Center
   const meteorEngine = new WarStarMeteorEngine();
   new HeroQuantumReactor('hero-reactor-canvas');
   new RadarTransmitterEngine('radar-canvas');
   const robotFace = new RobotFaceController('about-robot-face');
   const cliTerminal = new CyberCLITerminal('cli-terminal-window');
+  const heroSubtitleMorpher = new HeroSubtitleMorpher('hero-typewriter-text');
+  heroSubtitleMorpher.start();
   (window as any).__robotFace = robotFace;
   (window as any).__cliTerminal = cliTerminal;
   // 1. Render Skills Cards (Data Core) FIRST
@@ -34,7 +37,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const skillsGrid = document.getElementById('skills-grid');
   if (skillsGrid) {
-    skillsGrid.innerHTML = PORTFOLIO_DATA.skills
+    const jumpingRobotHtml = `
+      <div class="skills-jumping-robot" id="skills-jumping-robot" aria-hidden="true">
+        <div class="hopper-pixel-body">
+          <div class="hopper-antenna"><span class="antenna-bulb"></span></div>
+          <div class="hopper-head"><div class="hopper-visor-glow"></div></div>
+          <div class="hopper-torso"><div class="hopper-core"></div></div>
+          <div class="hopper-thruster">
+            <span class="thruster-spark left"></span>
+            <span class="thruster-spark right"></span>
+          </div>
+        </div>
+        <div class="hopper-shadow"></div>
+      </div>
+    `;
+
+    skillsGrid.innerHTML = jumpingRobotHtml + PORTFOLIO_DATA.skills
       .map(
         (skill) => `
         <article class="skill-card ${skill.rarity}" data-skill-id="${skill.id}" tabindex="0" role="button" aria-label="${skill.name}">
@@ -286,6 +304,35 @@ document.addEventListener('DOMContentLoaded', () => {
     "HARDWARE / NEURAL CORE SPECS:\n• ARCHITECTURE: Full-Stack Distributed Engine (TypeScript, React, Node, WebGL)\n• RUNTIME EFFICIENCY: 0ms Input Latency · 60 FPS Locked\n• SECURITY CLEARANCE: 256-Bit Encrypted Uplink · Status: Available For Work"
   ];
 
+  let activeBioTypeInterval: number | null = null;
+
+  function typeBioText(text: string) {
+    if (!terminalBioBody) return;
+    if (activeBioTypeInterval !== null) {
+      clearInterval(activeBioTypeInterval);
+      activeBioTypeInterval = null;
+    }
+
+    terminalBioBody.textContent = '';
+    let charIdx = 0;
+    activeBioTypeInterval = window.setInterval(() => {
+      if (charIdx < text.length) {
+        terminalBioBody.textContent = text.slice(0, charIdx + 1);
+        if (charIdx % 4 === 0) {
+          sounds.playKeyType();
+        }
+        charIdx++;
+      } else {
+        if (activeBioTypeInterval !== null) {
+          clearInterval(activeBioTypeInterval);
+          activeBioTypeInterval = null;
+        }
+      }
+    }, 12);
+  }
+
+  (window as any).__typeBioText = typeBioText;
+
   bioTabButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       sounds.playHoverBlip();
@@ -294,19 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const tabIdx = parseInt(btn.getAttribute('data-tab') || '0', 10);
       const text = bioTabData[tabIdx] || bioTabData[0];
-
-      if (terminalBioBody) {
-        terminalBioBody.textContent = '';
-        let charIdx = 0;
-        const typeInterval = setInterval(() => {
-          if (charIdx < text.length) {
-            terminalBioBody.textContent += text[charIdx];
-            charIdx++;
-          } else {
-            clearInterval(typeInterval);
-          }
-        }, 12);
-      }
+      typeBioText(text);
     });
   });
 
