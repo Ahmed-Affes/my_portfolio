@@ -43,9 +43,9 @@ export class InteractionSystem {
     backdropSelector: string = '#interaction-backdrop',
     drawerSelector: string = '#interaction-drawer'
   ) {
-    this.cameraEl = document.querySelector(cameraSelector) as HTMLElement;
-    this.backdropEl = document.querySelector(backdropSelector) as HTMLElement;
-    this.drawerEl = document.querySelector(drawerSelector) as HTMLElement;
+    this.cameraEl = (document.querySelector(cameraSelector) || document.querySelector('#scene-camera') || document.querySelector('.scene-camera')) as HTMLElement;
+    this.backdropEl = (document.querySelector(backdropSelector) || document.querySelector('#interaction-backdrop')) as HTMLElement;
+    this.drawerEl = (document.querySelector(drawerSelector) || document.querySelector('#interaction-drawer')) as HTMLElement;
     this.farLayerEl = document.querySelector('.far-skyline-layer');
     this.midLayerEl = document.querySelector('.mid-skyline-layer');
     this.portalTunnelEl = document.querySelector('#portal-tunnel');
@@ -105,17 +105,28 @@ export class InteractionSystem {
     // Build the master Portal Fly-Through timeline
     const tl = gsap.timeline();
 
-    // 1. Instant 🌀 Camera 3D Portal Zoom (scale: 3.2x into the clicked card)
-    tl.to(
-      this.cameraEl,
-      {
-        scale: 3.2,
-        transformOrigin: `${originXPercent}% ${originYPercent}%`,
-        duration: 0.95,
-        ease: 'power3.inOut'
-      },
-      0
-    );
+    // 1. Instant 🌀 Camera 3D Portal Zoom into the clicked card
+    if (this.cameraEl) {
+      tl.to(
+        this.cameraEl,
+        {
+          scale: 1.8,
+          transformOrigin: `${originXPercent}% ${originYPercent}%`,
+          duration: 0.65,
+          ease: 'power2.out'
+        },
+        0
+      );
+    }
+
+    // Neon highlight pulse on clicked target
+    tl.to(targetElement, {
+      scale: 1.04,
+      boxShadow: '0 0 36px rgba(79, 227, 255, 0.9)',
+      borderColor: '#4fe3ff',
+      duration: 0.4,
+      ease: 'power2.out'
+    }, 0);
 
     // 2. Laser Beam Slit-Scan & Portal Shockwave Rings
     if (this.portalBeamEl) {
@@ -148,7 +159,7 @@ export class InteractionSystem {
     if (this.farLayerEl) {
       tl.to(
         this.farLayerEl,
-        { filter: 'blur(8px)', duration: 0.95, ease: 'power2.out' },
+        { filter: 'blur(8px)', duration: 0.75, ease: 'power2.out' },
         0
       );
     }
@@ -156,52 +167,58 @@ export class InteractionSystem {
     if (this.midLayerEl) {
       tl.to(
         this.midLayerEl,
-        { filter: 'blur(4px)', y: -25, duration: 0.95, ease: 'power2.out' },
+        { filter: 'blur(4px)', y: -25, duration: 0.75, ease: 'power2.out' },
         0
       );
     }
 
     // 4. CRT Screen Mask Sweep
-    tl.call(() => sounds.playCrtPower(), [], 0.2);
+    tl.call(() => sounds.playCrtPower(), [], 0.15);
     tl.fromTo(
       this.activeMaskEl,
       { scaleY: 0, opacity: 0.9 },
-      { scaleY: 1, opacity: 1, duration: 0.4, ease: 'power2.inOut' },
-      0.25
+      { scaleY: 1, opacity: 1, duration: 0.35, ease: 'power2.inOut' },
+      0.15
     );
 
     // 5. Drawer & Backdrop Rise
     tl.call(() => {
       sounds.playPanelOpen();
-      this.backdropEl.classList.add('open');
-    }, [], 0.4);
+      this.backdropEl?.classList.add('open');
+    }, [], 0.25);
 
-    tl.to(
-      this.backdropEl,
-      { opacity: 1, duration: 0.45, ease: 'power1.out' },
-      0.4
-    );
+    if (this.backdropEl) {
+      tl.to(
+        this.backdropEl,
+        { opacity: 1, duration: 0.35, ease: 'power1.out' },
+        0.25
+      );
+    }
 
-    tl.to(
-      this.drawerEl,
-      { yPercent: 0, duration: 0.55, ease: EASE_UI },
-      0.45
-    );
+    if (this.drawerEl) {
+      tl.to(
+        this.drawerEl,
+        { yPercent: 0, duration: 0.45, ease: EASE_UI },
+        0.3
+      );
+    }
 
     // 6. Staggered Telemetry Reveal
-    const staggerItems = this.drawerEl.querySelectorAll('.stagger-item');
-    tl.fromTo(
-      staggerItems,
-      { opacity: 0, y: 16 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.35,
-        ease: EASE_UI,
-        stagger: 0.05
-      },
-      0.55
-    );
+    const staggerItems = this.drawerEl?.querySelectorAll('.stagger-item');
+    if (staggerItems && staggerItems.length > 0) {
+      tl.fromTo(
+        staggerItems,
+        { opacity: 0, y: 16 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.35,
+          ease: EASE_UI,
+          stagger: 0.05
+        },
+        0.35
+      );
+    }
 
     this.currentTimeline = tl;
   }
@@ -215,9 +232,11 @@ export class InteractionSystem {
     this.isOpen = false;
     sounds.playClose();
 
+    const target = this.activeTargetEl;
+
     const tl = gsap.timeline({
       onComplete: () => {
-        this.backdropEl.classList.remove('open');
+        this.backdropEl?.classList.remove('open');
         this.activeTargetEl = null;
         if (this.activeMaskEl) {
           gsap.set(this.activeMaskEl, { scaleY: 0 });
@@ -230,43 +249,61 @@ export class InteractionSystem {
     });
 
     // 1. Hide Drawer Stagger items
-    const staggerItems = this.drawerEl.querySelectorAll('.stagger-item');
-    tl.to(staggerItems, {
-      opacity: 0,
-      y: 10,
-      duration: 0.16,
-      ease: EASE_SNAP
-    });
+    const staggerItems = this.drawerEl?.querySelectorAll('.stagger-item');
+    if (staggerItems && staggerItems.length > 0) {
+      tl.to(staggerItems, {
+        opacity: 0,
+        y: 10,
+        duration: 0.16,
+        ease: EASE_SNAP
+      });
+    }
 
     // 2. Drop Drawer Down & Fade Backdrop
-    tl.to(
-      this.drawerEl,
-      { yPercent: 100, duration: 0.3, ease: EASE_SNAP },
-      "-=0.1"
-    );
+    if (this.drawerEl) {
+      tl.to(
+        this.drawerEl,
+        { yPercent: 100, duration: 0.3, ease: EASE_SNAP },
+        "-=0.1"
+      );
+    }
 
-    tl.to(
-      this.backdropEl,
-      { opacity: 0, duration: 0.3, ease: 'power1.in' },
-      "-=0.2"
-    );
+    if (this.backdropEl) {
+      tl.to(
+        this.backdropEl,
+        { opacity: 0, duration: 0.3, ease: 'power1.in' },
+        "-=0.2"
+      );
+    }
 
-    // 3. 🌀 Camera zooms back out from 3.2x to 1.0x!
-    tl.to(
-      this.cameraEl,
-      {
+    // 3. 🌀 Camera zooms back out to 1.0x!
+    if (this.cameraEl) {
+      tl.to(
+        this.cameraEl,
+        {
+          scale: 1.0,
+          transformOrigin: `${this.lastZoomOrigin.x}% ${this.lastZoomOrigin.y}%`,
+          duration: 0.6,
+          ease: 'power2.inOut'
+        },
+        "-=0.2"
+      );
+    }
+
+    if (target) {
+      tl.to(target, {
         scale: 1.0,
-        transformOrigin: `${this.lastZoomOrigin.x}% ${this.lastZoomOrigin.y}%`,
-        duration: 0.75,
-        ease: 'power3.inOut'
-      },
-      "-=0.25"
-    );
+        boxShadow: '',
+        borderColor: '',
+        duration: 0.4,
+        ease: 'power2.out'
+      }, "-=0.2");
+    }
 
     if (this.farLayerEl) {
       tl.to(
         this.farLayerEl,
-        { filter: 'blur(0px)', duration: 0.7, ease: 'power2.out' },
+        { filter: 'blur(0px)', duration: 0.6, ease: 'power2.out' },
         "<"
       );
     }
@@ -274,7 +311,7 @@ export class InteractionSystem {
     if (this.midLayerEl) {
       tl.to(
         this.midLayerEl,
-        { filter: 'blur(0px)', y: 0, duration: 0.7, ease: 'power2.out' },
+        { filter: 'blur(0px)', y: 0, duration: 0.6, ease: 'power2.out' },
         "<"
       );
     }

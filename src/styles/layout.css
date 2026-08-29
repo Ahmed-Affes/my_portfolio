@@ -539,8 +539,14 @@
   box-sizing: border-box;
   overflow-y: auto;
   scrollbar-width: none;
+  pointer-events: none; /* Inactive acts don't block clicks */
 }
 .stage-act::-webkit-scrollbar { display: none; }
+
+.stage-act.is-active,
+.act-boot {
+  pointer-events: auto;
+}
 
 .act-inner {
   max-width: 1140px;
@@ -2816,8 +2822,8 @@
 .interaction-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(4, 6, 14, 0.85);
-  backdrop-filter: blur(8px);
+  background: rgba(4, 7, 18, 0.65);
+  backdrop-filter: blur(4px);
   z-index: 950;
   opacity: 0;
   pointer-events: none;
