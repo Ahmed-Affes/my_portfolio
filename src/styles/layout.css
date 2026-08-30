@@ -582,7 +582,14 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  cursor: crosshair;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.hero-reactor-frame:hover {
+  border-color: #ffffff;
+  box-shadow: 0 0 50px rgba(79, 227, 255, 0.55), inset 0 0 35px rgba(79, 227, 255, 0.25);
+  transform: scale(1.02);
 }
 
 .reactor-glow-aura {
@@ -601,26 +608,72 @@
   border-radius: 50%;
 }
 
-.reactor-hud-overlay {
+.reactor-interact-pill {
   position: absolute;
-  bottom: 16px;
+  top: 18px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  justify-content: space-between;
-  gap: 12px;
+  align-items: center;
+  gap: 5px;
   font-family: var(--font-pixel);
-  font-size: 7px;
-  background: rgba(5, 8, 16, 0.92);
-  border: 1px solid rgba(79, 227, 255, 0.4);
-  padding: 4px 10px;
+  font-size: 6px;
+  color: var(--amber);
+  background: rgba(8, 14, 30, 0.92);
+  border: 1px solid rgba(255, 178, 56, 0.55);
+  padding: 3px 8px;
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(255, 178, 56, 0.35);
+  pointer-events: none;
+  z-index: 5;
+  white-space: nowrap;
+  animation: cyberBadgeShine 2.5s infinite ease-in-out;
+}
+
+.reactor-pill-dot {
+  width: 4.5px;
+  height: 4.5px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 6px var(--amber);
+  animation: pulseDot 1s infinite alternate;
+}
+
+.reactor-hud-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  background: rgba(5, 8, 16, 0.94);
+  border: 1px solid rgba(79, 227, 255, 0.45);
+  padding: 3px 10px;
   color: var(--cyan);
   pointer-events: none;
   border-radius: 2px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.9);
   white-space: nowrap;
+  z-index: 5;
   width: auto;
-  min-width: fit-content;
+  max-width: 140px;
+  text-align: center;
+}
+
+.reactor-hud-tag {
+  font-size: 5.5px;
+  color: var(--cyan);
+  letter-spacing: 0.5px;
+}
+
+.reactor-hud-status {
+  font-size: 5.5px;
+  color: var(--green);
+  letter-spacing: 0.5px;
 }
 
 /* HUD Callout Cards (Left & Right) */

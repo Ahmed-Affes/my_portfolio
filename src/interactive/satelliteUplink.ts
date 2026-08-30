@@ -82,24 +82,30 @@ export class SatelliteUplinkController {
   }
 
   private bindStationTargeting(): void {
-    const stations = document.querySelectorAll('.ground-receiver-dock');
-    stations.forEach((station) => {
-      const el = station as HTMLElement;
+    if (!this.actContact) return;
 
-      el.addEventListener('pointerenter', () => {
-        if (this.currentLockedStation && this.currentLockedStation !== el) {
+    this.actContact.addEventListener('mousemove', (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const hoveredStation = target ? (target.closest('.ground-receiver-dock') as HTMLElement) : null;
+
+      if (hoveredStation) {
+        if (hoveredStation !== this.currentLockedStation) {
+          if (this.currentLockedStation) {
+            this.unlockStation(this.currentLockedStation);
+          }
+          this.lockOnStation(hoveredStation);
+        }
+      } else {
+        if (this.currentLockedStation) {
           this.unlockStation(this.currentLockedStation);
         }
-        this.lockOnStation(el);
-      });
+      }
+    });
 
-      el.addEventListener('pointerleave', (e: PointerEvent) => {
-        const related = e.relatedTarget as HTMLElement | null;
-        if (related && el.contains(related)) return;
-        if (this.currentLockedStation === el) {
-          this.unlockStation(el);
-        }
-      });
+    this.actContact.addEventListener('mouseleave', () => {
+      if (this.currentLockedStation) {
+        this.unlockStation(this.currentLockedStation);
+      }
     });
   }
 

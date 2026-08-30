@@ -143,9 +143,17 @@
                 </div>
 
                 <!-- Centerpiece: Procedural Quantum Holographic Core (Canvas 2D) -->
-                <div class="hero-reactor-frame" id="hero-reactor-frame" title="Interactive Quantum Reactor Core — Move mouse to perturb flux">
+                <div class="hero-reactor-frame" id="hero-reactor-frame" role="button" aria-label="Interactive Quantum Reactor Core — Click to Overload Flux" title="Interactive Quantum Reactor Core — Click or move mouse to perturb flux">
                   <div class="reactor-glow-aura"></div>
                   <canvas id="hero-reactor-canvas" class="hero-reactor-canvas" width="280" height="280"></canvas>
+                  
+                  <!-- Interactive Top Prompt Badge -->
+                  <div class="reactor-interact-pill" aria-hidden="true">
+                    <span class="reactor-pill-dot"></span>
+                    <span>⚡ CLICK TO OVERLOAD FLUX</span>
+                  </div>
+
+                  <!-- Bottom Clean HUD Readout -->
                   <div class="reactor-hud-overlay">
                     <div class="reactor-hud-tag">QUANTUM_CORE // v2.6</div>
                     <div class="reactor-hud-status">FLUX: OPTIMAL</div>
