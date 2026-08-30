@@ -392,80 +392,78 @@ document.addEventListener('DOMContentLoaded', () => {
     meteorEngine
   );
 
-  // 8. Frictionless Preloader Boot Sequence with Fast Skip & Session Memory
+  // 8. Engaging Cyberpunk Preloader Boot Sequence (~1.8s) with 1-Click Skip
   const preloaderEl = document.getElementById('preloader-screen');
   const preloaderStatusEl = document.getElementById('preloader-status-text');
   const preloaderBarFill = document.getElementById('preloader-bar-fill');
   const preloaderSkipBtn = document.getElementById('preloader-skip-btn');
 
-  const hasBootedBefore = sessionStorage.getItem('unit07_booted') === 'true';
+  let hasFinishedBoot = false;
 
   const finishBoot = () => {
-    sessionStorage.setItem('unit07_booted', 'true');
+    if (hasFinishedBoot) return;
+    hasFinishedBoot = true;
     sounds.playCrtPower();
     if (preloaderEl) {
       preloaderEl.classList.add('hidden');
     }
 
-    // Hero Intro Animation
-    if (!prefersReducedMotion && !document.body.classList.contains('calm-motion-active')) {
+    // Hero Intro Entrance Animation
+    if (!prefersReducedMotion) {
       gsap.fromTo(
         '#act-boot .hero-modern-stage',
-        { opacity: 0, scale: 0.96, y: 20 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: EASE_UI }
+        { opacity: 0, scale: 0.94, y: 24 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.9, ease: EASE_UI }
       );
     }
   };
 
-  if (hasBootedBefore) {
-    // Instant bypass on repeat visits / reloads
-    if (preloaderEl) preloaderEl.classList.add('hidden');
-  } else {
-    const bootMessages = [
-      { threshold: 0, text: 'CALIBRATING CORE...' },
-      { threshold: 30, text: 'LOADING TECH STACK...' },
-      { threshold: 65, text: 'PREPARING TELEMETRY...' },
-      { threshold: 100, text: 'SYSTEM READY' }
-    ];
+  const bootMessages = [
+    { threshold: 0, text: 'CALIBRATING NEON MATRIX...' },
+    { threshold: 22, text: 'INITIALIZING SPRITE & SOUND ENGINES...' },
+    { threshold: 48, text: 'SYNCHRONIZING GSAP SCRUB TIMELINES...' },
+    { threshold: 72, text: 'ALIGNING SUB-ORBITAL SATELLITE RELAY...' },
+    { threshold: 90, text: 'LAUNCHING HOLOGRAPHIC MAINFRAME...' },
+    { threshold: 100, text: 'SYSTEM READY // UNIT_07 ONLINE' }
+  ];
 
-    let loadProgress = 0;
-    const progressInterval = window.setInterval(() => {
-      loadProgress += Math.floor(Math.random() * 16) + 12; // Fast sub-700ms boot
-      if (loadProgress > 100) loadProgress = 100;
+  let loadProgress = 0;
+  const progressInterval = window.setInterval(() => {
+    loadProgress += Math.floor(Math.random() * 4) + 2; // Smooth ~1.8s progression
+    if (loadProgress > 100) loadProgress = 100;
 
-      if (preloaderBarFill) {
-        preloaderBarFill.style.width = `${loadProgress}%`;
-      }
+    if (preloaderBarFill) {
+      preloaderBarFill.style.width = `${loadProgress}%`;
+    }
 
-      const currentMsg = [...bootMessages].reverse().find((m) => loadProgress >= m.threshold);
-      if (currentMsg && preloaderStatusEl) {
-        preloaderStatusEl.textContent = `[${String(loadProgress).padStart(3, ' ')}%] ${currentMsg.text}`;
-      }
+    const currentMsg = [...bootMessages].reverse().find((m) => loadProgress >= m.threshold);
+    if (currentMsg && preloaderStatusEl) {
+      preloaderStatusEl.textContent = `[${String(loadProgress).padStart(3, ' ')}%] ${currentMsg.text}`;
+    }
 
-      if (loadProgress >= 100) {
-        clearInterval(progressInterval);
-        window.setTimeout(() => {
-          finishBoot();
-        }, 150);
-      }
-    }, 25);
-
-    // 1-Click Skip / Keyboard Skip
-    const triggerSkip = () => {
+    if (loadProgress >= 100) {
       clearInterval(progressInterval);
-      finishBoot();
-    };
+      window.setTimeout(() => {
+        finishBoot();
+      }, 250);
+    }
+  }, 35);
 
-    preloaderSkipBtn?.addEventListener('click', triggerSkip);
-    window.addEventListener('keydown', (e) => {
-      if (preloaderEl && !preloaderEl.classList.contains('hidden')) {
-        if (e.code === 'Space' || e.key === 'Enter' || e.key === 'Escape') {
-          e.preventDefault();
-          triggerSkip();
-        }
+  // 1-Click Skip Button & Keyboard Shortcuts (Space, Enter, Escape)
+  const triggerSkip = () => {
+    clearInterval(progressInterval);
+    finishBoot();
+  };
+
+  preloaderSkipBtn?.addEventListener('click', triggerSkip);
+  window.addEventListener('keydown', (e) => {
+    if (preloaderEl && !preloaderEl.classList.contains('hidden')) {
+      if (e.code === 'Space' || e.key === 'Enter' || e.key === 'Escape') {
+        e.preventDefault();
+        triggerSkip();
       }
-    });
-  }
+    }
+  });
 
   // 9. Setup Audio Button in HUD
   const audioToggleBtn = document.getElementById('audio-toggle');
