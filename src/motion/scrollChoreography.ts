@@ -93,7 +93,7 @@ export class ScrollChoreography {
       opacity: 1,
       filter: 'blur(0px)',
       pointerEvents: 'auto',
-      zIndex: 10
+      zIndex: 20
     });
 
     // Acts 1, 2, 3, 4 start primed below the viewport ready to sweep up
@@ -103,7 +103,7 @@ export class ScrollChoreography {
       opacity: 0,
       filter: 'blur(6px)',
       pointerEvents: 'none',
-      zIndex: 9
+      zIndex: 1
     });
 
     gsap.set(actSkills, {
@@ -112,7 +112,7 @@ export class ScrollChoreography {
       opacity: 0,
       filter: 'blur(6px)',
       pointerEvents: 'none',
-      zIndex: 8
+      zIndex: 1
     });
 
     gsap.set(actProjects, {
@@ -121,7 +121,7 @@ export class ScrollChoreography {
       opacity: 0,
       filter: 'blur(6px)',
       pointerEvents: 'none',
-      zIndex: 7
+      zIndex: 1
     });
 
     gsap.set(actContact, {
@@ -130,7 +130,7 @@ export class ScrollChoreography {
       opacity: 0,
       filter: 'blur(6px)',
       pointerEvents: 'none',
-      zIndex: 6
+      zIndex: 1
     });
 
     gsap.set(warpStreaks, { opacity: 0 });
@@ -193,7 +193,8 @@ export class ScrollChoreography {
       .fromTo(warpStreaks, { opacity: 0, scaleX: 0.5 }, { opacity: 0.8, scaleX: 1.4, duration: 0.6, yoyo: true, repeat: 1 }, 1.0)
 
       // Act 1 (Neural Mainframe) enters: 3D Holographic Unfold
-      .set(actTerminal, { pointerEvents: 'auto' }, 1.2)
+      .set(actBoot, { pointerEvents: 'none', zIndex: 1 }, 1.2)
+      .set(actTerminal, { pointerEvents: 'auto', zIndex: 20 }, 1.2)
       .to(actTerminal, {
         yPercent: 0,
         scale: 1.0,
@@ -261,10 +262,10 @@ export class ScrollChoreography {
         duration: 0.6,
         ease: 'power2.in'
       }, 2.8)
-      .set(actTerminal, { pointerEvents: 'none' }, 3.4)
+      .set(actTerminal, { pointerEvents: 'none', zIndex: 1 }, 3.1)
 
       // Act 2 (Data Core Runway) enters with Mag-Lev Extrusion
-      .set(actSkills, { pointerEvents: 'auto' }, 3.4)
+      .set(actSkills, { pointerEvents: 'auto', zIndex: 20 }, 3.1)
       .to(actSkills, {
         yPercent: 0,
         scale: 1.0,
@@ -406,11 +407,10 @@ export class ScrollChoreography {
         duration: 0.6,
         ease: 'power2.in'
       }, 6.9)
-      .set(actSkills, { pointerEvents: 'none' }, 7.5)
-
+      .set(actSkills, { pointerEvents: 'none', zIndex: 1 }, 7.1)
 
       // Act 3 (Arcade Runway) enters and settles
-      .set(actProjects, { pointerEvents: 'auto' }, 7.1)
+      .set(actProjects, { pointerEvents: 'auto', zIndex: 20 }, 7.1)
       .to(actProjects, {
         yPercent: 0,
         scale: 1.0,
@@ -528,10 +528,10 @@ export class ScrollChoreography {
         duration: 0.8,
         ease: 'power2.in'
       }, 11.6)
-      .set(actProjects, { pointerEvents: 'none' }, 12.4)
+      .set(actProjects, { pointerEvents: 'none', zIndex: 1 }, 11.7)
 
       // Act 4 (Direct Neural Uplink) enters with Quantum Aperture Expansion
-      .set(actContact, { pointerEvents: 'auto' }, 11.7)
+      .set(actContact, { pointerEvents: 'auto', zIndex: 20 }, 11.7)
       .to(actContact, {
         yPercent: 0,
         scale: 1.0,

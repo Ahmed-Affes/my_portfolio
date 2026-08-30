@@ -1870,6 +1870,18 @@
   margin-top: 48px;
 }
 
+/* All UFO atmosphere elements are strictly non-interactive pass-through */
+.projects-ufo-sky-hanger,
+.projects-ufo-sky-hanger *,
+.projects-ufo-beamer,
+.projects-ufo-beamer *,
+.ufo-craft,
+.ufo-craft *,
+.ufo-tractor-beam,
+.ufo-tractor-beam * {
+  pointer-events: none !important;
+}
+
 .projects-ufo-sky-hanger {
   position: absolute;
   top: -46px;
@@ -2095,7 +2107,7 @@
   border: 1px solid var(--cyan-dim);
   padding: 12px 14px;
   position: relative;
-  cursor: pointer;
+  cursor: pointer !important;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2103,10 +2115,12 @@
   transform-style: preserve-3d;
   will-change: transform, box-shadow, border-color;
   user-select: none;
+  pointer-events: auto !important;
+  z-index: 10;
 }
 
 .arcade-cabinet * {
-  pointer-events: none;
+  pointer-events: none !important;
 }
 
 .cabinet-top-section {

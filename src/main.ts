@@ -231,7 +231,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   arcadeRow?.querySelectorAll('.arcade-cabinet').forEach((cabinet) => {
     cabinet.addEventListener('mouseenter', () => sounds.playHoverBlip());
-    cabinet.addEventListener('click', () => {
+    cabinet.addEventListener('click', (e) => {
+      e.preventDefault();
       const projId = cabinet.getAttribute('data-project-id');
       const proj = PORTFOLIO_DATA.projects.find((p) => p.id === projId);
       if (proj) {
@@ -250,6 +251,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
     });
+  });
+
+  // Global fallback delegation for 100% click reliability
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    const cabinet = target.closest('.arcade-cabinet') as HTMLElement;
+    if (cabinet && !interactionSystem.isOpenState()) {
+      const projId = cabinet.getAttribute('data-project-id');
+      const proj = PORTFOLIO_DATA.projects.find((p) => p.id === projId);
+      if (proj) {
+        interactionSystem.open(cabinet, {
+          statusBadge: {
+            text: proj.status,
+            type: proj.status === 'SHIPPED' ? 'shipped' : 'in-dev'
+          },
+          title: proj.title,
+          tagline: proj.tagline,
+          metrics: proj.metrics,
+          description: proj.description,
+          tags: proj.tags,
+          primaryBtn: { text: 'VISIT PROJECT ↗', href: proj.demoUrl },
+          secondaryBtn: { text: 'SOURCE CODE ↗', href: proj.repoUrl }
+        });
+      }
+    }
   });
 
   const terminalKiosk = document.getElementById('terminal-kiosk');
