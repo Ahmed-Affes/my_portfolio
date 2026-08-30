@@ -80,8 +80,6 @@ export class ScrollChoreography {
     const radarWaves = document.querySelector('#radar-waves');
     const warpStreaks = document.querySelector('#warp-streaks');
 
-    const farSkyline = document.querySelector('.far-skyline-layer');
-    const midSkyline = document.querySelector('.mid-skyline-layer');
     const gridFloor = document.querySelector('.perspective-grid-floor');
 
     // Initial Full-Page 3D spatial staging positions
@@ -161,8 +159,6 @@ export class ScrollChoreography {
 
     // Continuous world parallax & speed
     masterTl
-      .to(farSkyline, { xPercent: -20, duration: 12, ease: 'none' }, 0)
-      .to(midSkyline, { xPercent: -40, duration: 12, ease: 'none' }, 0)
       .to(gridFloor, { backgroundPosition: '0 2800px', duration: 12, ease: 'none' }, 0);
 
     // =========================================================================
@@ -665,35 +661,7 @@ export class ScrollChoreography {
   }
 
   private setup3DMouseParallax() {
-    const farSkyline = document.querySelector('.far-skyline-layer') as HTMLElement;
-    const midSkyline = document.querySelector('.mid-skyline-layer') as HTMLElement;
-    if (!farSkyline && !midSkyline) return;
-
-    let targetX = 0;
-    let targetY = 0;
-    let currentX = 0;
-    let currentY = 0;
-
-    window.addEventListener('mousemove', (e) => {
-      const normX = (e.clientX / window.innerWidth - 0.5) * 2;
-      const normY = (e.clientY / window.innerHeight - 0.5) * 2;
-      targetX = normX * 18;
-      targetY = normY * 10;
-    });
-
-    const updateParallax = () => {
-      currentX += (targetX - currentX) * 0.08;
-      currentY += (targetY - currentY) * 0.08;
-
-      if (midSkyline) {
-        midSkyline.style.transform = `translate(${currentX.toFixed(1)}px, ${currentY.toFixed(1)}px)`;
-      }
-      if (farSkyline) {
-        farSkyline.style.transform = `translate(${(currentX * 0.5).toFixed(1)}px, ${(currentY * 0.5).toFixed(1)}px)`;
-      }
-      requestAnimationFrame(updateParallax);
-    };
-    updateParallax();
+    // Parallax hook reserved for dynamic foreground cards
   }
 
   private updateHudProgress(progress: number) {
