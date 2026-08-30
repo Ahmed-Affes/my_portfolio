@@ -589,50 +589,53 @@ document.addEventListener('DOMContentLoaded', () => {
     new CustomCursorController('custom-cursor');
   }
 
-  // 14. 3D Card Elevation & Tilt on Hover (B3)
+  // 14. Smooth Jitter-Free 3D Card Hover & Focus (B3)
   const addTiltEffect = (selector: string) => {
     document.querySelectorAll(selector).forEach((card) => {
       const el = card as HTMLElement;
+      let bounds: DOMRect | null = null;
+      let isHovered = false;
+
       el.addEventListener('mouseenter', () => {
+        isHovered = true;
+        bounds = el.getBoundingClientRect();
         gsap.to(el, {
-          y: -8,
-          scale: 1.03,
-          boxShadow: '0 16px 36px rgba(79, 227, 255, 0.4)',
+          scale: 1.025,
+          boxShadow: '0 12px 36px rgba(79, 227, 255, 0.4)',
           borderColor: '#4fe3ff',
           zIndex: 30,
           duration: 0.25,
-          ease: 'power2.out',
-          overwrite: 'auto'
+          ease: 'power2.out'
         });
       });
 
       el.addEventListener('mousemove', (e: Event) => {
+        if (!isHovered) return;
+        if (!bounds) bounds = el.getBoundingClientRect();
         const me = e as MouseEvent;
-        const rect = el.getBoundingClientRect();
-        const x = (me.clientX - rect.left) / rect.width - 0.5;
-        const y = (me.clientY - rect.top) / rect.height - 0.5;
+        const x = (me.clientX - bounds.left) / bounds.width - 0.5;
+        const y = (me.clientY - bounds.top) / bounds.height - 0.5;
         gsap.to(el, {
-          rotateY: x * 10,
-          rotateX: -y * 8,
-          duration: 0.2,
+          rotateY: x * 6,
+          rotateX: -y * 4,
+          duration: 0.25,
           ease: 'power2.out',
-          transformPerspective: 800,
-          overwrite: 'auto'
+          transformPerspective: 800
         });
       });
 
       el.addEventListener('mouseleave', () => {
+        isHovered = false;
+        bounds = null;
         gsap.to(el, {
-          y: 0,
           scale: 1.0,
           rotateY: 0,
           rotateX: 0,
           boxShadow: '0 0 0px rgba(79, 227, 255, 0)',
           borderColor: '',
           zIndex: 1,
-          duration: 0.4,
-          ease: 'power2.out',
-          overwrite: 'auto'
+          duration: 0.35,
+          ease: 'power2.out'
         });
       });
     });
