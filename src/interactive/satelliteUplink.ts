@@ -19,6 +19,8 @@ export class SatelliteUplinkController {
   private pingMsg: HTMLElement | null = null;
 
   private isLockedOnCard = false;
+  private currentLockedStation: HTMLElement | null = null;
+  private animFrameId: number | null = null;
 
   constructor() {
     this.init();
@@ -94,8 +96,44 @@ export class SatelliteUplinkController {
     });
   }
 
+  private updateLaserBeamCoordinates(): void {
+    if (!this.isLockedOnCard || !this.currentLockedStation || !this.aperture || !this.laserCanvas || !this.laserLine || !this.targetReticle) {
+      return;
+    }
+
+    const canvasRect = this.laserCanvas.getBoundingClientRect();
+    const apertureRect = this.aperture.getBoundingClientRect();
+    
+    // Check if station has antenna spike element
+    const antenna = this.currentLockedStation.querySelector('.receiver-antenna-spike') as HTMLElement;
+    const targetRect = antenna ? antenna.getBoundingClientRect() : this.currentLockedStation.getBoundingClientRect();
+
+    const startX = apertureRect.left + apertureRect.width / 2 - canvasRect.left;
+    const startY = apertureRect.top + apertureRect.height / 2 - canvasRect.top;
+
+    const targetX = antenna
+      ? targetRect.left + targetRect.width / 2 - canvasRect.left
+      : targetRect.left + targetRect.width * 0.85 - canvasRect.left;
+    const targetY = antenna
+      ? targetRect.top - canvasRect.top
+      : targetRect.top + 6 - canvasRect.top;
+
+    this.laserLine.setAttribute('x1', `${startX}`);
+    this.laserLine.setAttribute('y1', `${startY}`);
+    this.laserLine.setAttribute('x2', `${targetX}`);
+    this.laserLine.setAttribute('y2', `${targetY}`);
+
+    this.targetReticle.setAttribute('cx', `${targetX}`);
+    this.targetReticle.setAttribute('cy', `${targetY}`);
+
+    if (this.isLockedOnCard) {
+      this.animFrameId = requestAnimationFrame(() => this.updateLaserBeamCoordinates());
+    }
+  }
+
   private lockOnStation(station: HTMLElement): void {
     this.isLockedOnCard = true;
+    this.currentLockedStation = station;
     station.classList.add('station-locked');
 
     sounds.playQuantumSurge();
@@ -117,34 +155,16 @@ export class SatelliteUplinkController {
     if (this.rig && this.actContact && this.laserCanvas && this.laserLine && this.targetReticle && this.aperture) {
       const contactRect = this.actContact.getBoundingClientRect();
       const stationRect = station.getBoundingClientRect();
-      const apertureRect = this.aperture.getBoundingClientRect();
 
-      const canvasRect = this.laserCanvas.getBoundingClientRect();
-
-      const startX = apertureRect.left + apertureRect.width / 2 - canvasRect.left;
-      const startY = apertureRect.top + apertureRect.height / 2 - canvasRect.top;
-
-      const targetX = stationRect.left + stationRect.width * 0.85 - canvasRect.left;
-      const targetY = stationRect.top + 6 - canvasRect.top;
-
-      // Animate satellite rotation pointing at target
-      const normX = (stationRect.left - contactRect.left) / contactRect.width - 0.5;
+      const normX = (stationRect.left + stationRect.width / 2 - (contactRect.left + contactRect.width / 2)) / (contactRect.width / 2);
       gsap.to(this.rig, {
-        rotateY: normX * 26,
+        rotateY: normX * 28,
         rotateX: 8,
         x: normX * 36,
         duration: 0.25,
-        ease: 'power2.out'
+        ease: 'power2.out',
+        overwrite: 'auto'
       });
-
-      // Draw volumetric laser beam line
-      this.laserLine.setAttribute('x1', `${startX}`);
-      this.laserLine.setAttribute('y1', `${startY}`);
-      this.laserLine.setAttribute('x2', `${targetX}`);
-      this.laserLine.setAttribute('y2', `${targetY}`);
-
-      this.targetReticle.setAttribute('cx', `${targetX}`);
-      this.targetReticle.setAttribute('cy', `${targetY}`);
 
       gsap.to([this.laserLine, this.targetReticle], {
         opacity: 1,
@@ -153,13 +173,23 @@ export class SatelliteUplinkController {
       });
 
       // Add laser beam pulsation
-      gsap.fromTo(this.laserLine, { strokeWidth: 2 }, { strokeWidth: 4.5, duration: 0.2, yoyo: true, repeat: 3, ease: 'sine.inOut' });
+      gsap.fromTo(this.laserLine, { strokeWidth: 2.5 }, { strokeWidth: 5, duration: 0.2, yoyo: true, repeat: 3, ease: 'sine.inOut' });
+
+      // Start continuous coordinate tracking loop
+      if (this.animFrameId) cancelAnimationFrame(this.animFrameId);
+      this.animFrameId = requestAnimationFrame(() => this.updateLaserBeamCoordinates());
     }
   }
 
   private unlockStation(station: HTMLElement): void {
     this.isLockedOnCard = false;
+    this.currentLockedStation = null;
     station.classList.remove('station-locked');
+
+    if (this.animFrameId) {
+      cancelAnimationFrame(this.animFrameId);
+      this.animFrameId = null;
+    }
 
     if (this.laserLine && this.targetReticle) {
       gsap.to([this.laserLine, this.targetReticle], {

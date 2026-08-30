@@ -541,39 +541,58 @@ export class ScrollChoreography {
         ease: 'power3.out'
       }, 11.7)
 
-      // 1. Orbital Satellite Rig descends from deep space and unfolds solar wings
+      // 1. Orbital Satellite Rig flies in dynamically from deep upper space with thrusters blazing
       .fromTo('#orbital-satellite-rig', {
-        y: -100,
-        scale: 0.6,
-        rotateX: 45,
+        x: 340,
+        y: -220,
+        scale: 0.18,
+        rotateZ: -35,
+        rotateY: 55,
         opacity: 0
       }, {
+        x: 0,
         y: 0,
         scale: 1.0,
-        rotateX: 0,
+        rotateZ: 0,
+        rotateY: 0,
         opacity: 1,
-        duration: 1.0,
-        ease: 'back.out(1.6)'
-      }, 11.7)
+        duration: 1.1,
+        ease: 'power3.out'
+      }, 11.6)
+      .fromTo('.sat-exhaust-flame', {
+        scaleY: 4,
+        scaleX: 2.5,
+        opacity: 1
+      }, {
+        scaleY: 1,
+        scaleX: 1,
+        opacity: 0.85,
+        duration: 0.8,
+        ease: 'power2.out'
+      }, 11.6)
       .fromTo('.satellite-solar-wing', {
         scaleX: 0,
+        rotateY: 90,
         opacity: 0
       }, {
         scaleX: 1,
+        rotateY: 0,
         opacity: 1,
-        stagger: 0.1,
-        duration: 0.8,
-        ease: 'power3.out'
-      }, 11.9)
+        stagger: 0.08,
+        duration: 0.7,
+        ease: 'back.out(1.4)'
+      }, 12.0)
       .fromTo('#satellite-laser-aperture', {
         scale: 0,
+        opacity: 0,
         boxShadow: '0 0 0px #ffffff'
       }, {
         scale: 1,
+        opacity: 1,
         boxShadow: '0 0 24px #4fe3ff, 0 0 35px #ff2e88',
-        duration: 0.6,
+        duration: 0.5,
         ease: 'elastic.out(1.2, 0.4)'
-      }, 12.0)
+      }, 12.1)
 
       // 2. Station Console expands from central quantum core
       .fromTo('.comms-station-deck', {
