@@ -1741,53 +1741,55 @@
 .orbiting-satellites-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
   margin-top: 14px;
   position: relative;
   z-index: 50;
-  contain: layout style;
 }
 
 .orbit-satellite {
+  cursor: pointer !important;
+  display: block;
+  position: relative;
+  z-index: 51;
+}
+
+.sat-inner-card {
   display: flex;
   align-items: center;
   gap: 8px;
   background: rgba(8, 14, 32, 0.94);
   border: 1px solid var(--cyan-dim);
-  padding: 8px 10px;
+  padding: 9px 12px;
   border-radius: 4px;
   backdrop-filter: blur(8px);
   transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-  animation: satelliteSlowDrift 5.5s ease-in-out infinite alternate;
+  animation: satelliteSlowFloat 3.8s ease-in-out infinite alternate;
   will-change: transform;
-  position: relative;
-  z-index: 51;
 }
 
-.orbit-satellite.sat-1 { animation-delay: 0s; }
-.orbit-satellite.sat-2 { animation-delay: 1.4s; }
-.orbit-satellite.sat-3 { animation-delay: 2.8s; }
-.orbit-satellite.sat-4 { animation-delay: 4.2s; }
+.orbit-satellite.sat-1 .sat-inner-card { animation-delay: 0s; }
+.orbit-satellite.sat-2 .sat-inner-card { animation-delay: 0.95s; }
+.orbit-satellite.sat-3 .sat-inner-card { animation-delay: 1.9s; }
+.orbit-satellite.sat-4 .sat-inner-card { animation-delay: 2.85s; }
 
-@keyframes satelliteSlowDrift {
+@keyframes satelliteSlowFloat {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-3.5px); }
+  50% { transform: translateY(-8px); }
   100% { transform: translateY(0px); }
 }
 
-.orbit-satellite:hover {
+.orbit-satellite:hover .sat-inner-card {
   border-color: var(--cyan);
-  background: rgba(16, 26, 56, 0.98);
-  box-shadow: 0 0 16px rgba(79, 227, 255, 0.5);
-  animation-play-state: paused;
+  background: rgba(16, 28, 60, 0.98);
+  box-shadow: 0 0 18px rgba(79, 227, 255, 0.55);
 }
 
-.orbit-satellite.active {
+.orbit-satellite.active .sat-inner-card {
   border-color: var(--cyan);
   background: rgba(79, 227, 255, 0.25);
-  box-shadow: 0 0 20px rgba(79, 227, 255, 0.6);
-  animation-play-state: paused;
+  box-shadow: 0 0 22px rgba(79, 227, 255, 0.65);
 }
 
 .sat-icon {
