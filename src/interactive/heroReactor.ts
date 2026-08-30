@@ -1,4 +1,5 @@
 import { sounds } from '../audio/soundEngine';
+import { gsap } from '../motion/customEases';
 
 export class HeroQuantumReactor {
   private canvas: HTMLCanvasElement | null = null;
@@ -9,6 +10,10 @@ export class HeroQuantumReactor {
   private mouseX: number = 0;
   private mouseY: number = 0;
   private surgeEnergy: number = 1.0;
+  private clickStreak: number = 0;
+  private lastClickTime: number = 0;
+  private isMeltdown: boolean = false;
+  private shockwaves: Array<{ radius: number; maxRadius: number; alpha: number; color: string }> = [];
   private particles: Array<{
     x: number;
     y: number;
@@ -80,19 +85,36 @@ export class HeroQuantumReactor {
   }
 
   public triggerSurge() {
-    sounds.playQuantumSurge();
-    this.surgeEnergy = 3.5;
+    if (this.isMeltdown) return;
 
-    // Burst 40 particles outwards
+    const now = Date.now();
+    if (now - this.lastClickTime < 1400) {
+      this.clickStreak++;
+    } else {
+      this.clickStreak = 1;
+    }
+    this.lastClickTime = now;
+
+    // If 4 rapid clicks reached: TRIGGER THE QUANTUM CORE EXPLOSION MELTDOWN! 💥
+    if (this.clickStreak >= 4) {
+      this.triggerMeltdownExplosion();
+      return;
+    }
+
+    sounds.playQuantumSurge();
+    this.surgeEnergy = 2.0 + this.clickStreak * 1.5;
+
+    // Burst particles
     if (this.canvas) {
       const rect = this.canvas.getBoundingClientRect();
       const cx = (rect.width || 280) / 2;
       const cy = (rect.height || 280) / 2;
       const colors = ['#4fe3ff', '#ff2e88', '#ffffff', '#ffb238'];
+      const burstCount = 25 * this.clickStreak;
 
-      for (let i = 0; i < 40; i++) {
-        const angle = (i / 40) * Math.PI * 2 + Math.random() * 0.2;
-        const speed = 2.5 + Math.random() * 3.5;
+      for (let i = 0; i < burstCount; i++) {
+        const angle = (i / burstCount) * Math.PI * 2 + Math.random() * 0.3;
+        const speed = (2.5 + Math.random() * 3.5) * (1 + this.clickStreak * 0.4);
         this.particles.push({
           x: cx,
           y: cy,
@@ -101,28 +123,145 @@ export class HeroQuantumReactor {
           size: 2.0 + Math.random() * 3.0,
           alpha: 1.0,
           life: 0,
-          maxLife: 40 + Math.random() * 30,
+          maxLife: 35 + Math.random() * 30,
           color: colors[Math.floor(Math.random() * colors.length)]
         });
       }
     }
 
-    // Temporary HUD status reaction
+    // Add expanding shockwave ring
+    this.shockwaves.push({
+      radius: 10,
+      maxRadius: 130,
+      alpha: 1.0,
+      color: this.clickStreak === 3 ? '#ff2e88' : '#4fe3ff'
+    });
+
+    // Update status labels based on streak
     const statusEl = document.querySelector('.reactor-hud-status');
+    const pillEl = document.querySelector('.reactor-interact-pill span:last-child');
+    
     if (statusEl) {
-      statusEl.textContent = 'FLUX: SURGE ⚡';
-      (statusEl as HTMLElement).style.color = '#ff2e88';
-      setTimeout(() => {
-        statusEl.textContent = 'FLUX: OPTIMAL';
-        (statusEl as HTMLElement).style.color = 'var(--cyan)';
-      }, 1600);
+      if (this.clickStreak === 1) {
+        statusEl.textContent = 'FLUX: SURGE ⚡';
+        (statusEl as HTMLElement).style.color = '#ffb238';
+      } else if (this.clickStreak === 2) {
+        statusEl.textContent = 'FLUX: OVERCHARGE ⚡ [WARN]';
+        (statusEl as HTMLElement).style.color = '#ffb238';
+      } else if (this.clickStreak === 3) {
+        statusEl.textContent = 'FLUX: CRITICAL 99% ⚠️ [UNSTABLE]';
+        (statusEl as HTMLElement).style.color = '#ff2e88';
+      }
+    }
+
+    if (pillEl) {
+      if (this.clickStreak === 1) pillEl.textContent = '⚡ ENERGY SURGE +1';
+      else if (this.clickStreak === 2) pillEl.textContent = '⚠️ CORE HEATING UP!';
+      else if (this.clickStreak === 3) pillEl.textContent = '🔥 DETONATION IMMINENT [CLICK!]';
     }
 
     const frameEl = document.getElementById('hero-reactor-frame');
     if (frameEl) {
       frameEl.classList.add('reactor-pulsing');
-      setTimeout(() => frameEl.classList.remove('reactor-pulsing'), 600);
+      setTimeout(() => frameEl.classList.remove('reactor-pulsing'), 500);
     }
+  }
+
+  private triggerMeltdownExplosion() {
+    this.isMeltdown = true;
+    this.surgeEnergy = 9.0;
+    sounds.playCoreDetonation();
+
+    // 1. Intense Camera & Screen Shake
+    const viewport = document.querySelector('.camera-parallax-rig') || document.body;
+    gsap.fromTo(viewport, 
+      { x: -14, y: 10, rotateZ: -1.2 }, 
+      { x: 0, y: 0, rotateZ: 0, duration: 0.8, ease: 'elastic.out(1.2, 0.15)' }
+    );
+
+    // 2. Burst 160 Hyper-velocity Plasma sparks
+    if (this.canvas) {
+      const rect = this.canvas.getBoundingClientRect();
+      const cx = (rect.width || 280) / 2;
+      const cy = (rect.height || 280) / 2;
+      const colors = ['#ffffff', '#ff2e88', '#4fe3ff', '#ffb238', '#39ff88'];
+
+      for (let i = 0; i < 160; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 4.0 + Math.random() * 8.5;
+        this.particles.push({
+          x: cx,
+          y: cy,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          size: 2.5 + Math.random() * 4.5,
+          alpha: 1.0,
+          life: 0,
+          maxLife: 60 + Math.random() * 45,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
+    }
+
+    // 3. Shockwave blast rings
+    this.shockwaves.push(
+      { radius: 10, maxRadius: 140, alpha: 1.0, color: '#ffffff' },
+      { radius: 5, maxRadius: 135, alpha: 0.9, color: '#ff2e88' },
+      { radius: 0, maxRadius: 130, alpha: 0.8, color: '#4fe3ff' }
+    );
+
+    // 4. Dramatic HUD text meltdown alert
+    const statusEl = document.querySelector('.reactor-hud-status');
+    const tagEl = document.querySelector('.reactor-hud-tag');
+    const pillEl = document.querySelector('.reactor-interact-pill span:last-child');
+    const frameEl = document.getElementById('hero-reactor-frame');
+
+    if (statusEl) {
+      statusEl.textContent = '💥 CRITICAL MELTDOWN 💥';
+      (statusEl as HTMLElement).style.color = '#ff2e88';
+    }
+    if (tagEl) {
+      tagEl.textContent = 'CORE // DETONATED';
+      (tagEl as HTMLElement).style.color = '#ffffff';
+    }
+    if (pillEl) {
+      pillEl.textContent = '⚡ FLUX VENTING // STABILIZING...';
+    }
+    if (frameEl) {
+      frameEl.classList.add('reactor-meltdown');
+    }
+
+    // 5. Smoothly stabilize and reboot after 3 seconds
+    setTimeout(() => {
+      if (statusEl) {
+        statusEl.textContent = 'FLUX: REBOOTING...';
+        (statusEl as HTMLElement).style.color = '#ffb238';
+      }
+      if (pillEl) {
+        pillEl.textContent = '⚡ CORE STABILIZING...';
+      }
+
+      setTimeout(() => {
+        if (statusEl) {
+          statusEl.textContent = 'FLUX: OPTIMAL';
+          (statusEl as HTMLElement).style.color = 'var(--green)';
+        }
+        if (tagEl) {
+          tagEl.textContent = 'QUANTUM_CORE // v2.6';
+          (tagEl as HTMLElement).style.color = 'var(--cyan)';
+        }
+        if (pillEl) {
+          pillEl.textContent = '⚡ CLICK TO OVERLOAD FLUX';
+        }
+        if (frameEl) {
+          frameEl.classList.remove('reactor-meltdown');
+        }
+        this.clickStreak = 0;
+        this.isMeltdown = false;
+        this.surgeEnergy = 1.0;
+        sounds.playCrtPower();
+      }, 1400);
+    }, 2200);
   }
 
   private initEventListeners() {
@@ -193,6 +332,25 @@ export class HeroQuantumReactor {
 
     this.ctx.save();
     this.ctx.translate(cx + tiltX, cy + tiltY);
+
+    // Draw expanding shockwaves
+    for (let i = this.shockwaves.length - 1; i >= 0; i--) {
+      const sw = this.shockwaves[i];
+      sw.radius += 4.5;
+      sw.alpha = Math.max(0, 1 - sw.radius / sw.maxRadius);
+
+      this.ctx.strokeStyle = sw.color;
+      this.ctx.globalAlpha = sw.alpha;
+      this.ctx.lineWidth = 2.5;
+      this.ctx.beginPath();
+      this.ctx.arc(0, 0, sw.radius, 0, Math.PI * 2);
+      this.ctx.stroke();
+
+      if (sw.radius >= sw.maxRadius) {
+        this.shockwaves.splice(i, 1);
+      }
+    }
+    this.ctx.globalAlpha = 1.0;
 
     // 1. Ambient Background Core Glow
     const pulseGlow = Math.sin(this.frame * 0.05) * 10 * this.surgeEnergy;

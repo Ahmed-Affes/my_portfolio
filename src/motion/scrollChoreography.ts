@@ -650,11 +650,12 @@ export class ScrollChoreography {
       this.hudRobotEl.style.left = `${targetLeft}px`;
     }
 
-    // Determine active checkpoint (0 to 4)
-    const activeIndex = Math.min(
-      this.checkpoints.length - 1,
-      Math.floor(progress * this.checkpoints.length + 0.15)
-    );
+    let activeIndex = 0;
+    if (progress < 0.04) activeIndex = 0;
+    else if (progress < 0.22) activeIndex = 1;
+    else if (progress < 0.48) activeIndex = 2;
+    else if (progress < 0.75) activeIndex = 3;
+    else activeIndex = 4;
 
     this.checkpoints.forEach((cp, idx) => {
       if (idx === activeIndex) {
@@ -671,22 +672,22 @@ export class ScrollChoreography {
     let envClass = 'env-act-0';
     let tintColor = 'rgba(79, 227, 255, 0.04)';
 
-    if (progress < 0.18) {
+    if (progress < 0.04) {
       sectorIdx = 0;
       envLabel = 'SECTOR: 00 // CITY_SUB';
       envClass = 'env-act-0';
       tintColor = 'rgba(79, 227, 255, 0.04)';
-    } else if (progress < 0.38) {
+    } else if (progress < 0.22) {
       sectorIdx = 1;
       envLabel = 'SECTOR: 01 // ARCHIVE_VAULT';
       envClass = 'env-act-1';
       tintColor = 'rgba(57, 255, 136, 0.08)';
-    } else if (progress < 0.60) {
+    } else if (progress < 0.48) {
       sectorIdx = 2;
       envLabel = 'SECTOR: 02 // DATA_CORE';
       envClass = 'env-act-2';
       tintColor = 'rgba(79, 227, 255, 0.1)';
-    } else if (progress < 0.88) {
+    } else if (progress < 0.75) {
       sectorIdx = 3;
       envLabel = 'SECTOR: 03 // ARCADE_ROW';
       envClass = 'env-act-3';
@@ -704,19 +705,19 @@ export class ScrollChoreography {
 
       if (this.hudEnvLabelEl) this.hudEnvLabelEl.textContent = envLabel;
       if (this.envSkyTintEl) this.envSkyTintEl.style.backgroundColor = tintColor;
+    }
 
-      // Trigger character-by-character typewriter once when entering About section
-      if (sectorIdx === 1 && !this.hasAutoTypedBio) {
-        this.hasAutoTypedBio = true;
-        sounds.playCrtPower();
-        const dialogueEl = document.getElementById('terminal-bio-body');
-        if (dialogueEl) {
-          const fullText = dialogueEl.getAttribute('data-full-text') || "Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Ahmed Affes. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads. Step into the Data Core or approach an Arcade Cabinet to inspect live archives.";
-          if (typeof (window as any).__typeBioText === 'function') {
-            (window as any).__typeBioText(fullText);
-          } else {
-            dialogueEl.textContent = fullText;
-          }
+    // Trigger character-by-character typewriter stream reliably upon scrolling into About section
+    if (progress >= 0.02 && !this.hasAutoTypedBio) {
+      this.hasAutoTypedBio = true;
+      sounds.playCrtPower();
+      const dialogueEl = document.getElementById('terminal-bio-body');
+      if (dialogueEl) {
+        const fullText = dialogueEl.getAttribute('data-full-text') || "Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Ahmed Affes. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads. Step into the Data Core or approach an Arcade Cabinet to inspect live archives.";
+        if (typeof (window as any).__typeBioText === 'function') {
+          (window as any).__typeBioText(fullText);
+        } else {
+          dialogueEl.textContent = fullText;
         }
       }
     }

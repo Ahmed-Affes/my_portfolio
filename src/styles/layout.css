@@ -592,6 +592,17 @@
   transform: scale(1.02);
 }
 
+.hero-reactor-frame.reactor-meltdown {
+  border-color: #ff2e88 !important;
+  box-shadow: 0 0 70px rgba(255, 46, 136, 0.95), inset 0 0 50px rgba(255, 255, 255, 0.85) !important;
+  animation: reactorRumble 0.08s infinite alternate !important;
+}
+
+@keyframes reactorRumble {
+  0% { transform: scale(1.05) translate(-3px, 2px) rotate(-1deg); }
+  100% { transform: scale(1.05) translate(3px, -2px) rotate(1deg); }
+}
+
 .reactor-glow-aura {
   position: absolute;
   inset: -25px;

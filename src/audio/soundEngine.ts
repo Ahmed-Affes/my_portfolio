@@ -342,6 +342,47 @@ class SoundEngine {
       // ignore
     }
   }
+
+  // 💥 Quantum Core Detonation & Meltdown Explosion Sound
+  public playCoreDetonation() {
+    if (this.isMuted) return;
+    this.initCtx();
+    if (!this.ctx) return;
+
+    try {
+      // 1. Deep Sub-bass Impact Rumble
+      const subOsc = this.ctx.createOscillator();
+      const subGain = this.ctx.createGain();
+      subOsc.type = 'sawtooth';
+      subOsc.frequency.setValueAtTime(180, this.ctx.currentTime);
+      subOsc.frequency.exponentialRampToValueAtTime(25, this.ctx.currentTime + 0.6);
+
+      subGain.gain.setValueAtTime(0.25, this.ctx.currentTime);
+      subGain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.7);
+
+      subOsc.connect(subGain);
+      subGain.connect(this.ctx.destination);
+      subOsc.start();
+      subOsc.stop(this.ctx.currentTime + 0.75);
+
+      // 2. High-frequency Plasma Discharge Zap
+      const zapOsc = this.ctx.createOscillator();
+      const zapGain = this.ctx.createGain();
+      zapOsc.type = 'square';
+      zapOsc.frequency.setValueAtTime(2600, this.ctx.currentTime);
+      zapOsc.frequency.exponentialRampToValueAtTime(150, this.ctx.currentTime + 0.4);
+
+      zapGain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+      zapGain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.45);
+
+      zapOsc.connect(zapGain);
+      zapGain.connect(this.ctx.destination);
+      zapOsc.start();
+      zapOsc.stop(this.ctx.currentTime + 0.5);
+    } catch {
+      // ignore
+    }
+  }
 }
 
 export const sounds = new SoundEngine();
