@@ -14,6 +14,7 @@ export class ScrollChoreography {
   private hudEnvLabelEl: HTMLElement | null;
   private envSkyTintEl: HTMLElement | null;
   private currentSectorIndex: number = -1;
+  private hasAutoTypedBio: boolean = false;
   private isDecryptedBeacon: boolean = false;
 
   constructor(
@@ -703,6 +704,21 @@ export class ScrollChoreography {
 
       if (this.hudEnvLabelEl) this.hudEnvLabelEl.textContent = envLabel;
       if (this.envSkyTintEl) this.envSkyTintEl.style.backgroundColor = tintColor;
+
+      // Trigger character-by-character typewriter once when entering About section
+      if (sectorIdx === 1 && !this.hasAutoTypedBio) {
+        this.hasAutoTypedBio = true;
+        sounds.playCrtPower();
+        const dialogueEl = document.getElementById('terminal-bio-body');
+        if (dialogueEl) {
+          const fullText = dialogueEl.getAttribute('data-full-text') || "Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Ahmed Affes. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads. Step into the Data Core or approach an Arcade Cabinet to inspect live archives.";
+          if (typeof (window as any).__typeBioText === 'function') {
+            (window as any).__typeBioText(fullText);
+          } else {
+            dialogueEl.textContent = fullText;
+          }
+        }
+      }
     }
   }
 
