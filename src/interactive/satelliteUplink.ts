@@ -82,17 +82,24 @@ export class SatelliteUplinkController {
   }
 
   private bindStationTargeting(): void {
-    const stations = document.querySelectorAll('.ground-receiver-dock');
-    stations.forEach((station) => {
-      const el = station as HTMLElement;
+    const kiosk = document.getElementById('beacon-kiosk');
+    if (!kiosk) return;
 
-      el.addEventListener('mouseenter', () => {
-        this.lockOnStation(el);
-      });
+    kiosk.addEventListener('mouseover', (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const station = target.closest('.ground-receiver-dock') as HTMLElement;
+      if (station && station !== this.currentLockedStation) {
+        if (this.currentLockedStation) {
+          this.unlockStation(this.currentLockedStation);
+        }
+        this.lockOnStation(station);
+      }
+    });
 
-      el.addEventListener('mouseleave', () => {
-        this.unlockStation(el);
-      });
+    kiosk.addEventListener('mouseleave', () => {
+      if (this.currentLockedStation) {
+        this.unlockStation(this.currentLockedStation);
+      }
     });
   }
 

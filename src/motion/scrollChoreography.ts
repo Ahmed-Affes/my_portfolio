@@ -133,6 +133,15 @@ export class ScrollChoreography {
       zIndex: 1
     });
 
+    gsap.set('#orbital-satellite-rig', {
+      x: 480,
+      y: -340,
+      scale: 0.15,
+      rotateZ: -45,
+      rotateY: 60,
+      opacity: 0
+    });
+
     gsap.set(warpStreaks, { opacity: 0 });
     gsap.set(radarWaves, { opacity: 0 });
 
@@ -541,13 +550,13 @@ export class ScrollChoreography {
         ease: 'power3.out'
       }, 11.7)
 
-      // 1. Orbital Satellite Rig flies in dynamically from deep upper space with thrusters blazing
+      // 1. Orbital Satellite Rig flies in dynamically across the screen from upper right deep space
       .fromTo('#orbital-satellite-rig', {
-        x: 340,
-        y: -220,
-        scale: 0.18,
-        rotateZ: -35,
-        rotateY: 55,
+        x: 480,
+        y: -340,
+        scale: 0.15,
+        rotateZ: -45,
+        rotateY: 60,
         opacity: 0
       }, {
         x: 0,
@@ -556,11 +565,11 @@ export class ScrollChoreography {
         rotateZ: 0,
         rotateY: 0,
         opacity: 1,
-        duration: 1.1,
+        duration: 1.2,
         ease: 'power3.out'
-      }, 11.6)
+      }, 11.75)
       .fromTo('.sat-exhaust-flame', {
-        scaleY: 4,
+        scaleY: 4.5,
         scaleX: 2.5,
         opacity: 1
       }, {
@@ -569,7 +578,7 @@ export class ScrollChoreography {
         opacity: 0.85,
         duration: 0.8,
         ease: 'power2.out'
-      }, 11.6)
+      }, 11.75)
       .fromTo('.satellite-solar-wing', {
         scaleX: 0,
         rotateY: 90,
@@ -581,7 +590,7 @@ export class ScrollChoreography {
         stagger: 0.08,
         duration: 0.7,
         ease: 'back.out(1.4)'
-      }, 12.0)
+      }, 12.1)
       .fromTo('#satellite-laser-aperture', {
         scale: 0,
         opacity: 0,
@@ -592,7 +601,7 @@ export class ScrollChoreography {
         boxShadow: '0 0 24px #4fe3ff, 0 0 35px #ff2e88',
         duration: 0.5,
         ease: 'elastic.out(1.2, 0.4)'
-      }, 12.1)
+      }, 12.2)
 
       // 2. Station Console expands from central quantum core
       .fromTo('.comms-station-deck', {

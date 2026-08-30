@@ -2219,7 +2219,9 @@
   align-items: center;
   justify-content: center;
   transform-style: preserve-3d;
-  will-change: transform;
+  will-change: transform, opacity;
+  opacity: 0;
+  transform: translate3d(380px, -320px, 0) scale(0.15) rotate(-35deg);
   filter: drop-shadow(0 0 18px rgba(79, 227, 255, 0.85)) drop-shadow(0 0 30px rgba(255, 46, 136, 0.35));
 }
 
@@ -2593,7 +2595,8 @@
   cursor: pointer !important;
   pointer-events: auto !important;
   user-select: none;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.22s ease;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow, border-color;
 }
 
 .comms-conduit-card * {
@@ -2631,7 +2634,6 @@
 .comms-conduit-card.station-locked {
   border-color: var(--cyan);
   box-shadow: 0 0 35px rgba(79, 227, 255, 0.55), inset 0 0 16px rgba(79, 227, 255, 0.15);
-  transform: translateY(-4px) scale(1.02);
 }
 
 .station-signal-meter {
@@ -2657,12 +2659,6 @@
 .station-signal-meter .meter-bar.active {
   background: var(--green);
   box-shadow: 0 0 4px var(--green);
-}
-
-.comms-conduit-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--cyan);
-  box-shadow: 0 0 28px rgba(79, 227, 255, 0.35), inset 0 0 12px rgba(79, 227, 255, 0.08);
 }
 
 .conduit-top-bar {
