@@ -5111,7 +5111,7 @@ body.custom-cursor-active .sentinel-mode-pill {
   /* ==================== HERO STAGE COMPACT MOBILE ==================== */
   .hero-modern-stage {
     padding: 8px 4px 20px 4px !important;
-    gap: 12px !important;
+    gap: 10px !important;
     min-height: auto !important;
     display: flex;
     flex-direction: column;
@@ -5151,32 +5151,61 @@ body.custom-cursor-active .sentinel-mode-pill {
     padding: 5px 6px !important;
     justify-content: center;
     text-align: center;
-    min-height: 30px !important;
+    min-height: 28px !important;
     box-sizing: border-box;
     gap: 4px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
-  .quick-connect-pill:first-child {
+  #hero-cv-pill {
     grid-column: 1 / -1 !important;
+  }
+
+  #hero-email-pill {
+    grid-column: 1 / -1 !important;
+  }
+
+  #hero-gh-pill {
+    grid-column: 1 / 2 !important;
+  }
+
+  #hero-li-pill {
+    grid-column: 2 / 3 !important;
   }
 
   .hero-centerpiece-container {
     display: flex !important;
     flex-direction: column !important;
+    align-items: center !important;
     gap: 10px !important;
     width: 100% !important;
     margin: 0 auto !important;
   }
 
   .hero-reactor-frame {
-    width: 140px !important;
-    height: 140px !important;
+    order: 1 !important;
+    width: 150px !important;
+    height: 150px !important;
     margin: 0 auto !important;
+    position: relative !important;
+    border: 1.5px solid rgba(79, 227, 255, 0.4) !important;
+    box-shadow: 0 0 25px rgba(79, 227, 255, 0.25) !important;
   }
 
   #hero-reactor-canvas {
-    width: 140px !important;
-    height: 140px !important;
+    width: 150px !important;
+    height: 150px !important;
+    display: block !important;
+  }
+
+  .reactor-interact-pill {
+    display: none !important;
+  }
+
+  .reactor-hud-overlay {
+    display: none !important;
   }
 
   .hero-hud-callout {
@@ -5187,7 +5216,15 @@ body.custom-cursor-active .sentinel-mode-pill {
     border-radius: 4px !important;
   }
 
+  .hero-hud-callout.left-callout {
+    order: 2 !important;
+  }
+
   .hero-hud-callout.right-callout {
+    display: none !important;
+  }
+
+  .hero-bottom-floating-row {
     display: none !important;
   }
 
@@ -5308,32 +5345,168 @@ body.custom-cursor-active .sentinel-mode-pill {
     transform: none !important;
   }
 
-  .dossier-terminal-screen {
+  .dossier-terminal-screen,
+  .terminal-interactive-kiosk {
     width: 100% !important;
     min-height: auto !important;
     padding: 8px 10px !important;
+    box-sizing: border-box !important;
   }
 
-  .bio-tab-group {
+  .terminal-kiosk-header {
     display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding-bottom: 6px !important;
+    gap: 4px !important;
+  }
+
+  .terminal-status {
+    font-size: 6.5px !important;
+  }
+
+  .terminal-scan-trigger-btn {
+    font-size: 6px !important;
+    padding: 3px 6px !important;
+  }
+
+  /* Responsive 3-Column Bio Dossier Tabs */
+  .bio-tabs-header {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 4px !important;
     width: 100% !important;
-    gap: 3px !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
     margin-bottom: 6px !important;
   }
 
   .bio-tab-btn {
-    flex: 1 0 auto !important;
+    padding: 6px 2px !important;
     font-size: 6.5px !important;
-    padding: 5px 6px !important;
-    min-height: 26px !important;
+    justify-content: center !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    min-height: 28px !important;
+    gap: 3px !important;
+    border-radius: 3px !important;
+    box-sizing: border-box !important;
   }
 
   #terminal-bio-body {
     font-size: 10.5px !important;
     line-height: 1.35 !important;
+  }
+
+  /* Tactical Dossier Actions */
+  .terminal-dossier-actions {
+    display: flex !important;
+    gap: 6px !important;
+    margin-top: 8px !important;
+    width: 100% !important;
+  }
+
+  .terminal-dossier-actions .dossier-action-btn {
+    flex: 1 1 50% !important;
+    padding: 7px 6px !important;
+    font-size: 7px !important;
+    min-height: 30px !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  /* ==================== FLOATING CLI TERMINAL MODAL MOBILE ==================== */
+  .floating-cli-container {
+    width: calc(100vw - 16px) !important;
+    max-width: 100% !important;
+    max-height: 86vh !important;
+    border-radius: 4px !important;
+    margin: 10px auto !important;
+  }
+
+  .cli-header-bar {
+    padding: 8px 10px !important;
+  }
+
+  .cli-window-title {
+    font-size: 6.5px !important;
+  }
+
+  .cli-close-btn {
+    font-size: 6px !important;
+    padding: 3px 6px !important;
+  }
+
+  .cli-output-log {
+    max-height: 220px !important;
+    min-height: 140px !important;
+    padding: 8px 10px !important;
+    font-size: 11.5px !important;
+    line-height: 1.3 !important;
+    gap: 6px !important;
+  }
+
+  .welcome-lead {
+    font-size: 11.5px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .welcome-shortcuts {
+    font-size: 10px !important;
+    gap: 6px !important;
+  }
+
+  .cli-card-header {
+    padding: 4px 8px !important;
+    font-size: 6.5px !important;
+  }
+
+  .cli-card-body {
+    padding: 6px 8px !important;
+    font-size: 11px !important;
+  }
+
+  .cli-command-echo {
+    font-size: 12px !important;
+    padding: 2px 0 !important;
+  }
+
+  .cli-input-line {
+    padding: 6px 8px !important;
+    gap: 6px !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .cli-prompt-label {
+    font-size: 11px !important;
+    white-space: nowrap !important;
+  }
+
+  .cli-input-field {
+    font-size: 11.5px !important;
+    padding: 5px 8px !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    flex: 1 !important;
+    border-radius: 3px !important;
+    box-sizing: border-box !important;
+  }
+
+  .cli-pills-bar {
+    padding: 6px 8px !important;
+    gap: 4px !important;
+    box-sizing: border-box !important;
+  }
+
+  .cli-pill-btn {
+    font-size: 5.5px !important;
+    padding: 3px 5px !important;
+  }
+
+  .pills-label {
+    font-size: 5.5px !important;
+    margin-right: 2px !important;
   }
 
   /* ==================== STAGE 2: SKILLS RUNWAY COMPACT MOBILE ==================== */
