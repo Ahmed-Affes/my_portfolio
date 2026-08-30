@@ -42,14 +42,11 @@ export class HeroQuantumReactor {
   private initCanvasSize() {
     if (!this.canvas) return;
     const dpr = window.devicePixelRatio || 1;
-    const rect = this.canvas.getBoundingClientRect();
-    const width = rect.width || 280;
-    const height = rect.height || 280;
-
-    this.canvas.width = width * dpr;
-    this.canvas.height = height * dpr;
+    this.canvas.width = 280 * dpr;
+    this.canvas.height = 280 * dpr;
 
     if (this.ctx) {
+      this.ctx.setTransform(1, 0, 0, 1, 0, 0);
       this.ctx.scale(dpr, dpr);
     }
   }
@@ -64,9 +61,8 @@ export class HeroQuantumReactor {
 
   private spawnParticle() {
     if (!this.canvas) return;
-    const rect = this.canvas.getBoundingClientRect();
-    const cx = (rect.width || 280) / 2;
-    const cy = (rect.height || 280) / 2;
+    const cx = 140;
+    const cy = 140;
     const angle = Math.random() * Math.PI * 2;
     const speed = (0.4 + Math.random() * 1.2) * this.surgeEnergy;
     const colors = ['#4fe3ff', '#ffb238', '#39ff88', '#ff2e88'];
@@ -95,32 +91,31 @@ export class HeroQuantumReactor {
     }
     this.lastClickTime = now;
 
-    // If 4 rapid clicks reached: TRIGGER THE 5-SECOND QUANTUM COUNTDOWN PROTOCOL! 💥
-    if (this.clickStreak >= 4) {
+    // Must reach 6 rapid clicks in a row to detonate countdown! 💥
+    if (this.clickStreak >= 6) {
       this.triggerCountdownProtocol();
       return;
     }
 
     sounds.playQuantumSurge();
-    this.surgeEnergy = 2.0 + this.clickStreak * 1.5;
+    this.surgeEnergy = 1.8 + this.clickStreak * 0.9;
 
-    // Burst particles
+    // Burst particles from center
     if (this.canvas) {
-      const rect = this.canvas.getBoundingClientRect();
-      const cx = (rect.width || 280) / 2;
-      const cy = (rect.height || 280) / 2;
+      const cx = 140;
+      const cy = 140;
       const colors = ['#4fe3ff', '#ff2e88', '#ffffff', '#ffb238'];
-      const burstCount = 25 * this.clickStreak;
+      const burstCount = 18 * this.clickStreak;
 
       for (let i = 0; i < burstCount; i++) {
         const angle = (i / burstCount) * Math.PI * 2 + Math.random() * 0.3;
-        const speed = (2.5 + Math.random() * 3.5) * (1 + this.clickStreak * 0.4);
+        const speed = (2.2 + Math.random() * 3.0) * (1 + this.clickStreak * 0.25);
         this.particles.push({
           x: cx,
           y: cy,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
-          size: 2.0 + Math.random() * 3.0,
+          size: 2.0 + Math.random() * 2.5,
           alpha: 1.0,
           life: 0,
           maxLife: 35 + Math.random() * 30,
@@ -134,36 +129,44 @@ export class HeroQuantumReactor {
       radius: 10,
       maxRadius: 130,
       alpha: 1.0,
-      color: this.clickStreak === 3 ? '#ff2e88' : '#4fe3ff'
+      color: this.clickStreak >= 4 ? '#ff2e88' : '#4fe3ff'
     });
 
-    // Update status labels based on streak
+    // Update status labels based on 1 to 5 streak count
     const statusEl = document.querySelector('.reactor-hud-status');
     const pillEl = document.querySelector('.reactor-interact-pill span:last-child');
     
     if (statusEl) {
       if (this.clickStreak === 1) {
-        statusEl.textContent = 'FLUX: SURGE ⚡';
-        (statusEl as HTMLElement).style.color = '#ffb238';
+        statusEl.textContent = 'FLUX: SURGE ⚡ [1/6]';
+        (statusEl as HTMLElement).style.color = '#4fe3ff';
       } else if (this.clickStreak === 2) {
-        statusEl.textContent = 'FLUX: OVERCHARGE ⚡ [WARN]';
+        statusEl.textContent = 'FLUX: OVERCHARGE ⚡ [2/6]';
         (statusEl as HTMLElement).style.color = '#ffb238';
       } else if (this.clickStreak === 3) {
-        statusEl.textContent = 'FLUX: CRITICAL 99% ⚠️ [UNSTABLE]';
+        statusEl.textContent = 'FLUX: OVERLOAD ⚡ [3/6]';
+        (statusEl as HTMLElement).style.color = '#ffb238';
+      } else if (this.clickStreak === 4) {
+        statusEl.textContent = 'FLUX: CRITICAL 85% ⚠️ [4/6]';
         (statusEl as HTMLElement).style.color = '#ff2e88';
+      } else if (this.clickStreak === 5) {
+        statusEl.textContent = 'FLUX: DETONATE IMMINENT 🔥 [5/6]';
+        (statusEl as HTMLElement).style.color = '#ffffff';
       }
     }
 
     if (pillEl) {
-      if (this.clickStreak === 1) pillEl.textContent = '⚡ ENERGY SURGE +1';
-      else if (this.clickStreak === 2) pillEl.textContent = '⚠️ CORE HEATING UP!';
-      else if (this.clickStreak === 3) pillEl.textContent = '🔥 DETONATION IMMINENT [CLICK!]';
+      if (this.clickStreak === 1) pillEl.textContent = '⚡ ENERGY SURGE [1/6]';
+      else if (this.clickStreak === 2) pillEl.textContent = '⚡ KEEP CLICKING [2/6]';
+      else if (this.clickStreak === 3) pillEl.textContent = '⚠️ CORE COMPRESSION 50% [3/6]';
+      else if (this.clickStreak === 4) pillEl.textContent = '⚠️ SINGULARITY CRACKING [4/6]';
+      else if (this.clickStreak === 5) pillEl.textContent = '🔥 1 MORE CLICK TO DETONATE! [5/6]';
     }
 
     const frameEl = document.getElementById('hero-reactor-frame');
     if (frameEl) {
       frameEl.classList.add('reactor-pulsing');
-      setTimeout(() => frameEl.classList.remove('reactor-pulsing'), 500);
+      setTimeout(() => frameEl.classList.remove('reactor-pulsing'), 450);
     }
   }
 
@@ -394,6 +397,9 @@ export class HeroQuantumReactor {
       pillEl.textContent = '⚡ CLICK TO OVERLOAD FLUX';
     }
 
+    this.initCanvasSize();
+    this.initParticles();
+    this.shockwaves = [];
     this.clickStreak = 0;
     this.isMeltdown = false;
     this.surgeEnergy = 1.0;
@@ -426,10 +432,6 @@ export class HeroQuantumReactor {
     this.canvas.addEventListener('mouseleave', () => {
       this.mouseX = 0;
       this.mouseY = 0;
-    });
-
-    this.canvas.addEventListener('click', () => {
-      this.triggerSurge();
     });
 
     const parentFrame = document.getElementById('hero-reactor-frame');
@@ -468,17 +470,16 @@ export class HeroQuantumReactor {
       if (this.surgeEnergy < 1.0) this.surgeEnergy = 1.0;
     }
 
-    const rect = this.canvas.getBoundingClientRect();
-    const width = rect.width || 280;
-    const height = rect.height || 280;
-    const cx = width / 2;
-    const cy = height / 2;
+    const width = 280;
+    const height = 280;
+    const cx = 140;
+    const cy = 140;
 
     this.ctx.clearRect(0, 0, width, height);
 
     // Dynamic tilt offset based on mouse
-    const tiltX = this.mouseX * 0.15;
-    const tiltY = this.mouseY * 0.15;
+    const tiltX = Math.max(-20, Math.min(20, this.mouseX * 0.15));
+    const tiltY = Math.max(-20, Math.min(20, this.mouseY * 0.15));
 
     this.ctx.save();
     this.ctx.translate(cx + tiltX, cy + tiltY);
