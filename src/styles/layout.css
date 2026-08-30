@@ -1368,13 +1368,6 @@
   backdrop-filter: blur(12px);
   border-radius: 6px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  animation: sentinelHover 3.5s ease-in-out infinite alternate;
-}
-
-@keyframes sentinelHover {
-  0% { transform: translateY(0px) rotateX(0deg); }
-  50% { transform: translateY(-7px) rotateX(1.5deg); }
-  100% { transform: translateY(0px) rotateX(0deg); }
 }
 
 .robot-face-chassis:hover,

@@ -200,8 +200,7 @@ class SoundEngine {
 
   public playKeyType() {
     if (this.isMuted) return;
-    this.initCtx();
-    if (!this.ctx) return;
+    if (!this.ctx || this.ctx.state !== 'running') return;
 
     try {
       const osc = this.ctx.createOscillator();
@@ -211,14 +210,14 @@ class SoundEngine {
       osc.type = 'sine';
       osc.frequency.setValueAtTime(randomPitch, this.ctx.currentTime);
 
-      gain.gain.setValueAtTime(0.015, this.ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.018);
+      gain.gain.setValueAtTime(0.012, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.015);
 
       osc.connect(gain);
       gain.connect(this.ctx.destination);
 
       osc.start();
-      osc.stop(this.ctx.currentTime + 0.02);
+      osc.stop(this.ctx.currentTime + 0.018);
     } catch {
       // ignore
     }

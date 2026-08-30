@@ -38,13 +38,9 @@ export class RobotFaceController {
       this.quickLeftY = gsap.quickTo(this.pupilLeftEl, 'y', { duration: 0.35, ease: 'power2.out' });
     }
     if (this.pupilRightEl) {
-      this.quickRightX = gsap.quickTo(this.pupilRightEl, 'x', { duration: 0.35, ease: 'power2.out' });
-      this.quickRightY = gsap.quickTo(this.pupilRightEl, 'y', { duration: 0.35, ease: 'power2.out' });
+      this.quickRightX = gsap.quickTo(this.pupilRightEl, 'x', { duration: 0.25, ease: 'power2.out' });
+      this.quickRightY = gsap.quickTo(this.pupilRightEl, 'y', { duration: 0.25, ease: 'power2.out' });
     }
-
-    // Initialize GSAP quickTo for 3D Head Tilt
-    this.quickTiltX = gsap.quickTo(this.containerEl, 'rotateY', { duration: 0.45, ease: 'power2.out' });
-    this.quickTiltY = gsap.quickTo(this.containerEl, 'rotateX', { duration: 0.45, ease: 'power2.out' });
 
     this.initMouseTracking();
     this.initBlinkingLoop();
@@ -69,25 +65,19 @@ export class RobotFaceController {
       const dist = Math.hypot(deltaX, deltaY);
 
       // Maximum pupil travel inside eye socket
-      const maxTravel = this.currentMode === 'overclock' ? 16 : 12;
+      const maxTravel = this.currentMode === 'overclock' ? 14 : 10;
       const angle = Math.atan2(deltaY, deltaX);
       const intensity = Math.min(dist / 400, 1.0);
 
       const targetX = Math.cos(angle) * maxTravel * intensity;
       const targetY = Math.sin(angle) * maxTravel * intensity;
 
-      // Drive both pupils
+      // Drive pupils smoothly with zero container shifting
       this.quickLeftX?.(targetX);
       this.quickLeftY?.(targetY);
       this.quickRightX?.(targetX);
       this.quickRightY?.(targetY);
-
-      // 3D Head tilt parallax (look at cursor)
-      const tiltY = Math.max(-12, Math.min(12, (deltaX / window.innerWidth) * 24));
-      const tiltX = Math.max(-10, Math.min(10, -(deltaY / window.innerHeight) * 20));
-      this.quickTiltX?.(tiltY);
-      this.quickTiltY?.(tiltX);
-    });
+    }, { passive: true });
 
     this.containerEl.addEventListener('mouseenter', () => {
       sounds.playHoverBlip();
