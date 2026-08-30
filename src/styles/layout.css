@@ -599,8 +599,176 @@
 }
 
 @keyframes reactorRumble {
-  0% { transform: scale(1.05) translate(-3px, 2px) rotate(-1deg); }
-  100% { transform: scale(1.05) translate(3px, -2px) rotate(1deg); }
+  0% { transform: scale(1.06) translate(-4px, 3px) rotate(-1.5deg); }
+  100% { transform: scale(1.06) translate(4px, -3px) rotate(1.5deg); }
+}
+
+/* ==================== QUANTUM MELTDOWN 5S COUNTDOWN & VOID FALL ==================== */
+.quantum-meltdown-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background: rgba(12, 4, 10, 0.95);
+  border: 2px solid #ff2e88;
+  box-shadow: 0 0 50px rgba(255, 46, 136, 0.8), inset 0 0 30px rgba(255, 46, 136, 0.3);
+  padding: 24px 36px;
+  border-radius: 6px;
+  backdrop-filter: blur(14px);
+  text-align: center;
+  pointer-events: none;
+  max-width: 520px;
+  width: 90%;
+  animation: modalRedAlertPulse 0.5s infinite alternate;
+}
+
+@keyframes modalRedAlertPulse {
+  0% { box-shadow: 0 0 35px rgba(255, 46, 136, 0.6); }
+  100% { box-shadow: 0 0 70px rgba(255, 46, 136, 1.0); }
+}
+
+.meltdown-siren-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 6px 12px;
+  background: rgba(255, 46, 136, 0.25);
+  border: 1px dashed #ff2e88;
+}
+
+.siren-text {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #ff2e88;
+}
+
+.meltdown-sub-text {
+  font-family: var(--font-terminal);
+  font-size: 20px;
+  color: #ffb238;
+  margin-bottom: 12px;
+}
+
+.meltdown-countdown-number {
+  font-family: var(--font-pixel);
+  font-size: 64px;
+  color: #ffffff;
+  line-height: 1;
+  text-shadow: 0 0 20px #ff2e88, 0 0 40px #ff2e88;
+  margin: 10px 0;
+  display: inline-block;
+}
+
+.meltdown-warning-tag {
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  color: #ff2e88;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
+}
+
+/* Void Flash Whiteout */
+.void-detonation-flash {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle, #ffffff 0%, #ff2e88 50%, #4fe3ff 100%);
+  z-index: 10000;
+  pointer-events: none;
+}
+
+/* Pitch Black Void Screen */
+.void-screen-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #02040a;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  pointer-events: none;
+}
+
+.void-terminal-box {
+  background: rgba(4, 8, 16, 0.95);
+  border: 1.5px solid #39ff88;
+  box-shadow: 0 0 30px rgba(57, 255, 136, 0.3);
+  padding: 28px 36px;
+  border-radius: 4px;
+  max-width: 620px;
+  width: 100%;
+  font-family: var(--font-terminal);
+}
+
+.void-glitch-header {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: #ff2e88;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #ff2e88;
+}
+
+.void-glitch-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.void-line {
+  font-size: 22px;
+  color: #39ff88;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.void-line span {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 26px;
+}
+
+/* Sweeping Matrix Laser Scanline */
+.reality-reboot-scanline {
+  position: fixed;
+  left: 0;
+  width: 100vw;
+  height: 6px;
+  background: #4fe3ff;
+  box-shadow: 0 0 20px #4fe3ff, 0 0 40px #ffffff;
+  z-index: 10001;
+  pointer-events: none;
+}
+
+/* Reality Restored Toast */
+.reality-restored-toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(4, 16, 12, 0.95);
+  border: 1.5px solid #39ff88;
+  color: #39ff88;
+  box-shadow: 0 0 25px rgba(57, 255, 136, 0.5);
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-family: var(--font-pixel);
+  font-size: 8.5px;
+  letter-spacing: 0.5px;
+  z-index: 9999;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .reactor-glow-aura {

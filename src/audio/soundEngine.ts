@@ -383,6 +383,90 @@ class SoundEngine {
       // ignore
     }
   }
+
+  // ⚠️ Countdown Warning Beep (escalates in pitch)
+  public playCountdownBeep(num: number) {
+    if (this.isMuted) return;
+    this.initCtx();
+    if (!this.ctx) return;
+
+    try {
+      const freqs: { [key: number]: number } = { 5: 880, 4: 1040, 3: 1200, 2: 1400, 1: 1760, 0: 2200 };
+      const freq = freqs[num] || 1000;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+
+      gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.2);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start();
+      osc.stop(this.ctx.currentTime + 0.22);
+    } catch {
+      // ignore
+    }
+  }
+
+  // 🚨 Emergency Quantum Siren
+  public playEmergencySiren() {
+    if (this.isMuted) return;
+    this.initCtx();
+    if (!this.ctx) return;
+
+    try {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(600, this.ctx.currentTime);
+      osc.frequency.linearRampToValueAtTime(1200, this.ctx.currentTime + 0.25);
+      osc.frequency.linearRampToValueAtTime(600, this.ctx.currentTime + 0.5);
+
+      gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.52);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start();
+      osc.stop(this.ctx.currentTime + 0.55);
+    } catch {
+      // ignore
+    }
+  }
+
+  // 🌟 System Restore Triumphant Reboot Chime
+  public playSystemReboot() {
+    if (this.isMuted) return;
+    this.initCtx();
+    if (!this.ctx) return;
+
+    try {
+      const chord = [261.63, 329.63, 392.00, 523.25, 659.25, 1046.50];
+      chord.forEach((freq, idx) => {
+        const delay = idx * 0.08;
+        const osc = this.ctx!.createOscillator();
+        const gain = this.ctx!.createGain();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, this.ctx!.currentTime + delay);
+
+        gain.gain.setValueAtTime(0.001, this.ctx!.currentTime + delay);
+        gain.gain.linearRampToValueAtTime(0.08, this.ctx!.currentTime + delay + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx!.currentTime + delay + 0.8);
+
+        osc.connect(gain);
+        gain.connect(this.ctx!.destination);
+        osc.start(this.ctx!.currentTime + delay);
+        osc.stop(this.ctx!.currentTime + delay + 0.85);
+      });
+    } catch {
+      // ignore
+    }
+  }
 }
 
 export const sounds = new SoundEngine();

@@ -95,9 +95,9 @@ export class HeroQuantumReactor {
     }
     this.lastClickTime = now;
 
-    // If 4 rapid clicks reached: TRIGGER THE QUANTUM CORE EXPLOSION MELTDOWN! 💥
+    // If 4 rapid clicks reached: TRIGGER THE 5-SECOND QUANTUM COUNTDOWN PROTOCOL! 💥
     if (this.clickStreak >= 4) {
-      this.triggerMeltdownExplosion();
+      this.triggerCountdownProtocol();
       return;
     }
 
@@ -167,101 +167,251 @@ export class HeroQuantumReactor {
     }
   }
 
-  private triggerMeltdownExplosion() {
+  private triggerCountdownProtocol() {
     this.isMeltdown = true;
-    this.surgeEnergy = 9.0;
-    sounds.playCoreDetonation();
+    sounds.playEmergencySiren();
 
-    // 1. Intense Camera & Screen Shake
-    const viewport = document.querySelector('.camera-parallax-rig') || document.body;
-    gsap.fromTo(viewport, 
-      { x: -14, y: 10, rotateZ: -1.2 }, 
-      { x: 0, y: 0, rotateZ: 0, duration: 0.8, ease: 'elastic.out(1.2, 0.15)' }
-    );
-
-    // 2. Burst 160 Hyper-velocity Plasma sparks
-    if (this.canvas) {
-      const rect = this.canvas.getBoundingClientRect();
-      const cx = (rect.width || 280) / 2;
-      const cy = (rect.height || 280) / 2;
-      const colors = ['#ffffff', '#ff2e88', '#4fe3ff', '#ffb238', '#39ff88'];
-
-      for (let i = 0; i < 160; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const speed = 4.0 + Math.random() * 8.5;
-        this.particles.push({
-          x: cx,
-          y: cy,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
-          size: 2.5 + Math.random() * 4.5,
-          alpha: 1.0,
-          life: 0,
-          maxLife: 60 + Math.random() * 45,
-          color: colors[Math.floor(Math.random() * colors.length)]
-        });
-      }
+    // 1. Create or get the Countdown Modal Container
+    let modal = document.getElementById('quantum-meltdown-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'quantum-meltdown-modal';
+      modal.className = 'quantum-meltdown-modal';
+      document.body.appendChild(modal);
     }
 
-    // 3. Shockwave blast rings
-    this.shockwaves.push(
-      { radius: 10, maxRadius: 140, alpha: 1.0, color: '#ffffff' },
-      { radius: 5, maxRadius: 135, alpha: 0.9, color: '#ff2e88' },
-      { radius: 0, maxRadius: 130, alpha: 0.8, color: '#4fe3ff' }
+    modal.innerHTML = `
+      <div class="meltdown-alert-frame">
+        <div class="meltdown-siren-bar">
+          <span class="siren-text">⚠️ CRITICAL SINGULARITY OVERLOAD ⚠️</span>
+        </div>
+        <div class="meltdown-sub-text">GRAVITATIONAL EQUILIBRIUM BREACHED // REALITY COLLAPSE IN:</div>
+        <div class="meltdown-countdown-number" id="meltdown-countdown-num">5</div>
+        <div class="meltdown-warning-tag">[HOLD ONTO YOUR INTERFACE · TIME-SPACE RUPTURE IMMINENT]</div>
+      </div>
+    `;
+
+    gsap.fromTo(modal, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1.0, duration: 0.3, ease: 'back.out(1.5)' });
+
+    const statusEl = document.querySelector('.reactor-hud-status');
+    const pillEl = document.querySelector('.reactor-interact-pill span:last-child');
+    const frameEl = document.getElementById('hero-reactor-frame');
+
+    if (frameEl) frameEl.classList.add('reactor-meltdown');
+    if (statusEl) {
+      statusEl.textContent = '💥 DETONATION IN PROGRESS 💥';
+      (statusEl as HTMLElement).style.color = '#ff2e88';
+    }
+    if (pillEl) {
+      pillEl.textContent = '🔥 5S TO TOTAL VOID COLLAPSE 🔥';
+    }
+
+    let count = 5;
+    sounds.playCountdownBeep(count);
+
+    const countdownInterval = window.setInterval(() => {
+      count--;
+      const countNumEl = document.getElementById('meltdown-countdown-num');
+
+      if (count > 0) {
+        if (countNumEl) {
+          countNumEl.textContent = `${count}`;
+          gsap.fromTo(countNumEl, { scale: 1.8, color: '#ffffff' }, { scale: 1.0, color: count <= 2 ? '#ff2e88' : '#ffb238', duration: 0.3, ease: 'back.out(2)' });
+        }
+        if (pillEl) {
+          pillEl.textContent = `🔥 ${count}S TO TOTAL VOID COLLAPSE 🔥`;
+        }
+
+        sounds.playCountdownBeep(count);
+        this.surgeEnergy = 4.0 + (5 - count) * 3.0;
+
+        // Camera shakes more violently with each tick
+        const viewport = document.querySelector('.camera-parallax-rig') || document.body;
+        gsap.fromTo(viewport, 
+          { x: (Math.random() - 0.5) * (10 + (5 - count) * 4), y: (Math.random() - 0.5) * (8 + (5 - count) * 3) },
+          { x: 0, y: 0, duration: 0.25, ease: 'power2.out' }
+        );
+
+        // Burst sparks and shockwave
+        this.shockwaves.push({
+          radius: 10,
+          maxRadius: 140,
+          alpha: 1.0,
+          color: count <= 2 ? '#ff2e88' : '#ffb238'
+        });
+      } else {
+        clearInterval(countdownInterval);
+        if (countNumEl) countNumEl.textContent = '0';
+        sounds.playCountdownBeep(0);
+        // Execute the Void Gravity Fall!
+        this.executeVoidGravityFall(modal);
+      }
+    }, 1000);
+  }
+
+  private executeVoidGravityFall(modal: HTMLElement | null) {
+    sounds.playCoreDetonation();
+
+    // 1. Create full-screen whiteout blast flash
+    let flash = document.getElementById('void-detonation-flash');
+    if (!flash) {
+      flash = document.createElement('div');
+      flash.id = 'void-detonation-flash';
+      flash.className = 'void-detonation-flash';
+      document.body.appendChild(flash);
+    }
+    gsap.fromTo(flash, { opacity: 1 }, { opacity: 0, duration: 1.2, ease: 'power2.out' });
+
+    // Remove countdown modal immediately
+    if (modal) {
+      gsap.to(modal, { opacity: 0, scale: 0.5, y: 300, duration: 0.4, onComplete: () => modal.remove() });
+    }
+
+    // 2. Select all primary UI containers and launch them down into the void
+    const fallingElements = document.querySelectorAll(
+      '.hud-top-bar, .hero-modern-header, .hero-hud-callout, .hero-reactor-frame, .floating-metric-card, .hero-scroll-directive, .perspective-grid-floor, .stars-layer, .hud-audio-visualizer'
     );
 
-    // 4. Dramatic HUD text meltdown alert
+    fallingElements.forEach((el, index) => {
+      const randomX = (Math.random() - 0.5) * 400;
+      const randomRot = (Math.random() - 0.5) * 90;
+      const randomDelay = index * 0.03;
+
+      gsap.to(el, {
+        y: window.innerHeight + 600,
+        x: randomX,
+        rotateZ: randomRot,
+        opacity: 0,
+        filter: 'blur(16px)',
+        duration: 1.1 + Math.random() * 0.4,
+        delay: randomDelay,
+        ease: 'power3.in'
+      });
+    });
+
+    // 3. Create the Pitch-Black VOID Screen with glitching terminal recovery logs
+    let voidScreen = document.getElementById('void-screen-overlay');
+    if (!voidScreen) {
+      voidScreen = document.createElement('div');
+      voidScreen.id = 'void-screen-overlay';
+      voidScreen.className = 'void-screen-overlay';
+      document.body.appendChild(voidScreen);
+    }
+
+    voidScreen.innerHTML = `
+      <div class="void-terminal-box">
+        <div class="void-glitch-header">[FATAL EXCEPTION: QUANTUM SINGULARITY RUPTURED]</div>
+        <div class="void-glitch-body">
+          <p class="void-line line-1">&gt; ERROR 0x000000FF: LOCAL REALITY HAS COLLAPSED INTO THE VOID.</p>
+          <p class="void-line line-2">&gt; SYSTEM INTEGRITY: 0.00% · GRAVITATIONAL MATRIX DESTROYED.</p>
+          <p class="void-line line-3">&gt; ENGAGING EMERGENCY QUANTUM TEMPORAL REWIND...</p>
+          <p class="void-line line-4">&gt; RECONSTRUCTING TIME-SPACE INTERFACE IN <span id="void-restore-sec">3</span>...</p>
+        </div>
+      </div>
+    `;
+
+    gsap.fromTo(voidScreen, { opacity: 0 }, { opacity: 1, duration: 0.6, delay: 0.8 });
+
+    // Countdown 3, 2, 1 in the void
+    let restoreSec = 3;
+    const restoreInterval = window.setInterval(() => {
+      restoreSec--;
+      const secEl = document.getElementById('void-restore-sec');
+      if (secEl && restoreSec > 0) {
+        secEl.textContent = `${restoreSec}`;
+        sounds.playHoverBlip();
+      } else if (restoreSec <= 0) {
+        clearInterval(restoreInterval);
+        this.executeRealityReboot(voidScreen, fallingElements);
+      }
+    }, 900);
+  }
+
+  private executeRealityReboot(voidScreen: HTMLElement | null, fallingElements: NodeListOf<Element>) {
+    sounds.playSystemReboot();
+
+    // 1. Create sweeping Matrix / CRT reboot scanline
+    let scanline = document.getElementById('reality-reboot-scanline');
+    if (!scanline) {
+      scanline = document.createElement('div');
+      scanline.id = 'reality-reboot-scanline';
+      scanline.className = 'reality-reboot-scanline';
+      document.body.appendChild(scanline);
+    }
+
+    gsap.fromTo(scanline, 
+      { top: '-20%', opacity: 1 }, 
+      { top: '120%', opacity: 1, duration: 1.2, ease: 'power2.inOut', onComplete: () => scanline?.remove() }
+    );
+
+    // Fade out void screen
+    if (voidScreen) {
+      gsap.to(voidScreen, { opacity: 0, duration: 0.5, onComplete: () => voidScreen.remove() });
+    }
+
+    // 2. Re-assemble all fallen elements flying back from sky with elastic bounce!
+    fallingElements.forEach((el) => {
+      gsap.fromTo(el,
+        {
+          y: -window.innerHeight - 300,
+          x: (Math.random() - 0.5) * 150,
+          rotateZ: (Math.random() - 0.5) * 45,
+          opacity: 0,
+          filter: 'blur(10px)'
+        },
+        {
+          y: 0,
+          x: 0,
+          rotateZ: 0,
+          opacity: 1,
+          filter: 'blur(0px)',
+          duration: 1.4,
+          ease: 'back.out(1.4)',
+          stagger: 0.04,
+          clearProps: 'transform,opacity,filter'
+        }
+      );
+    });
+
+    // 3. Reset Reactor Core to pristine nominal state
     const statusEl = document.querySelector('.reactor-hud-status');
     const tagEl = document.querySelector('.reactor-hud-tag');
     const pillEl = document.querySelector('.reactor-interact-pill span:last-child');
     const frameEl = document.getElementById('hero-reactor-frame');
 
+    if (frameEl) {
+      frameEl.classList.remove('reactor-meltdown');
+    }
     if (statusEl) {
-      statusEl.textContent = '💥 CRITICAL MELTDOWN 💥';
-      (statusEl as HTMLElement).style.color = '#ff2e88';
+      statusEl.textContent = 'FLUX: OPTIMAL';
+      (statusEl as HTMLElement).style.color = 'var(--green)';
     }
     if (tagEl) {
-      tagEl.textContent = 'CORE // DETONATED';
-      (tagEl as HTMLElement).style.color = '#ffffff';
+      tagEl.textContent = 'QUANTUM_CORE // v2.6';
+      (tagEl as HTMLElement).style.color = 'var(--cyan)';
     }
     if (pillEl) {
-      pillEl.textContent = '⚡ FLUX VENTING // STABILIZING...';
-    }
-    if (frameEl) {
-      frameEl.classList.add('reactor-meltdown');
+      pillEl.textContent = '⚡ CLICK TO OVERLOAD FLUX';
     }
 
-    // 5. Smoothly stabilize and reboot after 3 seconds
+    this.clickStreak = 0;
+    this.isMeltdown = false;
+    this.surgeEnergy = 1.0;
+
+    // 4. Show celebratory Reality Restored banner toast
+    let toast = document.createElement('div');
+    toast.className = 'reality-restored-toast';
+    toast.innerHTML = `<span>⚡</span> SYSTEM REBOOT COMPLETE · TIME-SPACE RESTORED 100% <span>⚡</span>`;
+    document.body.appendChild(toast);
+
+    gsap.fromTo(toast, 
+      { y: 50, opacity: 0, scale: 0.8 }, 
+      { y: 0, opacity: 1, scale: 1.0, duration: 0.5, ease: 'back.out(1.5)' }
+    );
+
     setTimeout(() => {
-      if (statusEl) {
-        statusEl.textContent = 'FLUX: REBOOTING...';
-        (statusEl as HTMLElement).style.color = '#ffb238';
-      }
-      if (pillEl) {
-        pillEl.textContent = '⚡ CORE STABILIZING...';
-      }
-
-      setTimeout(() => {
-        if (statusEl) {
-          statusEl.textContent = 'FLUX: OPTIMAL';
-          (statusEl as HTMLElement).style.color = 'var(--green)';
-        }
-        if (tagEl) {
-          tagEl.textContent = 'QUANTUM_CORE // v2.6';
-          (tagEl as HTMLElement).style.color = 'var(--cyan)';
-        }
-        if (pillEl) {
-          pillEl.textContent = '⚡ CLICK TO OVERLOAD FLUX';
-        }
-        if (frameEl) {
-          frameEl.classList.remove('reactor-meltdown');
-        }
-        this.clickStreak = 0;
-        this.isMeltdown = false;
-        this.surgeEnergy = 1.0;
-        sounds.playCrtPower();
-      }, 1400);
-    }, 2200);
+      gsap.to(toast, { y: -30, opacity: 0, duration: 0.4, onComplete: () => toast.remove() });
+    }, 3500);
   }
 
   private initEventListeners() {
