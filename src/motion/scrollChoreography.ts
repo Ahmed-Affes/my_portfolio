@@ -163,46 +163,45 @@ export class ScrollChoreography {
     // 🌌 CHAPTER 0 -> 1: HERO OUT -> MAINFRAME UNFOLD (ABOUT & ROBOT FACE)
     // =========================================================================
     masterTl
-      // Act 0 peels apart in parallax layers
+      // Act 0 peels apart in parallax layers immediately on initial scroll
       .to('.hero-hud-callout.left-callout', {
         xPercent: -40,
         opacity: 0,
         filter: 'blur(8px)',
-        duration: 1.1,
+        duration: 0.8,
         ease: 'power2.inOut'
-      }, 0.8)
+      }, 0.1)
       .to('.hero-hud-callout.right-callout', {
         xPercent: 40,
         opacity: 0,
         filter: 'blur(8px)',
-        duration: 1.1,
+        duration: 0.8,
         ease: 'power2.inOut'
-      }, 0.8)
+      }, 0.1)
       .to('.hero-reactor-frame', {
         scale: 0.7,
         opacity: 0,
         filter: 'blur(10px)',
-        duration: 0.8,
+        duration: 0.7,
         ease: 'power2.in'
-      }, 0.8)
+      }, 0.1)
       .to(actBoot, {
         opacity: 0,
-        duration: 1.0,
+        duration: 0.8,
         ease: 'power2.inOut'
-      }, 0.8)
-      .set(actBoot, { pointerEvents: 'none' }, 1.8)
+      }, 0.1)
+      .set(actBoot, { pointerEvents: 'none', zIndex: 1 }, 0.9)
 
-      // Act 1 (Neural Mainframe) enters: 3D Holographic Unfold
-      .set(actBoot, { pointerEvents: 'none', zIndex: 1 }, 1.2)
-      .set(actTerminal, { pointerEvents: 'auto', zIndex: 20 }, 1.2)
+      // Act 1 (Neural Mainframe) enters: 3D Holographic Unfold immediately
+      .set(actTerminal, { pointerEvents: 'auto', zIndex: 20 }, 0.3)
       .to(actTerminal, {
         yPercent: 0,
         scale: 1.0,
         opacity: 1,
         filter: 'blur(0px)',
-        duration: 1.1,
+        duration: 0.9,
         ease: 'power3.out'
-      }, 1.2)
+      }, 0.3)
       // Biometric Avatar Pod sweeps in from left with dramatic 3D isometric rotation
       .fromTo('.biometric-avatar-pod', {
         x: -140,
@@ -216,9 +215,9 @@ export class ScrollChoreography {
         scale: 1.0,
         opacity: 1,
         filter: 'blur(0px)',
-        duration: 1.1,
+        duration: 0.9,
         ease: 'back.out(1.5)'
-      }, 1.3)
+      }, 0.4)
       // Holographic Dossier Terminal expands vertically from top emitter laser
       .fromTo('.holographic-dossier-pod', {
         scaleY: 0.2,
@@ -231,10 +230,10 @@ export class ScrollChoreography {
         y: 0,
         opacity: 1,
         filter: 'blur(0px)',
-        duration: 0.9,
+        duration: 0.8,
         ease: 'power3.out'
-      }, 1.4)
-      .call(() => this.triggerTypewriter(), [], 2.2);
+      }, 0.5)
+      .call(() => this.triggerTypewriter(), [], 1.2);
 
     // =========================================================================
     // 🚪 CHAPTER 1 -> 2: MAINFRAME OUT -> KINETIC MAG-LEV DATA RUNWAY (SKILLS)
