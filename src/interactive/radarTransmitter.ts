@@ -16,7 +16,21 @@ export class RadarTransmitterEngine {
     this.initRings();
     this.initBlips();
     this.initEvents();
-    this.startLoop();
+
+    if (this.canvas && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.startLoop();
+          } else {
+            this.stopLoop();
+          }
+        });
+      }, { threshold: 0.05 });
+      observer.observe(this.canvas);
+    } else {
+      this.startLoop();
+    }
   }
 
   private initRings() {
@@ -49,12 +63,20 @@ export class RadarTransmitterEngine {
     });
   }
 
-  private startLoop() {
+  public startLoop() {
+    if (this.animId !== null) return;
     const render = () => {
       this.draw();
       this.animId = requestAnimationFrame(render);
     };
     render();
+  }
+
+  public stopLoop() {
+    if (this.animId !== null) {
+      cancelAnimationFrame(this.animId);
+      this.animId = null;
+    }
   }
 
   private draw() {

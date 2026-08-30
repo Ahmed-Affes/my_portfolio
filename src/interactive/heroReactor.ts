@@ -53,9 +53,23 @@ export class HeroQuantumReactor {
 
   private initParticles() {
     this.particles = [];
-    const count = 36;
+    const count = window.innerWidth < 768 ? 14 : 36;
     for (let i = 0; i < count; i++) {
       this.spawnParticle();
+    }
+
+    // Auto-pause when reactor is scrolled out of viewport (Performance budget)
+    if (this.canvas && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.start();
+          } else {
+            this.stop();
+          }
+        });
+      }, { threshold: 0.05 });
+      observer.observe(this.canvas);
     }
   }
 
@@ -644,7 +658,8 @@ export class HeroQuantumReactor {
 
         if (p.life >= p.maxLife) {
           this.particles.splice(i, 1);
-          if (this.particles.length < 36) {
+          const maxP = window.innerWidth < 768 ? 14 : 36;
+          if (this.particles.length < maxP) {
             this.spawnParticle();
           }
         }
@@ -657,6 +672,8 @@ export class HeroQuantumReactor {
       // safe fallback
     }
 
-    this.animId = requestAnimationFrame(this.render);
+    if (this.isRunning) {
+      this.animId = requestAnimationFrame(this.render);
+    }
   };
 }

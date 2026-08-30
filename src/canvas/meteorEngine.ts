@@ -54,6 +54,14 @@ export class WarStarMeteorEngine {
     this.ctx = this.canvas.getContext('2d')!;
     this.resize();
 
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        this.stop();
+      } else {
+        this.start();
+      }
+    });
+
     window.addEventListener('resize', () => this.resize());
     this.start();
   }
@@ -72,13 +80,14 @@ export class WarStarMeteorEngine {
   private spawnMeteor() {
     const palette = this.colors[Math.floor(Math.random() * this.colors.length)];
     const angle = (Math.PI / 180) * (48 + (Math.random() - 0.5) * 15); // ~48 deg downward right
-    const baseSpeed = (Math.random() * 5 + 7) * this.velocityMultiplier;
+    const isMobile = window.innerWidth < 768;
+    const baseSpeed = (Math.random() * (isMobile ? 3 : 5) + (isMobile ? 4 : 7)) * this.velocityMultiplier;
     const baseLength = (Math.random() * 60 + 90) * Math.min(2.0, this.velocityMultiplier * 1.0);
 
     this.meteors.push({
       x: Math.random() * (this.canvas.width + 400) - 200,
       y: -50,
-      length: baseLength,
+      length: isMobile ? baseLength * 0.7 : baseLength,
       speed: baseSpeed,
       angle: angle,
       thickness: Math.random() * 1.5 + 1.0,
@@ -91,6 +100,7 @@ export class WarStarMeteorEngine {
   }
 
   private spawnSparkle(x: number, y: number, color: string) {
+    if (window.innerWidth < 768) return; // Skip heavy spark particles on mobile
     for (let i = 0; i < 2; i++) {
       this.sparkles.push({
         x: x + (Math.random() - 0.5) * 10,
@@ -110,7 +120,8 @@ export class WarStarMeteorEngine {
     this.isRunning = true;
 
     // Seed initial meteors
-    for (let i = 0; i < 4; i++) {
+    const initialCount = window.innerWidth < 768 ? 1 : 4;
+    for (let i = 0; i < initialCount; i++) {
       this.spawnMeteor();
     }
 
@@ -123,14 +134,20 @@ export class WarStarMeteorEngine {
     loop();
   }
 
+  public stop() {
+    this.isRunning = false;
+  }
+
   private update() {
     // Lerp velocity multiplier towards target
     this.velocityMultiplier += (this.targetMultiplier - this.velocityMultiplier) * 0.05;
     this.targetMultiplier += (1.0 - this.targetMultiplier) * 0.04;
 
-    // Spawn chance scaled by velocity multiplier
-    const spawnRate = 0.04 * this.velocityMultiplier;
-    if (Math.random() < spawnRate && this.meteors.length < 18) {
+    // Spawn chance scaled by velocity multiplier and mobile threshold
+    const isMobile = window.innerWidth < 768;
+    const maxMeteors = isMobile ? 3 : 18;
+    const spawnRate = (isMobile ? 0.015 : 0.04) * this.velocityMultiplier;
+    if (Math.random() < spawnRate && this.meteors.length < maxMeteors) {
       this.spawnMeteor();
     }
 
@@ -208,9 +225,5 @@ export class WarStarMeteorEngine {
       this.ctx.fillRect(Math.floor(s.x), Math.floor(s.y), s.size, s.size);
     }
     this.ctx.restore();
-  }
-
-  public stop() {
-    this.isRunning = false;
   }
 }

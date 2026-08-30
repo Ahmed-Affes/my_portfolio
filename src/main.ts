@@ -312,10 +312,14 @@ document.addEventListener('DOMContentLoaded', () => {
         text: 'EXPLORE PROJECTS',
         onClick: () => {
           interactionSystem.close();
-          const scrollTrack = document.getElementById('scroll-track');
-          if (scrollTrack) {
-            const maxScroll = scrollTrack.offsetHeight - window.innerHeight;
-            scrollChoreography.lenis.scrollTo(0.75 * maxScroll, { duration: 1.4 });
+          if (window.innerWidth <= 768) {
+            document.getElementById('act-skills')?.scrollIntoView({ behavior: 'smooth' });
+          } else if (scrollChoreography.lenis) {
+            const scrollTrack = document.getElementById('scroll-track');
+            if (scrollTrack) {
+              const maxScroll = scrollTrack.offsetHeight - window.innerHeight;
+              scrollChoreography.lenis.scrollTo(0.75 * maxScroll, { duration: 1.4 });
+            }
           }
         }
       },
@@ -323,10 +327,14 @@ document.addEventListener('DOMContentLoaded', () => {
         text: 'TRANSMIT MESSAGE',
         onClick: () => {
           interactionSystem.close();
-          const scrollTrack = document.getElementById('scroll-track');
-          if (scrollTrack) {
-            const maxScroll = scrollTrack.offsetHeight - window.innerHeight;
-            scrollChoreography.lenis.scrollTo(1.00 * maxScroll, { duration: 1.6 });
+          if (window.innerWidth <= 768) {
+            document.getElementById('act-contact')?.scrollIntoView({ behavior: 'smooth' });
+          } else if (scrollChoreography.lenis) {
+            const scrollTrack = document.getElementById('scroll-track');
+            if (scrollTrack) {
+              const maxScroll = scrollTrack.offsetHeight - window.innerHeight;
+              scrollChoreography.lenis.scrollTo(1.00 * maxScroll, { duration: 1.6 });
+            }
           }
         }
       }
@@ -494,10 +502,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   heroViewProjectsBtn?.addEventListener('click', () => {
     sounds.playHoverBlip();
-    const scrollTrack = document.getElementById('scroll-track');
-    if (scrollTrack) {
-      const maxScroll = scrollTrack.offsetHeight - window.innerHeight;
-      scrollChoreography.lenis.scrollTo(0.25 * maxScroll, { duration: 1.5 });
+    if (window.innerWidth <= 768) {
+      document.getElementById('act-terminal')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (scrollChoreography.lenis) {
+      const scrollTrack = document.getElementById('scroll-track');
+      if (scrollTrack) {
+        const maxScroll = scrollTrack.offsetHeight - window.innerHeight;
+        scrollChoreography.lenis.scrollTo(0.25 * maxScroll, { duration: 1.5 });
+      }
     }
   });
 
@@ -529,7 +541,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const colors = ['#4fe3ff', '#ff2e88', '#ffb238', '#cdeaff'];
-      const particles: Particle[] = Array.from({ length: 45 }, () => ({
+      const particleCount = window.innerWidth < 768 ? 12 : 45;
+      const particles: Particle[] = Array.from({ length: particleCount }, () => ({
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
         size: Math.random() * 2 + 1,
@@ -579,10 +592,29 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateClock, 1000);
   }
 
-  // 13. Custom Cursor (B3)
-  if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
+  // 13. Tactical Custom Cursor (Desktop Only with Fine Pointer and Hover capability)
+  if (!prefersReducedMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     new CustomCursorController('custom-cursor');
   }
+
+  // 14. Mobile Screen Recommendation Toast
+  const mobileToastEl = document.getElementById('mobile-exp-toast');
+  const toastDismissBtn = document.getElementById('toast-dismiss-btn');
+  if (mobileToastEl && sessionStorage.getItem('unit07_mobile_toast_dismissed') === 'true') {
+    mobileToastEl.style.display = 'none';
+  }
+  toastDismissBtn?.addEventListener('click', () => {
+    sounds.playHoverBlip();
+    if (mobileToastEl) {
+      mobileToastEl.style.opacity = '0';
+      mobileToastEl.style.transform = 'translateY(-16px)';
+      mobileToastEl.style.transition = 'all 0.3s ease';
+      setTimeout(() => {
+        mobileToastEl.style.display = 'none';
+      }, 300);
+    }
+    sessionStorage.setItem('unit07_mobile_toast_dismissed', 'true');
+  });
 
   // 14. Smooth Jitter-Free 3D Card Hover & Focus (B3)
   const addTiltEffect = (selector: string) => {

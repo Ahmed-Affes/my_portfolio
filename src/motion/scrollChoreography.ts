@@ -5,7 +5,7 @@ import { sounds } from '../audio/soundEngine';
 import { WarStarMeteorEngine } from '../canvas/meteorEngine';
 
 export class ScrollChoreography {
-  public lenis: Lenis;
+  public lenis: Lenis | null = null;
   public meteorEngine: WarStarMeteorEngine;
   private hudRobotEl: HTMLElement;
   private hudTrackEl: HTMLElement;
@@ -16,6 +16,8 @@ export class ScrollChoreography {
   private currentSectorIndex: number = -1;
   private hasAutoTypedBio: boolean = false;
   private isDecryptedBeacon: boolean = false;
+  private mm: gsap.MatchMedia;
+  private mobileScrollRAF: number | null = null;
 
   constructor(
     hudRobotController: RobotSpriteController,
@@ -28,24 +30,172 @@ export class ScrollChoreography {
     this.checkpoints = Array.from(document.querySelectorAll('.hud-track-checkpoint'));
     this.hudEnvLabelEl = document.querySelector('#hud-env-label');
     this.envSkyTintEl = document.querySelector('#env-sky-tint');
+    this.mm = gsap.matchMedia();
 
-    // Initialize Lenis with enhanced smoothness & inertia
-    this.lenis = new Lenis({
-      duration: 1.4,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true
+    this.setupResponsiveScrollEngines();
+    this.setupCheckpointNavigation();
+  }
+
+  private setupResponsiveScrollEngines() {
+    // =========================================================================
+    // 🖥️ DESKTOP ENGINE: Full Lenis Smooth Scroll + 3D Spatial Pinned Staging
+    // =========================================================================
+    this.mm.add('(min-width: 769px) and (hover: hover)', () => {
+      this.lenis = new Lenis({
+        duration: 1.4,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true
+      });
+
+      (window as any).__lenis = this.lenis;
+
+      this.setupLenisWithGsap();
+      this.setupMasterFullPageTimeline();
+      this.setupScrollVelocityWalkAndMeteors();
+
+      return () => {
+        if (this.lenis) {
+          this.lenis.destroy();
+          this.lenis = null;
+        }
+      };
     });
 
-    (window as any).__lenis = this.lenis;
+    // =========================================================================
+    // 📱 MOBILE / TOUCH ENGINE: Native 60fps Momentum Scroll + Flowing Reveals
+    // =========================================================================
+    this.mm.add('(max-width: 768px), (pointer: coarse)', () => {
+      this.setupMobileNativeScrollAndReveals();
+      return () => {
+        if (this.mobileScrollRAF) cancelAnimationFrame(this.mobileScrollRAF);
+      };
+    });
+  }
 
-    this.setupLenisWithGsap();
-    this.setupMasterFullPageTimeline();
-    this.setupCheckpointNavigation();
-    this.setupScrollVelocityWalkAndMeteors();
-    this.setup3DMouseParallax();
+  private setupMobileNativeScrollAndReveals() {
+    const acts = ['#act-boot', '#act-terminal', '#act-skills', '#act-projects', '#act-contact'];
+    
+    // Ensure all stage acts are visible and interactive on mobile
+    acts.forEach((selector) => {
+      const el = document.querySelector(selector) as HTMLElement;
+      if (el) {
+        gsap.set(el, {
+          clearProps: 'transform,opacity,filter,pointerEvents,zIndex,yPercent'
+        });
+      }
+    });
+
+    // Clean, lightweight scroll entrance reveals for mobile sections
+    gsap.fromTo('#act-boot .hero-modern-stage', 
+      { opacity: 0, y: 25 },
+      { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
+    );
+
+    // Stage 1: Terminal & Dossier reveals
+    ScrollTrigger.create({
+      trigger: '#act-terminal',
+      start: 'top 85%',
+      onEnter: () => {
+        gsap.fromTo('#act-terminal .biometric-avatar-pod, #act-terminal .holographic-dossier-pod',
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, stagger: 0.12, duration: 0.6, ease: 'power2.out' }
+        );
+        this.triggerBioTypewriter();
+      }
+    });
+
+    // Stage 2: Skills Runway reveal
+    ScrollTrigger.create({
+      trigger: '#act-skills',
+      start: 'top 85%',
+      onEnter: () => {
+        gsap.fromTo('#act-skills .skill-card',
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, stagger: 0.04, duration: 0.5, ease: 'power2.out' }
+        );
+      }
+    });
+
+    // Stage 3: Projects Arcade Cards reveal
+    ScrollTrigger.create({
+      trigger: '#act-projects',
+      start: 'top 85%',
+      onEnter: () => {
+        gsap.fromTo('#act-projects .arcade-cabinet',
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, stagger: 0.1, duration: 0.6, ease: 'power2.out' }
+        );
+      }
+    });
+
+    // Stage 4: Sub-Orbital Contact & Conduits reveal
+    ScrollTrigger.create({
+      trigger: '#act-contact',
+      start: 'top 85%',
+      onEnter: () => {
+        gsap.fromTo('#act-contact .comms-conduit-card',
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, stagger: 0.08, duration: 0.5, ease: 'power2.out' }
+        );
+        this.triggerMatrixDecryption();
+      }
+    });
+
+    // Mobile Global Progress Tracker on document scroll
+    ScrollTrigger.create({
+      trigger: document.body,
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate: (self) => {
+        this.updateHudProgress(self.progress);
+        this.updateEnvironmentAndStory(self.progress);
+      }
+    });
+
+    // Mobile native scroll listener throttled with requestAnimationFrame for walking sprite
+    let lastScrollY = window.scrollY;
+    let stopWalkTimeout: number | null = null;
+
+    const handleMobileScroll = () => {
+      const currentScroll = window.scrollY;
+      const delta = currentScroll - lastScrollY;
+      lastScrollY = currentScroll;
+
+      if (Math.abs(delta) > 1) {
+        const direction = delta > 0 ? 'right' : 'left';
+        this.hudRobotController?.startWalking(direction);
+        this.meteorEngine.setScrollVelocity(Math.min(15, Math.max(-15, delta * 0.2)));
+
+        if (stopWalkTimeout) clearTimeout(stopWalkTimeout);
+        stopWalkTimeout = window.setTimeout(() => {
+          this.hudRobotController?.stopWalking();
+        }, 120);
+      }
+    };
+
+    window.addEventListener('scroll', () => {
+      if (this.mobileScrollRAF) cancelAnimationFrame(this.mobileScrollRAF);
+      this.mobileScrollRAF = requestAnimationFrame(handleMobileScroll);
+    }, { passive: true });
+  }
+
+  private triggerBioTypewriter() {
+    if (this.hasAutoTypedBio) return;
+    this.hasAutoTypedBio = true;
+    sounds.playCrtPower();
+    const dialogueEl = document.getElementById('terminal-bio-body');
+    if (dialogueEl) {
+      const fullText = dialogueEl.getAttribute('data-full-text') || "Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Ahmed Affes. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads. Step into the Data Core or approach an Arcade Cabinet to inspect live archives.";
+      if (typeof (window as any).__typeBioText === 'function') {
+        (window as any).__typeBioText(fullText);
+      } else {
+        dialogueEl.textContent = fullText;
+      }
+    }
   }
 
   private setupLenisWithGsap() {
+    if (!this.lenis) return;
     // Scroll-velocity-driven text skew (B2)
     const skewTargets = document.querySelectorAll('.zone-title');
     skewTargets.forEach((el) => el.classList.add('velocity-skew'));
@@ -64,7 +214,7 @@ export class ScrollChoreography {
     });
 
     gsap.ticker.add((time) => {
-      this.lenis.raf(time * 1000);
+      this.lenis?.raf(time * 1000);
     });
 
     gsap.ticker.lagSmoothing(0);
@@ -659,10 +809,6 @@ export class ScrollChoreography {
     ScrollTrigger.refresh();
   }
 
-  private setup3DMouseParallax() {
-    // Parallax hook reserved for dynamic foreground cards
-  }
-
   private updateHudProgress(progress: number) {
     if (this.hudRobotEl && this.hudTrackEl) {
       const currentTrackWidth = this.hudTrackEl.offsetWidth - 28;
@@ -744,21 +890,38 @@ export class ScrollChoreography {
   }
 
   private setupCheckpointNavigation() {
-    this.checkpoints.forEach((cp) => {
+    const stageSelectors = ['#act-boot', '#act-terminal', '#act-skills', '#act-projects', '#act-contact'];
+    this.checkpoints.forEach((cp, idx) => {
       cp.addEventListener('click', (e) => {
         e.preventDefault();
         sounds.playHoverBlip();
-        const targetProgress = parseFloat(cp.getAttribute('data-progress') || '0');
-        const scrollTrack = document.getElementById('scroll-track');
-        if (scrollTrack) {
-          const maxScroll = scrollTrack.offsetHeight - window.innerHeight;
-          this.lenis.scrollTo(targetProgress * maxScroll, { duration: 1.4 });
+        const isMobile = window.innerWidth <= 768;
+
+        if (isMobile) {
+          const targetEl = document.querySelector(stageSelectors[idx]);
+          if (targetEl) {
+            const headerOffset = 65;
+            const elementPosition = targetEl.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        } else if (this.lenis) {
+          const targetProgress = parseFloat(cp.getAttribute('data-progress') || '0');
+          const scrollTrack = document.getElementById('scroll-track');
+          if (scrollTrack) {
+            const maxScroll = scrollTrack.offsetHeight - window.innerHeight;
+            this.lenis.scrollTo(targetProgress * maxScroll, { duration: 1.4 });
+          }
         }
       });
     });
   }
 
   private setupScrollVelocityWalkAndMeteors() {
+    if (!this.lenis) return;
     let scrollTimeout: number | null = null;
     let lastScrollY = window.scrollY;
 
