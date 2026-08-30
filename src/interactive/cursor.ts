@@ -13,6 +13,7 @@ export class CustomCursorController {
     this.ringEl = this.cursorEl.querySelector('.cursor-ring');
     this.dotEl = this.cursorEl.querySelector('.cursor-dot');
 
+    document.documentElement.classList.add('custom-cursor-active');
     document.body.classList.add('custom-cursor-active');
     this.bindEvents();
   }

@@ -1690,14 +1690,20 @@
   display: flex;
   justify-content: space-around;
   width: 70%;
+  height: 28px;
   margin-top: -2px;
+  position: relative;
   z-index: 1;
+  contain: strict;
 }
 
 .sentinel-thruster {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  width: 24px;
+  height: 28px;
 }
 
 .thruster-nozzle {
@@ -1707,6 +1713,8 @@
   border: 1px solid var(--cyan);
   border-radius: 0 0 3px 3px;
   box-shadow: 0 0 6px rgba(79, 227, 255, 0.4);
+  position: relative;
+  z-index: 2;
 }
 
 .thruster-plasma-flame {
@@ -1716,12 +1724,17 @@
   border-radius: 0 0 8px 8px;
   filter: blur(1px);
   box-shadow: 0 0 12px #4fe3ff, 0 0 20px #ff2e88;
-  animation: thrusterFlicker 0.12s infinite alternate;
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  transform-origin: top center;
+  animation: thrusterGentleGlow 1.2s ease-in-out infinite alternate;
+  pointer-events: none;
 }
 
-@keyframes thrusterFlicker {
-  0% { transform: scaleY(0.85) scaleX(0.9); opacity: 0.8; }
-  100% { transform: scaleY(1.2) scaleX(1.1); opacity: 1.0; }
+@keyframes thrusterGentleGlow {
+  0% { opacity: 0.75; transform: scaleY(0.9); }
+  100% { opacity: 1.0; transform: scaleY(1.1); }
 }
 
 /* 4 Floating Orbiting Knowledge Satellites */
@@ -1733,7 +1746,7 @@
   margin-top: 14px;
   position: relative;
   z-index: 50;
-  pointer-events: auto;
+  contain: layout style;
 }
 
 .orbit-satellite {
@@ -1744,24 +1757,22 @@
   border: 1px solid var(--cyan-dim);
   padding: 8px 10px;
   border-radius: 4px;
-  cursor: pointer !important;
   backdrop-filter: blur(8px);
   transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-  animation: slowSmoothFloat 4.8s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  animation: satelliteSlowDrift 5.5s ease-in-out infinite alternate;
   will-change: transform;
   position: relative;
   z-index: 51;
-  pointer-events: auto !important;
 }
 
 .orbit-satellite.sat-1 { animation-delay: 0s; }
-.orbit-satellite.sat-2 { animation-delay: 1.2s; }
-.orbit-satellite.sat-3 { animation-delay: 2.4s; }
-.orbit-satellite.sat-4 { animation-delay: 3.6s; }
+.orbit-satellite.sat-2 { animation-delay: 1.4s; }
+.orbit-satellite.sat-3 { animation-delay: 2.8s; }
+.orbit-satellite.sat-4 { animation-delay: 4.2s; }
 
-@keyframes slowSmoothFloat {
+@keyframes satelliteSlowDrift {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-4px); }
+  50% { transform: translateY(-3.5px); }
   100% { transform: translateY(0px); }
 }
 
@@ -3972,8 +3983,18 @@
   box-shadow: 0 0 6px var(--cyan);
 }
 
-.custom-cursor-active,
-.custom-cursor-active * {
+html.custom-cursor-active,
+html.custom-cursor-active *,
+body.custom-cursor-active,
+body.custom-cursor-active *,
+body.custom-cursor-active a,
+body.custom-cursor-active button,
+body.custom-cursor-active input,
+body.custom-cursor-active select,
+body.custom-cursor-active textarea,
+body.custom-cursor-active [role="button"],
+body.custom-cursor-active .orbit-satellite,
+body.custom-cursor-active .sentinel-mode-pill {
   cursor: none !important;
 }
 
