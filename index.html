@@ -921,10 +921,34 @@
     <div class="drawer-footer-actions stagger-item"></div>
   </aside>
 
-  <!-- Custom Cursor Reticle -->
+  <!-- Cyberpunk Tactical HUD Reticle Cursor (§B3) -->
   <div class="custom-cursor" id="custom-cursor" aria-hidden="true">
-    <div class="cursor-ring"></div>
+    <!-- 4 Cyber Corner Brackets -->
+    <div class="cursor-bracket bracket-tl"></div>
+    <div class="cursor-bracket bracket-tr"></div>
+    <div class="cursor-bracket bracket-bl"></div>
+    <div class="cursor-bracket bracket-br"></div>
+    
+    <!-- Rotating Segmented Tactical HUD Ring -->
+    <div class="cursor-tactical-ring">
+      <span class="ring-tick tick-n"></span>
+      <span class="ring-tick tick-s"></span>
+      <span class="ring-tick tick-e"></span>
+      <span class="ring-tick tick-w"></span>
+    </div>
+
+    <!-- Central Diamond Core & Precision Laser Dot -->
+    <div class="cursor-diamond-core"></div>
     <div class="cursor-dot"></div>
+
+    <!-- Micro Live Telemetry Tag -->
+    <div class="cursor-hud-label" id="cursor-hud-label">
+      <span class="hud-mode-code" id="cursor-hud-mode">SYS_AIM</span>
+      <span class="hud-coords" id="cursor-hud-coords">00.00</span>
+    </div>
+
+    <!-- Click Shockwave Pulse -->
+    <div class="cursor-pulse-wave" id="cursor-pulse-wave"></div>
   </div>
 
   <script type="module" src="/src/main.ts"></script>
