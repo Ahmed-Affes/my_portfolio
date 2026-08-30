@@ -1151,23 +1151,40 @@
   align-items: start;
   width: 100%;
   margin-top: 14px;
+  position: relative;
+}
+
+/* Stage 01 Full-Width Biometric Laser Scanline */
+.mainframe-laser-scanline {
+  position: absolute;
+  top: 0;
+  left: -20px;
+  right: -20px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #4fe3ff 30%, #ffffff 50%, #ff2e88 70%, transparent 100%);
+  box-shadow: 0 0 16px #4fe3ff, 0 0 24px #ff2e88;
+  pointer-events: none !important;
+  z-index: 25;
+  opacity: 0;
 }
 
 .biometric-avatar-pod {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .robot-face-chassis {
   width: 100%;
-  height: 290px;
+  height: 300px;
   background: rgba(8, 12, 26, 0.94);
   border: 1.5px solid var(--cyan);
   box-shadow: 0 0 30px rgba(79, 227, 255, 0.25), inset 0 0 20px rgba(79, 227, 255, 0.08);
   position: relative;
   overflow: hidden;
-  padding: 16px 18px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1179,9 +1196,13 @@
 
 .robot-face-chassis:hover,
 .robot-face-chassis.face-active {
-  transform: translateY(-4px) scale(1.02);
   border-color: #ffffff;
   box-shadow: 0 0 40px rgba(79, 227, 255, 0.45);
+}
+
+.robot-face-chassis.overclock-mode {
+  border-color: #ff2e88 !important;
+  box-shadow: 0 0 45px rgba(255, 46, 136, 0.6), inset 0 0 20px rgba(255, 46, 136, 0.2) !important;
 }
 
 .face-corner-bracket {
@@ -1199,7 +1220,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 8px;
+  padding-bottom: 6px;
   border-bottom: 1px solid rgba(79, 227, 255, 0.25);
 }
 
@@ -1275,12 +1296,12 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin: 12px 0 8px 0;
+  margin: 10px 0 6px 0;
 }
 
 .robot-eye-socket {
   width: 95px;
-  height: 68px;
+  height: 64px;
   background: #040714;
   border: 1.5px solid var(--cyan);
   box-shadow: inset 0 0 16px rgba(79, 227, 255, 0.4);
@@ -1323,6 +1344,17 @@
   align-items: center;
   justify-content: center;
   will-change: transform;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.robot-pupil.pupil-amber {
+  border-color: #ffb238 !important;
+  box-shadow: 0 0 16px #ffb238, 0 0 28px rgba(255, 178, 56, 0.85) !important;
+}
+
+.robot-pupil.pupil-magenta {
+  border-color: #ff2e88 !important;
+  box-shadow: 0 0 16px #ff2e88, 0 0 28px rgba(255, 46, 136, 0.85) !important;
 }
 
 .robot-pupil::after {
@@ -1337,10 +1369,10 @@
 .robot-mouth-equalizer {
   display: flex;
   gap: 4px;
-  height: 24px;
+  height: 22px;
   justify-content: center;
   align-items: flex-end;
-  padding: 4px 10px;
+  padding: 3px 10px;
   background: rgba(4, 7, 16, 0.85);
   border: 1px solid rgba(79, 227, 255, 0.2);
   margin-top: 4px;
@@ -1352,7 +1384,57 @@
   box-shadow: 0 0 6px var(--cyan);
   min-height: 3px;
   height: 25%;
-  transition: height 0.1s ease;
+  transition: height 0.08s ease;
+}
+
+/* Overclock Interactive Switch */
+.face-overclock-row {
+  margin-top: 4px;
+  display: flex;
+  justify-content: center;
+}
+
+.overclock-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(10, 16, 36, 0.9);
+  border: 1px solid var(--cyan-dim);
+  padding: 3px 8px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.overclock-toggle-btn:hover {
+  border-color: var(--cyan);
+  box-shadow: 0 0 12px rgba(79, 227, 255, 0.4);
+}
+
+.overclock-led {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  transition: all 0.2s ease;
+}
+
+.overclock-text {
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+.overclock-badge {
+  font-family: var(--font-pixel);
+  font-size: 5.5px;
+  background: rgba(255, 178, 56, 0.2);
+  border: 1px solid var(--amber);
+  color: var(--amber);
+  padding: 1px 4px;
+  border-radius: 2px;
 }
 
 .face-footer-tag {
@@ -1361,7 +1443,7 @@
   font-size: 5.5px;
   color: var(--cyan);
   letter-spacing: 0.5px;
-  margin-top: 6px;
+  margin-top: 4px;
   opacity: 0.85;
 }
 
@@ -1399,7 +1481,52 @@
 .holographic-dossier-pod {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Holographic Emitter Projector Bar */
+.holographic-emitter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 6px;
+  background: #030612;
+  border: 1px solid var(--cyan);
+  border-radius: 2px;
+  padding: 0 4px;
+  box-shadow: 0 0 10px rgba(79, 227, 255, 0.4);
+}
+
+.emitter-spark {
+  width: 4px;
+  height: 4px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #4fe3ff;
+}
+
+.emitter-beam-track {
+  flex: 1;
+  height: 1.5px;
+  margin: 0 6px;
+  background: rgba(79, 227, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.emitter-core-laser {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #4fe3ff, #ff2e88, #4fe3ff);
+  box-shadow: 0 0 8px #4fe3ff;
+  animation: laserPulse 1.5s infinite alternate;
+}
+
+@keyframes laserPulse {
+  0% { opacity: 0.4; }
+  100% { opacity: 1; }
 }
 
 /* Memory Bio Tabs */

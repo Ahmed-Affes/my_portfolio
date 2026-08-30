@@ -291,6 +291,9 @@
               <!-- Mainframe Lab Layout: Left Biometric Avatar Pod + Right Holographic Dossier Console -->
               <div class="mainframe-lab-stage">
                 
+                <!-- Stage 01 Full-Width Biometric Laser Scanline -->
+                <div class="mainframe-laser-scanline" id="mainframe-laser-scanline" aria-hidden="true"></div>
+
                 <!-- Left Deck: Biometric Cyber Android Pod -->
                 <div class="biometric-avatar-pod" id="robot-face-container">
                   <div class="robot-face-chassis" id="about-robot-face" role="region" aria-label="Interactive Mouse Tracking Robot Face">
@@ -314,7 +317,7 @@
                       <span class="diag-sep">·</span>
                       <span id="face-temp-stat">TEMP: 32°C</span>
                       <span class="diag-sep">·</span>
-                      <span class="diag-status">STATUS: NOMINAL</span>
+                      <span class="diag-status" id="face-status-text">STATUS: NOMINAL</span>
                     </div>
 
                     <!-- Robot Eye Sockets & Interactive Pupils -->
@@ -346,7 +349,16 @@
                       <span class="mouth-bar bar-10"></span>
                     </div>
 
-                    <div class="face-footer-tag">[MOUSE OVER TO ENGAGE · CLICK TO WINK]</div>
+                    <!-- Interactive Overclock Toggle Switch -->
+                    <div class="face-overclock-row">
+                      <button class="overclock-toggle-btn" id="face-overclock-btn" aria-label="Toggle Neural Overclock Mode">
+                        <span class="overclock-led"></span>
+                        <span class="overclock-text" id="overclock-status-label">CORE: NOMINAL</span>
+                        <span class="overclock-badge">OVERCLOCK ⚡</span>
+                      </button>
+                    </div>
+
+                    <div class="face-footer-tag">[CLICK CORE TO OVERCLOCK · HOVER TO ENGAGE]</div>
                   </div>
 
                   <!-- Quick Hardware & Operational Badges -->
@@ -367,8 +379,17 @@
                 </div>
 
                 <!-- Right Deck: Holographic Neural Command Terminal -->
-                <div class="holographic-dossier-pod">
+                <div class="holographic-dossier-pod" id="holographic-dossier-pod">
                   
+                  <!-- Holographic Emitter Projector Bar -->
+                  <div class="holographic-emitter-bar">
+                    <span class="emitter-spark left"></span>
+                    <div class="emitter-beam-track">
+                      <span class="emitter-core-laser"></span>
+                    </div>
+                    <span class="emitter-spark right"></span>
+                  </div>
+
                   <!-- Bio Dossier Memory Tabs -->
                   <div class="bio-tabs-header" id="bio-tabs">
                     <button class="bio-tab-btn active" data-tab="0">01 // OPERATOR LOG</button>

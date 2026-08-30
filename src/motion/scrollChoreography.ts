@@ -212,38 +212,51 @@ export class ScrollChoreography {
         duration: 1.1,
         ease: 'power3.out'
       }, 1.2)
-      // Biometric Avatar Pod projects in from left with 3D rotation
+      // Biometric Avatar Pod sweeps in from left with dramatic 3D isometric rotation
       .fromTo('.biometric-avatar-pod', {
-        x: -90,
-        rotateY: 25,
-        scale: 0.9,
+        x: -140,
+        rotateY: -35,
+        scale: 0.85,
         opacity: 0,
-        filter: 'blur(6px)'
+        filter: 'blur(8px)'
       }, {
         x: 0,
         rotateY: 0,
         scale: 1.0,
         opacity: 1,
         filter: 'blur(0px)',
-        duration: 1.0,
-        ease: 'back.out(1.4)'
+        duration: 1.1,
+        ease: 'back.out(1.5)'
       }, 1.3)
-      // Dossier Terminal unfolds from top with 3D perspective
+      // Holographic Dossier Terminal expands vertically from top emitter laser
       .fromTo('.holographic-dossier-pod', {
-        y: -60,
-        rotateX: -20,
-        scale: 0.92,
+        scaleY: 0.2,
+        y: -40,
         opacity: 0,
-        filter: 'blur(6px)'
+        transformOrigin: 'top center',
+        filter: 'blur(8px)'
       }, {
+        scaleY: 1.0,
         y: 0,
-        rotateX: 0,
-        scale: 1.0,
         opacity: 1,
         filter: 'blur(0px)',
-        duration: 1.0,
+        duration: 0.9,
         ease: 'power3.out'
       }, 1.4)
+      // Full-Stage Biometric Laser Scanline sweeps down
+      .fromTo('#mainframe-laser-scanline', {
+        top: '0%',
+        opacity: 1
+      }, {
+        top: '100%',
+        opacity: 1,
+        duration: 0.8,
+        ease: 'power2.inOut'
+      }, 1.5)
+      .to('#mainframe-laser-scanline', {
+        opacity: 0,
+        duration: 0.2
+      }, 2.3)
       .call(() => this.triggerTypewriter(), [], 2.2);
 
     // =========================================================================
