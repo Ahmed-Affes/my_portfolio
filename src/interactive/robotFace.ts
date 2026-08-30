@@ -202,16 +202,52 @@ export class RobotFaceController {
     });
   }
 
+  private activeTypeInterval: number | null = null;
+
+  public typeTextIntoTerminal(text: string) {
+    const terminalBioBody = document.getElementById('terminal-bio-body');
+    if (!terminalBioBody) return;
+
+    if (this.activeTypeInterval !== null) {
+      clearInterval(this.activeTypeInterval);
+      this.activeTypeInterval = null;
+    }
+
+    terminalBioBody.textContent = '';
+    let charIdx = 0;
+    this.triggerSpeech(Math.min(2500, text.length * 15));
+
+    this.activeTypeInterval = window.setInterval(() => {
+      if (charIdx < text.length) {
+        terminalBioBody.textContent = text.slice(0, charIdx + 1);
+        if (charIdx % 4 === 0) sounds.playKeyType();
+        charIdx++;
+      } else {
+        if (this.activeTypeInterval !== null) {
+          clearInterval(this.activeTypeInterval);
+          this.activeTypeInterval = null;
+        }
+      }
+    }, 12);
+  }
+
   private bindBioTabsReactivity() {
     const tabs = document.querySelectorAll('#bio-tabs .bio-tab-btn');
     const tabViews = document.querySelectorAll('.terminal-tab-view');
     const portStatus = document.getElementById('terminal-port-status');
 
+    const defaultBioText = "Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Ahmed Affes. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads. Step into the Data Core or approach an Arcade Cabinet to inspect live archives.";
+
     tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
+      tab.addEventListener('click', (e) => {
+        e.preventDefault();
         sounds.playPanelOpen();
         tabs.forEach((t) => t.classList.remove('active'));
         tab.classList.add('active');
+
+        // Deactivate active satellites
+        const satellites = document.querySelectorAll('#orbiting-satellites .orbit-satellite');
+        satellites.forEach((s) => s.classList.remove('active'));
 
         const tabIdx = parseInt(tab.getAttribute('data-tab') || '0', 10);
 
@@ -227,8 +263,10 @@ export class RobotFaceController {
           else if (tabIdx === 2) portStatus.textContent = 'HARDWARE_DIAGNOSTICS // LIVE SPECS · [SYNCED]';
         }
 
-        // Animate gauge bars on Tab 2 view
-        if (tabIdx === 2) {
+        if (tabIdx === 0) {
+          this.typeTextIntoTerminal(defaultBioText);
+        } else if (tabIdx === 2) {
+          // Animate gauge bars on Tab 2 view
           const fills = document.querySelectorAll('.gauge-bar-fill');
           fills.forEach((fill) => {
             const el = fill as HTMLElement;
@@ -239,16 +277,17 @@ export class RobotFaceController {
             }, 50);
           });
         }
-
-        this.triggerSpeech(900);
       });
     });
+
+    (window as any).__typeBioText = (text: string) => this.typeTextIntoTerminal(text);
   }
 
   private initOrbitingSatellites() {
     const satellites = document.querySelectorAll('#orbiting-satellites .orbit-satellite');
-    const terminalBioBody = document.getElementById('terminal-bio-body');
-    const tab0Btn = document.querySelector('#bio-tabs .bio-tab-btn[data-tab="0"]') as HTMLElement;
+    const tabs = document.querySelectorAll('#bio-tabs .bio-tab-btn');
+    const tabViews = document.querySelectorAll('.terminal-tab-view');
+    const portStatus = document.getElementById('terminal-port-status');
 
     const satPayloads: { [key: string]: string } = {
       fullstack: "MODULE [MOD_01: FULLSTACK ARCHITECTURE]\n• Core Focus: High-performance TypeScript, React component hierarchies, Node.js microservices.\n• Clean modular architecture with strict typing, zero bloat, and enterprise resilience.",
@@ -261,22 +300,30 @@ export class RobotFaceController {
       sat.addEventListener('mouseenter', () => sounds.playHoverBlip());
       sat.addEventListener('click', () => {
         sounds.playQuantumSurge();
+        
+        // Highlight clicked satellite
+        satellites.forEach((s) => s.classList.remove('active'));
+        sat.classList.add('active');
+
+        // Switch to Tab 0 smoothly without firing competing events
+        tabs.forEach((t, idx) => {
+          if (idx === 0) t.classList.add('active');
+          else t.classList.remove('active');
+        });
+        tabViews.forEach((view, idx) => {
+          if (idx === 0) view.classList.add('active');
+          else view.classList.remove('active');
+        });
+
         const chip = sat.getAttribute('data-chip') || '';
         const payload = satPayloads[chip];
-        if (payload && terminalBioBody) {
-          tab0Btn?.click();
-          // Stream payload into typewriter
-          terminalBioBody.textContent = '';
-          let charIdx = 0;
-          const interval = window.setInterval(() => {
-            if (charIdx < payload.length) {
-              terminalBioBody.textContent = payload.slice(0, charIdx + 1);
-              if (charIdx % 3 === 0) sounds.playKeyType();
-              charIdx++;
-            } else {
-              clearInterval(interval);
-            }
-          }, 14);
+
+        if (portStatus) {
+          portStatus.textContent = `SATELLITE_FEED // ${chip.toUpperCase()} · [STREAMING]`;
+        }
+
+        if (payload) {
+          this.typeTextIntoTerminal(payload);
         }
       });
     });

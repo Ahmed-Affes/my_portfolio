@@ -1703,24 +1703,18 @@
   border-radius: 3px;
   cursor: pointer;
   backdrop-filter: blur(8px);
-  transition: all 0.2s ease;
-  animation: floatSat 3s ease-in-out infinite alternate;
-}
-
-.orbit-satellite.sat-1 { animation-delay: 0s; }
-.orbit-satellite.sat-2 { animation-delay: 0.7s; }
-.orbit-satellite.sat-3 { animation-delay: 1.4s; }
-.orbit-satellite.sat-4 { animation-delay: 2.1s; }
-
-@keyframes floatSat {
-  0% { transform: translateY(0px); }
-  100% { transform: translateY(-4px); }
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .orbit-satellite:hover {
   border-color: var(--cyan);
   box-shadow: 0 0 14px rgba(79, 227, 255, 0.4);
-  transform: translateY(-2px) scale(1.02);
+}
+
+.orbit-satellite.active {
+  border-color: var(--cyan);
+  background: rgba(79, 227, 255, 0.2);
+  box-shadow: 0 0 16px rgba(79, 227, 255, 0.45);
 }
 
 .sat-icon {
@@ -1873,6 +1867,8 @@
   backdrop-filter: blur(12px);
   border-radius: 4px;
   min-height: 250px;
+  height: 250px;
+  box-sizing: border-box;
 }
 
 .terminal-interactive-kiosk:hover {
@@ -1922,7 +1918,9 @@
 /* Multi-Tab View Containers */
 .terminal-body-wrapper {
   position: relative;
-  min-height: 140px;
+  min-height: 155px;
+  height: 155px;
+  overflow: hidden;
 }
 
 .terminal-tab-view {
@@ -1947,7 +1945,7 @@
   white-space: pre-line;
   word-break: break-word;
   text-align: left;
-  min-height: 130px;
+  min-height: 140px;
   margin: 0;
   padding: 0;
 }

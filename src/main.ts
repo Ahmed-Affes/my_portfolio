@@ -330,57 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Bio Dossier Tabs Swapping
-  const bioTabButtons = document.querySelectorAll('#bio-tabs .bio-tab-btn');
-  const terminalBioBody = document.getElementById('terminal-bio-body');
 
-  const bioTabData = [
-    "Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Ahmed Affes. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads.",
-    "OPERATOR PRODUCTION TIMELINE:\n• 2024–PRESENT: Principal Motion & Full-Stack Architect — NextGen Web & Mobile Ecosystems\n• 2022–2024: Senior Systems Engineer — Distributed Microservices & High-Performance Clients\n• 2020–2022: Creative UI Developer — Pixel-Perfect Motion Engines & Interactive Canvas Apps",
-    "HARDWARE / NEURAL CORE SPECS:\n• ARCHITECTURE: Full-Stack Distributed Engine (TypeScript, React, Node, WebGL)\n• RUNTIME EFFICIENCY: 0ms Input Latency · 60 FPS Locked\n• SECURITY CLEARANCE: 256-Bit Encrypted Uplink · Status: Available For Work"
-  ];
-
-  let activeBioTypeInterval: number | null = null;
-
-  function typeBioText(text: string) {
-    if (!terminalBioBody) return;
-    if (activeBioTypeInterval !== null) {
-      clearInterval(activeBioTypeInterval);
-      activeBioTypeInterval = null;
-    }
-
-    terminalBioBody.textContent = '';
-    let charIdx = 0;
-    activeBioTypeInterval = window.setInterval(() => {
-      if (charIdx < text.length) {
-        terminalBioBody.textContent = text.slice(0, charIdx + 1);
-        if (charIdx % 4 === 0) {
-          sounds.playKeyType();
-        }
-        charIdx++;
-      } else {
-        if (activeBioTypeInterval !== null) {
-          clearInterval(activeBioTypeInterval);
-          activeBioTypeInterval = null;
-        }
-      }
-    }, 12);
-  }
-
-  (window as any).__typeBioText = typeBioText;
-
-  bioTabButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      sounds.playHoverBlip();
-      bioTabButtons.forEach((b) => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const tabIdx = parseInt(btn.getAttribute('data-tab') || '0', 10);
-      if (tabIdx === 0) {
-        typeBioText(bioTabData[0]);
-      }
-    });
-  });
 
   // Dossier Quick Action Triggers
   const dossierResumeBtn = document.getElementById('dossier-resume-btn');
