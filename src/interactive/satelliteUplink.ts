@@ -82,31 +82,47 @@ export class SatelliteUplinkController {
   }
 
   private bindStationTargeting(): void {
-    if (!this.actContact) return;
+    const stations = document.querySelectorAll('.ground-receiver-dock');
+    stations.forEach((station) => {
+      const el = station as HTMLElement;
 
-    this.actContact.addEventListener('mousemove', (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const hoveredStation = target ? (target.closest('.ground-receiver-dock') as HTMLElement) : null;
+      el.addEventListener('mouseenter', () => {
+        if (this.currentLockedStation && this.currentLockedStation !== el) {
+          this.unlockStation(this.currentLockedStation);
+        }
+        this.lockOnStation(el);
+      });
 
-      if (hoveredStation) {
-        if (hoveredStation !== this.currentLockedStation) {
+      el.addEventListener('mouseleave', (e: MouseEvent) => {
+        const related = e.relatedTarget as HTMLElement | null;
+        if (related && (el.contains(related) || related.closest('.ground-receiver-dock') === el)) {
+          return;
+        }
+        if (this.currentLockedStation === el) {
+          this.unlockStation(el);
+        }
+      });
+    });
+
+    if (this.actContact) {
+      this.actContact.addEventListener('mousemove', (e: MouseEvent) => {
+        const target = e.target as HTMLElement;
+        const hoveredStation = target ? (target.closest('.ground-receiver-dock') as HTMLElement) : null;
+
+        if (hoveredStation && hoveredStation !== this.currentLockedStation) {
           if (this.currentLockedStation) {
             this.unlockStation(this.currentLockedStation);
           }
           this.lockOnStation(hoveredStation);
         }
-      } else {
+      });
+
+      this.actContact.addEventListener('mouseleave', () => {
         if (this.currentLockedStation) {
           this.unlockStation(this.currentLockedStation);
         }
-      }
-    });
-
-    this.actContact.addEventListener('mouseleave', () => {
-      if (this.currentLockedStation) {
-        this.unlockStation(this.currentLockedStation);
-      }
-    });
+      });
+    }
   }
 
   private updateLaserBeamCoordinates(): void {
@@ -177,14 +193,14 @@ export class SatelliteUplinkController {
         overwrite: 'auto'
       });
 
+      // Keep laser line constantly visible and glowing at full opacity
       gsap.to([this.laserLine, this.targetReticle], {
         opacity: 1,
-        duration: 0.15,
-        ease: 'power1.out'
+        duration: 0.1,
+        ease: 'power1.out',
+        overwrite: 'auto'
       });
-
-      // Add laser beam pulsation
-      gsap.fromTo(this.laserLine, { strokeWidth: 2.5 }, { strokeWidth: 5, duration: 0.2, yoyo: true, repeat: 3, ease: 'sine.inOut' });
+      gsap.set(this.laserLine, { strokeWidth: 3.5 });
 
       // Start continuous coordinate tracking loop immediately
       if (this.animFrameId) cancelAnimationFrame(this.animFrameId);

@@ -52,8 +52,8 @@ export class CustomCursorController {
       }
     });
 
-    // Magnetic pull on primary CTAs
-    document.querySelectorAll('.hero-cta-cyan-btn, .dossier-action-btn.primary, .conduit-btn.primary').forEach((btn) => {
+    // Magnetic pull on primary hero & dossier CTAs
+    document.querySelectorAll('.hero-cta-cyan-btn, .dossier-action-btn.primary').forEach((btn) => {
       btn.addEventListener('mousemove', (e) => {
         const me = e as MouseEvent;
         const rect = (btn as HTMLElement).getBoundingClientRect();
