@@ -5016,7 +5016,7 @@ body.custom-cursor-active .sentinel-mode-pill {
     transform: none !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 40px !important;
+    gap: 28px !important;
   }
 
   .stage-act {
@@ -5030,20 +5030,30 @@ body.custom-cursor-active .sentinel-mode-pill {
     pointer-events: auto !important;
     filter: none !important;
     display: block !important;
-    padding: 32px 14px 48px 14px !important;
+    padding: 20px 12px 32px 12px !important;
     box-sizing: border-box !important;
+  }
+
+  /* Stage Act Headers */
+  .zone-title {
+    font-size: clamp(20px, 6vw, 26px) !important;
+    margin-bottom: 2px !important;
+  }
+  .zone-subtitle {
+    font-size: 8px !important;
+    margin-bottom: 12px !important;
   }
 
   /* HUD Header Mobile Polish */
   .hud-header {
-    height: 52px;
-    padding: 0 10px;
+    height: 48px;
+    padding: 0 8px;
   }
   .hud-brand {
-    gap: 4px;
+    gap: 3px;
   }
   .hud-brand-tag {
-    font-size: 9.5px;
+    font-size: 8.5px;
   }
   .hud-brand-sub {
     display: none;
@@ -5051,129 +5061,199 @@ body.custom-cursor-active .sentinel-mode-pill {
   .hud-track-container {
     margin: 0 4px;
     flex: 1;
-    max-width: 180px;
+    max-width: 160px;
   }
   .hud-track-checkpoint {
-    width: 20px;
-    height: 20px;
-    font-size: 6.5px;
+    width: 18px;
+    height: 18px;
+    font-size: 6px;
   }
   .hud-meta {
-    gap: 6px;
+    gap: 4px;
   }
   .hud-status-badge {
-    padding: 3px 6px;
-    font-size: 7px;
+    padding: 2px 5px;
+    font-size: 6.5px;
   }
   .hud-status-badge .env-label,
   .hud-status-badge .hud-divider {
     display: none;
   }
   .audio-btn {
-    padding: 4px 6px;
-    font-size: 7px;
+    padding: 3px 5px;
+    font-size: 6.5px;
   }
   #audio-label {
     display: none;
   }
 
-  /* Hero Modern Stage Mobile Layout */
+  /* Floating Bottom-Right Cyber CLI & Help Center Widget - Compact Docked */
+  .floating-help-center {
+    position: fixed !important;
+    bottom: 12px !important;
+    right: 12px !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+  }
+
+  .floating-help-btn {
+    padding: 6px 10px !important;
+    font-size: 7px !important;
+    gap: 5px !important;
+    border-radius: 20px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8), 0 0 10px rgba(79, 227, 255, 0.4) !important;
+    background: rgba(7, 12, 24, 0.94) !important;
+  }
+
+  /* ==================== HERO STAGE COMPACT MOBILE ==================== */
   .hero-modern-stage {
-    padding: 16px 8px 32px 8px;
-    gap: 18px;
-    min-height: calc(100dvh - 60px);
+    padding: 8px 4px 20px 4px !important;
+    gap: 12px !important;
+    min-height: auto !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
+  .hero-top-meta-row {
+    font-size: 7.5px !important;
+    margin-bottom: 2px !important;
+    gap: 4px !important;
+  }
+
   .hero-giant-headline {
-    font-size: clamp(30px, 8.5vw, 44px) !important;
-    letter-spacing: 2px !important;
-    line-height: 1.15 !important;
+    font-size: clamp(26px, 7.5vw, 36px) !important;
+    letter-spacing: 1.5px !important;
+    line-height: 1.1 !important;
+    margin: 2px 0 !important;
   }
 
   .hero-subtitle-morph-box {
-    font-size: 10.5px;
-    padding: 6px 10px;
-    max-width: 100%;
-    margin: 0 auto;
+    font-size: 8.5px !important;
+    padding: 3px 8px !important;
+    max-width: 100% !important;
+    margin: 2px auto 8px auto !important;
   }
 
   .hero-quick-connect-bar {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 6px;
-    width: 100%;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 5px !important;
+    width: 100% !important;
+    margin: 2px auto 8px auto !important;
   }
 
   .quick-connect-pill {
-    font-size: 7.5px;
-    padding: 6px 8px;
-    flex: 1 1 calc(50% - 8px);
+    font-size: 7px !important;
+    padding: 5px 6px !important;
     justify-content: center;
     text-align: center;
-    min-height: 38px;
+    min-height: 30px !important;
     box-sizing: border-box;
+    gap: 4px !important;
+  }
+
+  .quick-connect-pill:first-child {
+    grid-column: 1 / -1 !important;
   }
 
   .hero-centerpiece-container {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    width: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
   }
 
   .hero-reactor-frame {
-    width: 220px;
-    height: 220px;
-    margin: 0 auto;
+    width: 140px !important;
+    height: 140px !important;
+    margin: 0 auto !important;
   }
 
   #hero-reactor-canvas {
-    width: 220px !important;
-    height: 220px !important;
+    width: 140px !important;
+    height: 140px !important;
   }
 
   .hero-hud-callout {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 12px;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 8px 10px !important;
+    border-radius: 4px !important;
+  }
+
+  .hero-hud-callout.right-callout {
+    display: none !important;
+  }
+
+  .hero-callout-header {
+    font-size: 7px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .hero-callout-body {
+    font-size: 10.5px !important;
+    line-height: 1.35 !important;
+    margin-bottom: 4px !important;
+  }
+
+  .hero-callout-footer {
+    font-size: 7px !important;
+    gap: 3px !important;
   }
 
   .hero-cta-button-row {
-    flex-direction: column;
-    width: 100%;
-    gap: 10px;
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100% !important;
+    gap: 6px !important;
+    margin-top: 4px !important;
   }
 
   .hero-cta-button-row .hero-cta-cyan-btn,
   .hero-cta-button-row .hero-secondary-btn {
-    width: 100%;
-    justify-content: center;
-    padding: 12px;
-    font-size: 9px;
-    min-height: 44px;
+    flex: 1 1 50% !important;
+    justify-content: center !important;
+    padding: 7px 6px !important;
+    font-size: 7.5px !important;
+    min-height: 32px !important;
+    text-align: center !important;
   }
 
-  /* Stage 1: Mainframe / Bio Stage Mobile */
+  /* ==================== STAGE 1: MAINFRAME / BIO COMPACT MOBILE ==================== */
   .mainframe-lab-stage {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    width: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
   }
 
   .biometric-avatar-pod {
-    width: 100%;
+    width: 100% !important;
     transform: none !important;
-    margin: 0 auto;
+    margin: 0 auto !important;
   }
 
   .avatar-containment-chamber {
-    width: 100%;
-    max-width: 240px;
-    height: 240px;
-    margin: 0 auto;
+    width: 100% !important;
+    max-width: 180px !important;
+    height: 170px !important;
+    margin: 0 auto !important;
+    padding: 4px !important;
+  }
+
+  .sentinel-hud-top {
+    font-size: 6.5px !important;
+    padding: 2px 4px !important;
+  }
+
+  .robot-eyes-wrapper {
+    margin: 2px 0 !important;
   }
 
   .orbit-satellite-system {
@@ -5181,87 +5261,215 @@ body.custom-cursor-active .sentinel-mode-pill {
   }
 
   .sentinel-mode-selector {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    width: 100%;
-    justify-content: center;
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 3px !important;
+    width: 100% !important;
+    margin-top: 4px !important;
   }
 
   .sentinel-mode-pill {
-    flex: 1 1 calc(50% - 6px);
-    font-size: 7.5px;
-    padding: 8px 6px;
-    text-align: center;
-    justify-content: center;
-    min-height: 40px;
+    padding: 4px 2px !important;
+    font-size: 6.5px !important;
+    text-align: center !important;
+    justify-content: center !important;
+    min-height: 24px !important;
+  }
+
+  .sentinel-mode-pill span:first-child {
+    display: none !important;
+  }
+
+  .sentinel-hint-bar {
+    font-size: 6px !important;
+    margin-top: 3px !important;
+  }
+
+  .bio-modules-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 5px !important;
+    margin: 8px 0 !important;
+  }
+
+  .floating-metric-card {
+    padding: 5px 6px !important;
+    min-height: 28px !important;
+    font-size: 6.5px !important;
+    gap: 4px !important;
+  }
+
+  .metric-card-content {
+    gap: 1px !important;
   }
 
   .holographic-dossier-pod {
-    width: 100%;
+    width: 100% !important;
     transform: none !important;
   }
 
   .dossier-terminal-screen {
-    width: 100%;
-    min-height: auto;
-    padding: 12px 10px;
+    width: 100% !important;
+    min-height: auto !important;
+    padding: 8px 10px !important;
   }
 
   .bio-tab-group {
-    display: flex;
-    width: 100%;
-    gap: 4px;
-    overflow-x: auto;
+    display: flex !important;
+    width: 100% !important;
+    gap: 3px !important;
+    overflow-x: auto !important;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    margin-bottom: 6px !important;
   }
 
   .bio-tab-btn {
-    flex: 1 0 auto;
-    font-size: 7px;
-    padding: 8px 8px;
-    min-height: 38px;
+    flex: 1 0 auto !important;
+    font-size: 6.5px !important;
+    padding: 5px 6px !important;
+    min-height: 26px !important;
   }
 
-  /* Stage 2: Skills Runway Mobile */
-  #skills-runway-viewport {
-    width: 100%;
-    overflow: visible;
-    padding: 0;
+  #terminal-bio-body {
+    font-size: 10.5px !important;
+    line-height: 1.35 !important;
+  }
+
+  /* ==================== STAGE 2: SKILLS RUNWAY COMPACT MOBILE ==================== */
+  #skills-runway-viewport,
+  .skills-runway-viewport {
+    width: 100% !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
   }
 
   .skills-horizontal-track {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 14px;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
     transform: none !important;
     width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
   }
 
+  .skill-card,
+  .skill-card.legendary,
+  .skill-card.rare,
+  .skill-card.common,
   .skill-cartridge-card {
     width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding: 10px 12px !important;
+    margin: 0 !important;
     transform: none !important;
-    margin: 0;
+    gap: 4px !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+  }
+
+  .skill-card-tier {
+    font-size: 6px !important;
+    margin-bottom: 0px !important;
+  }
+
+  .skill-card-name {
+    font-size: 15px !important;
+    margin: 0 0 2px 0 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .skill-card-desc,
+  .skill-card p,
+  .skill-cartridge-card p {
+    font-size: 10.5px !important;
+    line-height: 1.35 !important;
+    margin: 2px 0 4px 0 !important;
+    color: #b4c2d6 !important;
+  }
+
+  .skill-card-action,
+  .skill-card-action span {
+    font-size: 6.5px !important;
+    padding: 2px 6px !important;
+  }
+
+  .skills-jumping-robot {
+    display: none !important;
   }
 
   .companion-robot-runner {
     display: none !important;
   }
 
-  /* Stage 3: Projects Arcade Cards Mobile */
+  .skills-runway-footer {
+    margin-top: 10px !important;
+    gap: 6px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  .skill-tier-legend {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 4px 10px !important;
+    font-size: 7px !important;
+  }
+
+  .runway-scroll-hint {
+    display: none !important;
+  }
+
+  /* ==================== STAGE 3: PROJECTS ARCADE COMPACT MOBILE ==================== */
   .arcade-cards-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
   }
 
   .arcade-cabinet {
     width: 100% !important;
     max-width: 100% !important;
+    padding: 10px 12px !important;
     transform: none !important;
-    margin: 0 auto;
+    margin: 0 auto !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+  }
+
+  .cabinet-screen-frame {
+    height: 110px !important;
+    margin: 4px 0 !important;
+  }
+
+  .cabinet-title {
+    font-size: 14px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .cabinet-desc {
+    font-size: 10px !important;
+    line-height: 1.3 !important;
+    margin-bottom: 4px !important;
+  }
+
+  .cabinet-tech-stack {
+    gap: 3px !important;
+    margin: 4px 0 !important;
+  }
+
+  .tech-tag {
+    font-size: 6.5px !important;
+    padding: 2px 4px !important;
   }
 
   .ufo-dropship-rig {
@@ -5269,59 +5477,63 @@ body.custom-cursor-active .sentinel-mode-pill {
   }
 
   .cabinet-direct-actions {
-    width: 100%;
-    display: flex;
-    gap: 8px;
+    width: 100% !important;
+    display: flex !important;
+    gap: 5px !important;
+    margin-top: 6px !important;
   }
 
   .cabinet-action-btn {
-    flex: 1 1 50%;
-    justify-content: center;
-    padding: 10px 6px;
-    font-size: 8px;
-    min-height: 40px;
-    text-align: center;
+    flex: 1 1 50% !important;
+    justify-content: center !important;
+    padding: 6px 4px !important;
+    font-size: 7px !important;
+    min-height: 28px !important;
+    text-align: center !important;
   }
 
-  /* Stage 4: Contact & Ground Conduits Mobile */
+  /* ==================== STAGE 4: CONTACT & CONDUITS COMPACT MOBILE ==================== */
   #orbital-satellite-rig {
     display: none !important;
   }
 
   .comms-station-deck {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    width: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
   }
 
   .radar-scope-frame {
-    width: 200px;
-    height: 200px;
-    margin: 0 auto;
+    width: 140px !important;
+    height: 140px !important;
+    margin: 0 auto !important;
   }
 
   .radar-canvas {
-    width: 200px !important;
-    height: 200px !important;
+    width: 140px !important;
+    height: 140px !important;
   }
 
   .ground-receiver-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    width: 100%;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px !important;
+    width: 100% !important;
   }
 
   .comms-conduit-card {
-    width: 100%;
-    min-height: 48px;
-    padding: 12px;
+    width: 100% !important;
+    min-height: 32px !important;
+    padding: 6px 8px !important;
+    font-size: 7.5px !important;
   }
 
   .interaction-drawer {
     width: 100vw !important;
     max-width: 100vw !important;
-    padding: 18px 14px;
-    box-sizing: border-box;
+    padding: 14px 10px !important;
+    box-sizing: border-box !important;
   }
 }
 
