@@ -646,6 +646,5 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!prefersReducedMotion) {
     addTiltEffect('.skill-card');
     addTiltEffect('.arcade-cabinet');
-    addTiltEffect('.comms-conduit-card');
   }
 });

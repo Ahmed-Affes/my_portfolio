@@ -82,24 +82,24 @@ export class SatelliteUplinkController {
   }
 
   private bindStationTargeting(): void {
-    const kiosk = document.getElementById('beacon-kiosk');
-    if (!kiosk) return;
+    const stations = document.querySelectorAll('.ground-receiver-dock');
+    stations.forEach((station) => {
+      const el = station as HTMLElement;
 
-    kiosk.addEventListener('mouseover', (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const station = target.closest('.ground-receiver-dock') as HTMLElement;
-      if (station && station !== this.currentLockedStation) {
-        if (this.currentLockedStation) {
+      el.addEventListener('pointerenter', () => {
+        if (this.currentLockedStation && this.currentLockedStation !== el) {
           this.unlockStation(this.currentLockedStation);
         }
-        this.lockOnStation(station);
-      }
-    });
+        this.lockOnStation(el);
+      });
 
-    kiosk.addEventListener('mouseleave', () => {
-      if (this.currentLockedStation) {
-        this.unlockStation(this.currentLockedStation);
-      }
+      el.addEventListener('pointerleave', (e: PointerEvent) => {
+        const related = e.relatedTarget as HTMLElement | null;
+        if (related && el.contains(related)) return;
+        if (this.currentLockedStation === el) {
+          this.unlockStation(el);
+        }
+      });
     });
   }
 
@@ -122,7 +122,7 @@ export class SatelliteUplinkController {
       ? targetRect.left + targetRect.width / 2 - canvasRect.left
       : targetRect.left + targetRect.width * 0.85 - canvasRect.left;
     const targetY = antenna
-      ? targetRect.top - canvasRect.top
+      ? targetRect.top + 2 - canvasRect.top
       : targetRect.top + 6 - canvasRect.top;
 
     this.laserLine.setAttribute('x1', `${startX}`);
@@ -133,9 +133,7 @@ export class SatelliteUplinkController {
     this.targetReticle.setAttribute('cx', `${targetX}`);
     this.targetReticle.setAttribute('cy', `${targetY}`);
 
-    if (this.isLockedOnCard) {
-      this.animFrameId = requestAnimationFrame(() => this.updateLaserBeamCoordinates());
-    }
+    this.animFrameId = requestAnimationFrame(() => this.updateLaserBeamCoordinates());
   }
 
   private lockOnStation(station: HTMLElement): void {
@@ -182,9 +180,9 @@ export class SatelliteUplinkController {
       // Add laser beam pulsation
       gsap.fromTo(this.laserLine, { strokeWidth: 2.5 }, { strokeWidth: 5, duration: 0.2, yoyo: true, repeat: 3, ease: 'sine.inOut' });
 
-      // Start continuous coordinate tracking loop
+      // Start continuous coordinate tracking loop immediately
       if (this.animFrameId) cancelAnimationFrame(this.animFrameId);
-      this.animFrameId = requestAnimationFrame(() => this.updateLaserBeamCoordinates());
+      this.updateLaserBeamCoordinates();
     }
   }
 
@@ -203,6 +201,17 @@ export class SatelliteUplinkController {
         opacity: 0,
         duration: 0.2,
         ease: 'power2.in'
+      });
+    }
+
+    if (this.rig) {
+      gsap.to(this.rig, {
+        rotateY: 0,
+        rotateX: 0,
+        x: 0,
+        duration: 0.4,
+        ease: 'power2.out',
+        overwrite: 'auto'
       });
     }
 

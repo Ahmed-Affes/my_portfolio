@@ -78,7 +78,6 @@ export class ScrollChoreography {
     const actContact = document.querySelector('#act-contact') as HTMLElement;
 
     const radarWaves = document.querySelector('#radar-waves');
-    const warpStreaks = document.querySelector('#warp-streaks');
 
     const gridFloor = document.querySelector('.perspective-grid-floor');
 
@@ -140,7 +139,6 @@ export class ScrollChoreography {
       opacity: 0
     });
 
-    gsap.set(warpStreaks, { opacity: 0 });
     gsap.set(radarWaves, { opacity: 0 });
 
     // Master Timeline with 12 units total duration (Full-Page Continuous Staging)
@@ -194,9 +192,6 @@ export class ScrollChoreography {
       }, 0.8)
       .set(actBoot, { pointerEvents: 'none' }, 1.8)
 
-      // Warp speed lines flash
-      .fromTo(warpStreaks, { opacity: 0, scaleX: 0.5 }, { opacity: 0.8, scaleX: 1.4, duration: 0.6, yoyo: true, repeat: 1 }, 1.0)
-
       // Act 1 (Neural Mainframe) enters: 3D Holographic Unfold
       .set(actBoot, { pointerEvents: 'none', zIndex: 1 }, 1.2)
       .set(actTerminal, { pointerEvents: 'auto', zIndex: 20 }, 1.2)
@@ -239,20 +234,6 @@ export class ScrollChoreography {
         duration: 0.9,
         ease: 'power3.out'
       }, 1.4)
-      // Full-Stage Biometric Laser Scanline sweeps down
-      .fromTo('#mainframe-laser-scanline', {
-        top: '0%',
-        opacity: 1
-      }, {
-        top: '100%',
-        opacity: 1,
-        duration: 0.8,
-        ease: 'power2.inOut'
-      }, 1.5)
-      .to('#mainframe-laser-scanline', {
-        opacity: 0,
-        duration: 0.2
-      }, 2.3)
       .call(() => this.triggerTypewriter(), [], 2.2);
 
     // =========================================================================
