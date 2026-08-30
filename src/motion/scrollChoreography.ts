@@ -14,7 +14,6 @@ export class ScrollChoreography {
   private hudEnvLabelEl: HTMLElement | null;
   private envSkyTintEl: HTMLElement | null;
   private currentSectorIndex: number = -1;
-  private isTypingDialogue: boolean = false;
   private isDecryptedBeacon: boolean = false;
 
   constructor(
@@ -232,8 +231,7 @@ export class ScrollChoreography {
         filter: 'blur(0px)',
         duration: 0.8,
         ease: 'power3.out'
-      }, 0.5)
-      .call(() => this.triggerTypewriter(), [], 1.2);
+      }, 0.5);
 
     // =========================================================================
     // 🚪 CHAPTER 1 -> 2: MAINFRAME OUT -> KINETIC MAG-LEV DATA RUNWAY (SKILLS)
@@ -747,20 +745,6 @@ export class ScrollChoreography {
     });
   }
 
-  private triggerTypewriter() {
-    const dialogueEl = document.getElementById('terminal-bio-body') || document.querySelector('.terminal-text-body') as HTMLElement;
-    if (!dialogueEl || this.isTypingDialogue) return;
-
-    this.isTypingDialogue = true;
-    sounds.playCrtPower();
-
-    const fullText = dialogueEl.getAttribute('data-full-text') || dialogueEl.textContent || '';
-    if (typeof (window as any).__typeBioText === 'function') {
-      (window as any).__typeBioText(fullText);
-    } else {
-      dialogueEl.textContent = fullText;
-    }
-  }
 
   private triggerMatrixDecryption() {
     if (this.isDecryptedBeacon) return;
