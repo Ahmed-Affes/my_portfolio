@@ -556,6 +556,64 @@
   50%, 100% { opacity: 0; }
 }
 
+/* Hero Fast-Access Quick Connect Bar */
+.hero-quick-connect-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  z-index: 25;
+}
+
+.quick-connect-pill {
+  font-family: var(--font-pixel);
+  font-size: 7.5px;
+  padding: 6px 12px;
+  background: rgba(13, 18, 36, 0.85);
+  border: 1px solid var(--cyan-dim);
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(6px);
+}
+
+.quick-connect-pill:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(79, 227, 255, 0.12);
+  box-shadow: 0 0 12px var(--cyan-glow);
+  transform: translateY(-2px);
+}
+
+.quick-connect-pill.primary {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(79, 227, 255, 0.08);
+}
+
+.quick-connect-pill.primary:hover {
+  background: var(--cyan);
+  color: var(--bg);
+}
+
+.quick-connect-pill.accent-amber {
+  border-color: var(--amber);
+  color: var(--amber);
+  background: rgba(255, 178, 56, 0.08);
+}
+
+.quick-connect-pill.accent-amber:hover {
+  background: var(--amber);
+  color: var(--bg);
+  box-shadow: 0 0 12px var(--amber-glow);
+}
+
 /* Centerpiece 3-Column Grid Layout */
 .hero-centerpiece-container {
   display: grid;
@@ -2799,7 +2857,12 @@
 }
 
 .arcade-cabinet * {
-  pointer-events: none !important;
+  pointer-events: none;
+}
+
+.arcade-cabinet .cabinet-direct-actions,
+.arcade-cabinet .cabinet-direct-actions * {
+  pointer-events: auto !important;
 }
 
 .cabinet-top-section {
@@ -2866,6 +2929,51 @@
   background: rgba(15, 95, 115, 0.2);
   border: 1px solid var(--cyan-dim);
   color: var(--cyan);
+}
+
+.cabinet-direct-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  z-index: 15;
+}
+
+.cabinet-action-btn {
+  flex: 1;
+  font-family: var(--font-pixel);
+  font-size: 6.5px;
+  padding: 6px 6px;
+  text-align: center;
+  text-decoration: none;
+  background: rgba(10, 15, 30, 0.85);
+  border: 1px solid var(--cyan-dim);
+  color: var(--cyan);
+  letter-spacing: 0.5px;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.cabinet-action-btn:hover {
+  background: var(--cyan);
+  color: var(--bg);
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan-glow);
+}
+
+.cabinet-action-btn.secondary {
+  border-color: rgba(255, 178, 56, 0.4);
+  color: var(--amber);
+}
+
+.cabinet-action-btn.secondary:hover {
+  background: var(--amber);
+  color: var(--bg);
+  border-color: var(--amber);
+  box-shadow: 0 0 10px var(--amber-glow);
 }
 
 /* ==================== ACT 4: SUB-ORBITAL QUANTUM SATELLITE RELAY & UPLINK ==================== */

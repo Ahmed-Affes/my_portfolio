@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         (proj) => `
         <article class="arcade-cabinet" id="cabinet-${proj.id}" data-project-id="${proj.id}" tabindex="0" role="button" aria-label="${proj.title}">
           <div class="cabinet-top-section">
-            <div class="walk-up-indicator shine-badge">WALK UP ▲ [CLICK]</div>
+            <div class="walk-up-indicator shine-badge">INSPECT SPECS ▲ [CLICK]</div>
             <div class="cabinet-level-tag">${proj.levelTitle}</div>
             <div class="cabinet-badge-row">
               <span class="pixel-badge ${proj.status === 'SHIPPED' ? 'badge-shipped' : 'badge-in-dev'}">${proj.status}</span>
@@ -106,6 +106,16 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="cabinet-desc">${proj.tagline}</p>
             <div class="cabinet-tags">
               ${proj.tags.map((t) => `<span class="tag-chip">${t}</span>`).join('')}
+            </div>
+
+            <!-- Direct 1-Click Action Buttons for Fast Scan / Recruiters -->
+            <div class="cabinet-direct-actions">
+              <a href="${proj.demoUrl || 'https://github.com/Ahmed-Affes'}" target="_blank" rel="noopener noreferrer" class="cabinet-action-btn" title="Launch Live Demo or Deployment">
+                <span>⚡ LIVE DEMO ↗</span>
+              </a>
+              <a href="${proj.repoUrl || 'https://github.com/Ahmed-Affes'}" target="_blank" rel="noopener noreferrer" class="cabinet-action-btn secondary" title="Inspect Source Code on GitHub">
+                <span>⌥ GITHUB ↗</span>
+              </a>
             </div>
           </div>
 
@@ -234,6 +244,11 @@ document.addEventListener('DOMContentLoaded', () => {
   arcadeRow?.querySelectorAll('.arcade-cabinet').forEach((cabinet) => {
     cabinet.addEventListener('mouseenter', () => sounds.playHoverBlip());
     cabinet.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('.cabinet-direct-actions') || target.tagName === 'A') {
+        // Direct link clicked, do not trigger modal drawer
+        return;
+      }
       e.preventDefault();
       const projId = cabinet.getAttribute('data-project-id');
       const proj = PORTFOLIO_DATA.projects.find((p) => p.id === projId);
@@ -258,6 +273,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Global fallback delegation for 100% click reliability
   document.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
+    if (target.closest('.cabinet-direct-actions') || target.tagName === 'A') {
+      return;
+    }
     const cabinet = target.closest('.arcade-cabinet') as HTMLElement;
     if (cabinet && !interactionSystem.isOpenState()) {
       const projId = cabinet.getAttribute('data-project-id');
@@ -325,12 +343,10 @@ document.addEventListener('DOMContentLoaded', () => {
       metrics: 'CHANNEL: OPEN · ENCRYPTION: 256-BIT · PING: <12ms',
       description: 'Send a direct transmission for full-stack engineering contracts, creative motion development, or technical collaboration.',
       tags: ['AVAILABLE FOR WORK', 'REMOTE / HYBRID', 'CONTRACT / FULL-TIME'],
-      primaryBtn: { text: 'SEND EMAIL ↗', href: 'mailto:ahmed.affes.dev@gmail.com' },
+      primaryBtn: { text: 'SEND EMAIL ↗', href: 'mailto:c0der.devl0pper@gmail.com' },
       secondaryBtn: { text: 'GITHUB PROFILE ↗', href: 'https://github.com/Ahmed-Affes' }
     });
   });
-
-
 
   // Dossier Quick Action Triggers
   const dossierResumeBtn = document.getElementById('dossier-resume-btn');
@@ -344,7 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
       description: 'Specializing in high-performance frontend architecture, custom canvas engines, GSAP kinetic web motion, distributed APIs, and production microservices.',
       tags: ['TYPESCRIPT', 'REACT', 'NODE.JS', 'GSAP', 'CANVAS', 'FLUTTER', 'POSTGRESQL'],
       primaryBtn: { text: 'DOWNLOAD PDF ⬇', href: '/Ahmed_Affes_CV_2026.pdf' },
-      secondaryBtn: { text: 'CONTACT DIRECT ↗', href: 'mailto:ahmed.affes.dev@gmail.com' }
+      secondaryBtn: { text: 'CONTACT DIRECT ↗', href: 'mailto:c0der.devl0pper@gmail.com' }
     });
   });
 
@@ -366,7 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
       description: 'Specializing in high-performance frontend architecture, custom canvas engines, GSAP kinetic web motion, distributed APIs, and production microservices.',
       tags: ['TYPESCRIPT', 'REACT', 'NODE.JS', 'GSAP', 'CANVAS', 'FLUTTER', 'POSTGRESQL'],
       primaryBtn: { text: 'DOWNLOAD PDF ⬇', href: '/Ahmed_Affes_CV_2026.pdf' },
-      secondaryBtn: { text: 'SEND EMAIL ↗', href: 'mailto:ahmed.affes.dev@gmail.com' }
+      secondaryBtn: { text: 'SEND EMAIL ↗', href: 'mailto:c0der.devl0pper@gmail.com' }
     });
   });
 
@@ -376,52 +392,80 @@ document.addEventListener('DOMContentLoaded', () => {
     meteorEngine
   );
 
-  // 8. Run Preloader Boot Sequence (Screenshots 1 & 2)
+  // 8. Frictionless Preloader Boot Sequence with Fast Skip & Session Memory
   const preloaderEl = document.getElementById('preloader-screen');
   const preloaderStatusEl = document.getElementById('preloader-status-text');
   const preloaderBarFill = document.getElementById('preloader-bar-fill');
+  const preloaderSkipBtn = document.getElementById('preloader-skip-btn');
 
-  const bootMessages = [
-    { threshold: 0, text: 'CALIBRATING NEON...' },
-    { threshold: 25, text: 'INITIALIZING SPRITE ENGINE...' },
-    { threshold: 55, text: 'SYNCHRONIZING GSAP TIMELINES...' },
-    { threshold: 85, text: 'ENGAGING CINEMATIC STAGE...' },
-    { threshold: 100, text: 'SYSTEM READY' }
-  ];
+  const hasBootedBefore = sessionStorage.getItem('unit07_booted') === 'true';
 
-  let loadProgress = 0;
-  const progressInterval = window.setInterval(() => {
-    loadProgress += Math.floor(Math.random() * 8) + 4;
-    if (loadProgress > 100) loadProgress = 100;
-
-    if (preloaderBarFill) {
-      preloaderBarFill.style.width = `${loadProgress}%`;
+  const finishBoot = () => {
+    sessionStorage.setItem('unit07_booted', 'true');
+    sounds.playCrtPower();
+    if (preloaderEl) {
+      preloaderEl.classList.add('hidden');
     }
 
-    const currentMsg = [...bootMessages].reverse().find((m) => loadProgress >= m.threshold);
-    if (currentMsg && preloaderStatusEl) {
-      preloaderStatusEl.textContent = `[${String(loadProgress).padStart(3, ' ')}%] ${currentMsg.text}`;
+    // Hero Intro Animation
+    if (!prefersReducedMotion && !document.body.classList.contains('calm-motion-active')) {
+      gsap.fromTo(
+        '#act-boot .hero-modern-stage',
+        { opacity: 0, scale: 0.96, y: 20 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: EASE_UI }
+      );
     }
+  };
 
-    if (loadProgress >= 100) {
+  if (hasBootedBefore) {
+    // Instant bypass on repeat visits / reloads
+    if (preloaderEl) preloaderEl.classList.add('hidden');
+  } else {
+    const bootMessages = [
+      { threshold: 0, text: 'CALIBRATING CORE...' },
+      { threshold: 30, text: 'LOADING TECH STACK...' },
+      { threshold: 65, text: 'PREPARING TELEMETRY...' },
+      { threshold: 100, text: 'SYSTEM READY' }
+    ];
+
+    let loadProgress = 0;
+    const progressInterval = window.setInterval(() => {
+      loadProgress += Math.floor(Math.random() * 16) + 12; // Fast sub-700ms boot
+      if (loadProgress > 100) loadProgress = 100;
+
+      if (preloaderBarFill) {
+        preloaderBarFill.style.width = `${loadProgress}%`;
+      }
+
+      const currentMsg = [...bootMessages].reverse().find((m) => loadProgress >= m.threshold);
+      if (currentMsg && preloaderStatusEl) {
+        preloaderStatusEl.textContent = `[${String(loadProgress).padStart(3, ' ')}%] ${currentMsg.text}`;
+      }
+
+      if (loadProgress >= 100) {
+        clearInterval(progressInterval);
+        window.setTimeout(() => {
+          finishBoot();
+        }, 150);
+      }
+    }, 25);
+
+    // 1-Click Skip / Keyboard Skip
+    const triggerSkip = () => {
       clearInterval(progressInterval);
-      window.setTimeout(() => {
-        sounds.playCrtPower();
-        if (preloaderEl) {
-          preloaderEl.classList.add('hidden');
-        }
+      finishBoot();
+    };
 
-        // Hero Intro Animation
-        if (!prefersReducedMotion) {
-          gsap.fromTo(
-            '#act-boot .hero-modern-stage',
-            { opacity: 0, scale: 0.94, y: 30 },
-            { opacity: 1, scale: 1, y: 0, duration: 1.0, ease: EASE_UI }
-          );
+    preloaderSkipBtn?.addEventListener('click', triggerSkip);
+    window.addEventListener('keydown', (e) => {
+      if (preloaderEl && !preloaderEl.classList.contains('hidden')) {
+        if (e.code === 'Space' || e.key === 'Enter' || e.key === 'Escape') {
+          e.preventDefault();
+          triggerSkip();
         }
-      }, 400);
-    }
-  }, 45);
+      }
+    });
+  }
 
   // 9. Setup Audio Button in HUD
   const audioToggleBtn = document.getElementById('audio-toggle');

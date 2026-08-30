@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Press+Start+2P&family=VT323&display=swap');
 
 :root {
   /* Official Design Tokens per Spec */
@@ -7,19 +7,21 @@
   --bg3: #0a0f1e;
   --cyan: #4fe3ff;
   --cyan-dim: #0f5f73;
-  --cyan-glow: rgba(79, 227, 255, 0.35);
+  --cyan-glow: rgba(79, 227, 255, 0.25);
   --magenta: #ff2e88;
-  --magenta-glow: rgba(255, 46, 136, 0.4);
+  --magenta-glow: rgba(255, 46, 136, 0.3);
   --amber: #ffb238;
-  --amber-glow: rgba(255, 178, 56, 0.4);
-  --ink: #cdeaff;
-  --muted: #6f83a3;
+  --amber-glow: rgba(255, 178, 56, 0.3);
+  --ink: #d4e8ff;
+  --muted: #7e92b3;
   --green: #39ff88;
-  --green-glow: rgba(57, 255, 136, 0.35);
+  --green-glow: rgba(57, 255, 136, 0.25);
 
   /* Typography */
   --font-pixel: 'Press Start 2P', monospace;
   --font-terminal: 'VT323', monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 
   --hud-height: 56px;
 }
@@ -50,7 +52,7 @@ body.env-act-2 { background-color: #070e28; }
 body.env-act-3 { background-color: #16081c; }
 body.env-act-4 { background-color: #030510; }
 
-/* ==================== PRELOADER OVERLAY (Screenshots 1 & 2) ==================== */
+/* ==================== PRELOADER OVERLAY ==================== */
 .preloader-overlay {
   position: fixed;
   inset: 0;
@@ -59,28 +61,31 @@ body.env-act-4 { background-color: #030510; }
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .preloader-overlay.hidden {
   opacity: 0;
   pointer-events: none;
-  transform: scale(1.04);
+  transform: scale(1.02);
 }
 
 .preloader-box {
   text-align: center;
   max-width: 480px;
   width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .preloader-title {
   font-family: var(--font-pixel);
   font-size: clamp(14px, 2.5vw, 18px);
-  color: var(--magenta);
-  text-shadow: 0 0 16px var(--magenta-glow);
+  color: var(--cyan);
+  text-shadow: 0 0 16px var(--cyan-glow);
   letter-spacing: 2px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .preloader-status {
@@ -88,18 +93,19 @@ body.env-act-4 { background-color: #030510; }
   font-size: clamp(9px, 1.5vw, 11px);
   color: var(--green);
   letter-spacing: 1.5px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   min-height: 16px;
   text-shadow: 0 0 8px var(--green-glow);
 }
 
 .preloader-bar-track {
   width: 100%;
-  height: 14px;
+  height: 12px;
   border: 1px solid var(--cyan);
   background: rgba(10, 15, 30, 0.8);
   padding: 2px;
   box-shadow: 0 0 12px var(--cyan-glow);
+  margin-bottom: 24px;
 }
 
 .preloader-bar-fill {
@@ -107,10 +113,38 @@ body.env-act-4 { background-color: #030510; }
   height: 100%;
   background: var(--cyan);
   box-shadow: 0 0 10px var(--cyan);
-  transition: width 0.15s linear;
+  transition: width 0.08s linear;
 }
 
-/* Subtle CRT Scanline overlay */
+.preloader-skip-btn {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  padding: 8px 16px;
+  background: rgba(79, 227, 255, 0.08);
+  color: var(--cyan);
+  border: 1px dashed var(--cyan);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  animation: pulseSkip 1.5s infinite alternate ease-in-out;
+}
+
+.preloader-skip-btn:hover {
+  background: var(--cyan);
+  color: var(--bg);
+  box-shadow: 0 0 16px var(--cyan-glow);
+  transform: scale(1.05);
+}
+
+@keyframes pulseSkip {
+  0% { opacity: 0.75; transform: scale(0.98); }
+  100% { opacity: 1; transform: scale(1.02); }
+}
+
+/* Calmed CRT Scanline overlay (Prevents eye fatigue) */
 .scanlines-overlay {
   position: fixed;
   inset: 0;
@@ -118,10 +152,10 @@ body.env-act-4 { background-color: #030510; }
   z-index: 999;
   background: linear-gradient(
     rgba(18, 16, 24, 0) 50%, 
-    rgba(0, 0, 0, 0.22) 50%
+    rgba(0, 0, 0, 0.08) 50%
   );
   background-size: 100% 4px;
-  opacity: 0.5;
+  opacity: 0.25;
 }
 
 .crt-vignette {
@@ -129,7 +163,8 @@ body.env-act-4 { background-color: #030510; }
   inset: 0;
   pointer-events: none;
   z-index: 998;
-  background: radial-gradient(circle at center, transparent 60%, rgba(4, 6, 14, 0.75) 100%);
+  background: radial-gradient(circle at center, transparent 65%, rgba(4, 6, 14, 0.6) 100%);
+  opacity: 0.7;
 }
 
 /* Custom Scrollbar */
@@ -166,9 +201,9 @@ body.env-act-4 { background-color: #030510; }
 }
 
 .badge-in-dev {
-  background: rgba(255, 46, 136, 0.08);
-  color: var(--magenta);
-  border: 1px solid var(--magenta);
+  background: rgba(255, 178, 56, 0.08);
+  color: var(--amber);
+  border: 1px solid var(--amber);
 }
 
 .badge-legendary {
@@ -220,27 +255,27 @@ body.env-act-4 { background-color: #030510; }
 }
 
 .btn-pixel.secondary {
-  border: 1px solid var(--magenta);
-  color: var(--magenta);
-  background: rgba(255, 46, 136, 0.04);
+  border: 1px solid var(--amber);
+  color: var(--amber);
+  background: rgba(255, 178, 56, 0.04);
 }
 
 .btn-pixel.secondary:hover {
-  background: var(--magenta);
+  background: var(--amber);
   color: var(--bg);
-  box-shadow: 0 0 16px var(--magenta-glow);
+  box-shadow: 0 0 16px var(--amber-glow);
 }
 
 /* Crisp Glitch Text Animation */
 @keyframes subtleGlitch {
-  0%, 94% { transform: translate(0, 0); text-shadow: none; }
-  95% { transform: translate(-2px, 0); text-shadow: 2px 0 var(--magenta), -2px 0 var(--cyan); }
-  96% { transform: translate(2px, 0); text-shadow: -2px 0 var(--magenta), 2px 0 var(--cyan); }
-  97%, 100% { transform: translate(0, 0); text-shadow: none; }
+  0%, 95% { transform: translate(0, 0); text-shadow: none; }
+  96% { transform: translate(-1.5px, 0); text-shadow: 1px 0 var(--magenta), -1px 0 var(--cyan); }
+  97% { transform: translate(1.5px, 0); text-shadow: -1px 0 var(--magenta), 1px 0 var(--cyan); }
+  98%, 100% { transform: translate(0, 0); text-shadow: none; }
 }
 
 .glitch-text {
-  animation: subtleGlitch 4.5s infinite;
+  animation: subtleGlitch 6s infinite;
 }
 
 /* Screen Mask Wipe Effect (§5) */

@@ -9,14 +9,17 @@
   <link rel="stylesheet" href="/src/styles/layout.css">
 </head>
 <body class="env-act-0 custom-cursor-active">
-  <!-- Retro CRT Boot Preloader (Screenshots 1 & 2) -->
+  <!-- Retro CRT Boot Preloader -->
   <div id="preloader-screen" class="preloader-overlay" role="dialog" aria-modal="true" aria-label="System Initializer">
     <div class="preloader-box">
       <div class="preloader-title glitch-text">UNIT_07 SYSTEMS</div>
-      <div class="preloader-status" id="preloader-status-text">CALIBRATING NEON...</div>
+      <div class="preloader-status" id="preloader-status-text">INITIALIZING CORE...</div>
       <div class="preloader-bar-track">
         <div class="preloader-bar-fill" id="preloader-bar-fill"></div>
       </div>
+      <button class="preloader-skip-btn" id="preloader-skip-btn" title="Skip Boot Sequence">
+        <span>⚡ SKIP INTRO [SPACE]</span>
+      </button>
     </div>
   </div>
 
@@ -63,17 +66,15 @@
       </div>
     </div>
 
-    <!-- HUD Status & Audio Toggle -->
+    <!-- HUD Status & Quick Action Controls -->
     <div class="hud-meta">
       <div class="hud-status-badge">
-        <span class="env-label" id="hud-env-label">SECTOR: 00 // CITY_SUB</span>
+        <span class="env-label" id="hud-env-label">SECTOR: 00 // BOOT</span>
         <span class="hud-divider">|</span>
         <span class="status-dot"></span>
         <span style="color: var(--green);">ONLINE</span>
-        <span class="hud-divider">|</span>
-        <span class="hud-neural-badge"><span class="status-pulse-dot"></span>NEURAL CORE ONLINE</span>
       </div>
-      <button class="audio-btn" id="audio-toggle" aria-label="Toggle Sound Effects">
+      <button class="audio-btn" id="audio-toggle" aria-label="Toggle Sound Effects" title="Toggle Audio Synthesizer">
         <span id="audio-icon">🔊</span>
         <span id="audio-label">AUDIO: ON</span>
       </button>
@@ -116,7 +117,23 @@
                   AHMED AFFES
                 </h1>
                 <div class="hero-role-subtitle" id="hero-role-subtitle">
-                  <span class="typewriter-text" id="hero-typewriter-text">CREATIVE FULL-STACK ARCHITECT &amp; MOTION DESIGN ENGINEER</span><span class="typewriter-cursor">_</span>
+                  <span class="typewriter-text" id="hero-typewriter-text">FULL-STACK SOFTWARE ENGINEER &amp; MOTION ARCHITECT</span><span class="typewriter-cursor">_</span>
+                </div>
+
+                <!-- Hero Fast-Access Recruiter & Connect Bar -->
+                <div class="hero-quick-connect-bar" id="hero-quick-bar">
+                  <a href="/Ahmed_Affes_CV_2026.pdf" class="quick-connect-pill primary" id="hero-cv-pill" download>
+                    <span>📄</span> <span>DOWNLOAD CV</span>
+                  </a>
+                  <a href="mailto:c0der.devl0pper@gmail.com" class="quick-connect-pill" id="hero-email-pill">
+                    <span>✉️</span> <span>c0der.devl0pper@gmail.com</span>
+                  </a>
+                  <a href="https://github.com/Ahmed-Affes" target="_blank" rel="noopener noreferrer" class="quick-connect-pill accent-amber" id="hero-gh-pill">
+                    <span>🐙</span> <span>GITHUB ↗</span>
+                  </a>
+                  <a href="https://www.linkedin.com/in/ahmed-affes-a8778942a/" target="_blank" rel="noopener noreferrer" class="quick-connect-pill" id="hero-li-pill">
+                    <span>⚡</span> <span>LINKEDIN ↗</span>
+                  </a>
                 </div>
               </div>
 
@@ -231,11 +248,11 @@
               
               <div class="stage-label">
                 <span class="stage-label-box"></span>
-                <span>STAGE 01 — NEURAL MAINFRAME ARCHIVE</span>
+                <span>OPERATOR BIO &amp; TELEMETRY // STAGE 01</span>
               </div>
               <h2 class="zone-title" id="terminal-title">Operator Bio &amp; Neural Core</h2>
               <p class="zone-subtitle">
-                Cursor-tracking gaze module and operational dossier archive. Select memory sectors or click the terminal to inspect logs.
+                Software architecture, production experience, and telemetry metrics for Ahmed Affes.
               </p>
 
               <!-- Mainframe Lab Layout: Left Biometric Sentinel Drone Pod + Orbiting Satellites + Right Holographic Dossier Console -->
@@ -541,11 +558,11 @@
               
               <div class="stage-label">
                 <span class="stage-label-box"></span>
-                <span>STAGE 02 — DATA CORE RUNWAY // KINETIC INVENTORY</span>
+                <span>SKILLS &amp; TECH STACK // STAGE 02</span>
               </div>
-              <h2 class="zone-title" id="skills-title">Equipped skills</h2>
+              <h2 class="zone-title" id="skills-title">Equipped Skills &amp; Capabilities</h2>
               <p class="zone-subtitle">
-                Scroll down to launch UNIT_07 across the horizontal data runway. Each skill cartridge contains production specs and runtime capabilities. Click any card to inspect.
+                Core technologies, daily drivers, and production capabilities. Click any skill cartridge to inspect runtime specs.
               </p>
 
               <!-- Single-Row Horizontal Runway Container -->
@@ -589,11 +606,11 @@
             <div class="act-inner">
               <div class="stage-label">
                 <span class="stage-label-box"></span>
-                <span>STAGE 03 — LEVEL SELECT &amp; ORBITAL CARGO DEPLOYMENT</span>
+                <span>FEATURED PROJECTS &amp; CODE // STAGE 03</span>
               </div>
-              <h2 class="zone-title" id="projects-title">Projects cleared</h2>
+              <h2 class="zone-title" id="projects-title">Featured Projects &amp; Archives</h2>
               <p class="zone-subtitle">
-                Orbital cargo dropship deploying interactive arcade units via quantum tractor beam. Click any unit to inspect.
+                Shipped web applications, distributed tools, and high-performance client software built by Ahmed Affes.
               </p>
 
               <!-- Arcade Cabinet Runway with Orbital Dropship -->
@@ -642,11 +659,11 @@
               
               <div class="stage-label">
                 <span class="stage-label-box"></span>
-                <span>STAGE 04 — SUB-ORBITAL QUANTUM TRANSMITTER &amp; RELAY SATELLITE</span>
+                <span>DIRECT UPLINK &amp; CONTACT // STAGE 04</span>
               </div>
               <h2 class="zone-title" id="contact-title">Direct Neural Uplink</h2>
               <p class="zone-subtitle">
-                Deep-space satellite relay active. Aim laser beam or select a ground receiver terminal to establish instant transmission with Ahmed Affes.
+                Ready to collaborate on high-impact products and engineering teams. Establish instant connection with Ahmed Affes below.
               </p>
 
               <!-- 🛰️ Sub-Orbital Satellite Array in Upper Atmosphere -->
@@ -772,9 +789,9 @@
                       <span class="conduit-icon">✉</span>
                     </div>
                     <div class="conduit-label">DIRECT EMAIL</div>
-                    <div class="conduit-val">ahmed.affes.dev@gmail.com</div>
+                    <div class="conduit-val">c0der.devl0pper@gmail.com</div>
                     <div class="conduit-btn-row">
-                      <a href="mailto:ahmed.affes.dev@gmail.com" class="conduit-btn primary">
+                      <a href="mailto:c0der.devl0pper@gmail.com" class="conduit-btn primary">
                         TRANSMIT EMAIL ↗
                       </a>
                     </div>
@@ -808,7 +825,7 @@
                     <div class="conduit-label">LINKEDIN UPLINK</div>
                     <div class="conduit-val">linkedin.com/in/ahmed-affes</div>
                     <div class="conduit-btn-row">
-                      <a href="https://linkedin.com/in/ahmed-affes" target="_blank" rel="noopener noreferrer" class="conduit-btn">
+                      <a href="https://www.linkedin.com/in/ahmed-affes-a8778942a/" target="_blank" rel="noopener noreferrer" class="conduit-btn">
                         CONNECT ↗
                       </a>
                     </div>
@@ -823,7 +840,7 @@
                       <span class="conduit-icon">📜</span>
                     </div>
                     <div class="conduit-label">DOSSIER / RESUME</div>
-                    <div class="conduit-val">curriculum_vitae_2026.pdf</div>
+                    <div class="conduit-val">Ahmed_Affes_CV_2026.pdf</div>
                     <div class="conduit-btn-row">
                       <a href="/Ahmed_Affes_CV_2026.pdf" class="conduit-btn primary" id="conduit-resume-btn" download>
                         DOWNLOAD CV ⬇

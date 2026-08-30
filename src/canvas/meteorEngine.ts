@@ -72,8 +72,8 @@ export class WarStarMeteorEngine {
   private spawnMeteor() {
     const palette = this.colors[Math.floor(Math.random() * this.colors.length)];
     const angle = (Math.PI / 180) * (48 + (Math.random() - 0.5) * 15); // ~48 deg downward right
-    const baseSpeed = (Math.random() * 8 + 12) * this.velocityMultiplier;
-    const baseLength = (Math.random() * 80 + 120) * Math.min(2.5, this.velocityMultiplier * 1.2);
+    const baseSpeed = (Math.random() * 5 + 7) * this.velocityMultiplier;
+    const baseLength = (Math.random() * 60 + 90) * Math.min(2.0, this.velocityMultiplier * 1.0);
 
     this.meteors.push({
       x: Math.random() * (this.canvas.width + 400) - 200,
@@ -81,17 +81,17 @@ export class WarStarMeteorEngine {
       length: baseLength,
       speed: baseSpeed,
       angle: angle,
-      thickness: Math.random() * 2 + 1.2,
+      thickness: Math.random() * 1.5 + 1.0,
       color: palette.main,
       glowColor: palette.glow,
-      alpha: Math.random() * 0.4 + 0.6,
+      alpha: Math.random() * 0.3 + 0.45,
       life: 0,
       maxLife: Math.random() * 80 + 100
     });
   }
 
   private spawnSparkle(x: number, y: number, color: string) {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 2; i++) {
       this.sparkles.push({
         x: x + (Math.random() - 0.5) * 10,
         y: y + (Math.random() - 0.5) * 10,
@@ -99,7 +99,7 @@ export class WarStarMeteorEngine {
         vy: (Math.random() - 0.5) * 2 + 1,
         size: Math.random() * 2 + 1,
         color: color,
-        alpha: 1.0,
+        alpha: 0.8,
         life: 0
       });
     }

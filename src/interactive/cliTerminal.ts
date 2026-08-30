@@ -220,6 +220,8 @@ export class CyberCLITerminal {
       case 'email':
       case 'links':
       case 'hire':
+      case 'resume':
+      case 'cv':
         this.cmdContact();
         break;
       case 'matrix':
@@ -452,9 +454,9 @@ export class CyberCLITerminal {
 
   private cmdContact() {
     const contactLinks = [
-      { label: 'DIRECT EMAIL', value: 'ahmed.affes.dev@gmail.com', href: 'mailto:ahmed.affes.dev@gmail.com', icon: '✉️' },
+      { label: 'DIRECT EMAIL', value: 'c0der.devl0pper@gmail.com', href: 'mailto:c0der.devl0pper@gmail.com', icon: '✉️' },
       { label: 'GITHUB VAULT', value: 'github.com/Ahmed-Affes', href: 'https://github.com/Ahmed-Affes', icon: '🐙' },
-      { label: 'LINKEDIN UPLINK', value: 'linkedin.com/in/ahmed-affes', href: 'https://linkedin.com', icon: '⚡' },
+      { label: 'LINKEDIN UPLINK', value: 'linkedin.com/in/ahmed-affes', href: 'https://www.linkedin.com/in/ahmed-affes-a8778942a/', icon: '⚡' },
       { label: 'CURRICULUM VITAE', value: 'Ahmed_Affes_CV_2026.pdf', href: '/Ahmed_Affes_CV_2026.pdf', icon: '📄' }
     ];
 
@@ -474,11 +476,11 @@ export class CyberCLITerminal {
     this.appendOutput(`
 <div class="cli-card contact-card">
   <div class="cli-card-header">
-    <span class="cli-tag-green">DIRECT TRANSMISSION PORTAL</span>
+    <span class="cli-tag-green">DIRECT TRANSMISSION PORTAL // AHMED AFFES</span>
     <span class="cli-tag-green">STATUS: AVAILABLE</span>
   </div>
   <div class="cli-card-body">
-    <p class="contact-lead">Ready for high-impact full-stack architecture, web motion engineering, and high-performance product teams.</p>
+    <p class="contact-lead">Ready for high-impact full-stack software engineering, web motion architecture, and product team collaboration.</p>
     <div class="cli-comms-grid">
       ${commsHtml}
     </div>

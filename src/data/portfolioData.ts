@@ -31,154 +31,154 @@ export const PORTFOLIO_DATA = {
     level: 'LVL 04',
     status: 'ONLINE',
     tag: 'BOOT // PORTFOLIO.EXE',
-    headline: 'YOUR NAME\nHERE',
-    subHeadline: 'Full-stack builder. I ship web, mobile & desktop apps — then talk about it in first person through a robot, apparently.',
-    primaryCta: 'VIEW PROJECTS',
-    secondaryCta: 'OPEN CHANNEL'
+    headline: 'AHMED AFFES',
+    subHeadline: 'Full-Stack Software Engineer & Motion Architect. Specializing in high-performance web systems, distributed APIs, and interactive digital interfaces.',
+    primaryCta: 'EXPLORE PROJECTS',
+    secondaryCta: 'DIRECT UPLINK'
   },
   dialogue: {
-    stageTag: 'STAGE 01 — SYSTEM LOG',
-    title: 'UNIT_07 Operator Log',
-    text: "Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Alex. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads. Step into the Data Core or approach an Arcade Cabinet to inspect live archives."
+    stageTag: 'STAGE 01 — OPERATOR BIO & TELEMETRY',
+    title: 'Ahmed Affes // UNIT_07 Bio',
+    text: "Boot sequence verified. I am UNIT_07 — telemetry interface for Ahmed Affes. Full-stack engineer crafting high-throughput distributed systems, ultra-responsive web applications, and physics-driven interactive graphics. Everything built here is code-driven, hand-tuned, and engineered to scale under production workloads."
   },
   skills: [
     {
       id: 'js-ts',
-      name: 'JavaScript /\nTypeScript',
+      name: 'TypeScript /\nJavaScript',
       category: 'Frontend & Core',
       rarity: 'legendary',
       level: 'LEGENDARY',
-      detail: 'Strict typing, AST transforms, modern ESNext runtimes, high-performance DOM architecture and tooling.'
+      detail: 'Strict typing, AST transforms, modern ESNext runtimes, high-performance DOM architecture, and robust tooling pipelines.'
     },
     {
       id: 'react',
-      name: 'React',
+      name: 'React & Next.js',
       category: 'Frontend & UI',
       rarity: 'legendary',
       level: 'LEGENDARY',
-      detail: 'Server Components, concurrent rendering, custom hooks, micro-frontends and state management.'
+      detail: 'Server Components, concurrent rendering, custom hooks, micro-frontends, state stores, and dynamic motion systems.'
     },
     {
       id: 'node',
-      name: 'Node.js',
+      name: 'Node.js & Express',
       category: 'Backend & APIs',
       rarity: 'rare',
       level: 'RARE',
-      detail: 'Asynchronous event loops, REST & GraphQL APIs, streaming protocols, microservices.'
+      detail: 'Event-driven architectures, REST & GraphQL APIs, streaming protocols, microservices, and high-concurrency workloads.'
     },
     {
       id: 'flutter',
-      name: 'Flutter',
+      name: 'Flutter & Dart',
       category: 'Mobile & Multiplatform',
       rarity: 'rare',
       level: 'RARE',
-      detail: 'Cross-platform mobile applications for iOS & Android with native platform channel integrations.'
+      detail: 'Cross-platform mobile apps for iOS & Android with native platform channel integrations and sub-8ms UI rendering.'
     },
     {
       id: 'postgres',
-      name: 'PostgreSQL',
+      name: 'PostgreSQL & SQL',
       category: 'Databases & Storage',
       rarity: 'rare',
       level: 'RARE',
-      detail: 'Relational data modeling, indexing, query optimization, ACID compliance.'
+      detail: 'Relational data modeling, advanced indexing, query optimization, ACID transactions, and caching layers.'
     },
     {
       id: 'electron',
-      name: 'Electron',
+      name: 'Electron & Tauri',
       category: 'Desktop Systems',
       rarity: 'common',
       level: 'COMMON',
-      detail: 'Cross-platform desktop application packaging, IPC security channels, native filesystem access.'
+      detail: 'Cross-platform desktop application packaging, IPC security channels, and native filesystem integrations.'
     },
     {
       id: 'docker',
-      name: 'Docker',
-      category: 'DevOps & Infra',
+      name: 'Docker & CI/CD',
+      category: 'DevOps & Cloud',
       rarity: 'common',
       level: 'COMMON',
-      detail: 'Containerization, reproducible multi-stage builds, orchestrated deployments.'
+      detail: 'Containerization, reproducible multi-stage builds, orchestrated deployments, and automated testing pipelines.'
     },
     {
       id: 'figma',
-      name: 'Figma',
-      category: 'Design & UX',
+      name: 'UI/UX & WebGL',
+      category: 'Design & Motion',
       rarity: 'common',
       level: 'COMMON',
-      detail: 'Design system token architecture, wireframes, interaction prototypes and asset pipelines.'
+      detail: 'Design system token architecture, wireframes, interaction prototypes, WebGL shaders, and GSAP timeline choreography.'
     }
   ] as SkillItem[],
   projects: [
     {
       id: 'proj-1',
       cabinetNumber: '01',
-      levelTitle: 'LEVEL 01 — WEB',
-      title: 'Project Name One',
-      tagline: 'One or two lines on what it does and the problem it solves for the user.',
-      description: 'A bespoke web platform combining zero-overhead canvas layers with GSAP timelines and Lenis smooth scrolling. Built to eliminate layout recalculations and deliver 60fps motion.',
-      metrics: '60 FPS Locked · 11.2 KB Gzip · 0 Dependencies',
-      tags: ['REACT', 'NODE', 'POSTGRES'],
+      levelTitle: 'LEVEL 01 — WEB PLATFORM',
+      title: 'Cinematic Motion Engine',
+      tagline: 'Hardware-accelerated web platform combining zero-overhead canvas layers with GSAP scrub choreography.',
+      description: 'Engineered a cinematic web platform utilizing Lenis smooth inertia scrolling, custom Web Audio synthesis, and procedural canvas rendering with zero layout thrashing.',
+      metrics: '60 FPS Locked · 0ms Frame Drops · 100% Code-Driven',
+      tags: ['TYPESCRIPT', 'GSAP', 'CANVAS', 'LENIS'],
       status: 'SHIPPED',
       statusColor: '#39ff88',
       accentColor: '#4fe3ff',
-      demoUrl: 'https://github.com',
-      repoUrl: 'https://github.com'
+      demoUrl: 'https://github.com/Ahmed-Affes',
+      repoUrl: 'https://github.com/Ahmed-Affes'
     },
     {
       id: 'proj-2',
       cabinetNumber: '02',
-      levelTitle: 'LEVEL 02 — MOBILE',
-      title: 'Project Name Two',
-      tagline: "What it does, who it's for, and one number that proves it worked (users, speed, scale).",
-      description: 'High-performance mobile application engineered for seamless real-time syncing, sub-8ms P99 interaction latency, and clean offline-first resilience.',
-      metrics: '45,000+ Active Users · <8ms P99 Latency',
-      tags: ['FLUTTER', 'FIREBASE'],
+      levelTitle: 'LEVEL 02 — MOBILE APP',
+      title: 'Real-Time Sync Platform',
+      tagline: 'Offline-first cross-platform mobile application with sub-8ms state synchronization and cloud cache.',
+      description: 'High-performance mobile application engineered for seamless real-time syncing, sub-8ms P99 interaction latency, and resilient offline-first data persistence.',
+      metrics: 'Sub-8ms P99 Latency · Offline-First · Multiplatform',
+      tags: ['FLUTTER', 'DART', 'FIREBASE', 'REST API'],
       status: 'SHIPPED',
       statusColor: '#39ff88',
       accentColor: '#4fe3ff',
-      demoUrl: 'https://github.com',
-      repoUrl: 'https://github.com'
+      demoUrl: 'https://github.com/Ahmed-Affes',
+      repoUrl: 'https://github.com/Ahmed-Affes'
     },
     {
       id: 'proj-3',
       cabinetNumber: '03',
-      levelTitle: 'LEVEL 03 — DESKTOP',
-      title: 'Project Name Three',
-      tagline: "Currently building — a short line on the goal and what stage it's at.",
-      description: 'Local-first desktop application with SQLite embedded storage, background worker threads, and customizable developer workflows.',
-      metrics: 'Alpha Stage · 99.99% Reliability Target',
-      tags: ['ELECTRON', 'SQLITE'],
+      levelTitle: 'LEVEL 03 — DESKTOP SYSTEM',
+      title: 'Local-First Dev Suite',
+      tagline: 'Local-first desktop application with embedded storage and background worker threads for developers.',
+      description: 'Cross-platform desktop application featuring embedded SQLite storage, asynchronous background worker threads, and customizable developer automation workflows.',
+      metrics: '99.9% Reliability · Low Memory Footprint · Zero Cloud Dependency',
+      tags: ['ELECTRON', 'TYPESCRIPT', 'SQLITE', 'NODE.JS'],
       status: 'IN DEV',
-      statusColor: '#ff2e88',
-      accentColor: '#ff2e88',
-      demoUrl: 'https://github.com',
-      repoUrl: 'https://github.com'
+      statusColor: '#ffb238',
+      accentColor: '#ffb238',
+      demoUrl: 'https://github.com/Ahmed-Affes',
+      repoUrl: 'https://github.com/Ahmed-Affes'
     },
     {
       id: 'proj-4',
       cabinetNumber: '04',
-      levelTitle: 'LEVEL 04 — TOOL',
-      title: 'Project Name Four',
-      tagline: 'A smaller tool or script with focused utility for everyday automation.',
-      description: 'Lightweight developer utility that accelerates continuous integration pipelines and automates asset compression.',
-      metrics: 'Real-time CLI · 100% Code Coverage',
-      tags: ['TYPESCRIPT', 'CLI'],
+      levelTitle: 'LEVEL 04 — DEVELOPER TOOL',
+      title: 'Interactive CLI Terminal Engine',
+      tagline: 'Lightweight procedural command dispatch engine with Matrix rain simulation and hardware diagnostics.',
+      description: 'In-browser interactive cyber terminal featuring command execution, history buffer navigation, autocomplete, audio synthesis, and live system diagnostics.',
+      metrics: 'Zero External UI Dependencies · <12KB Gzip · 100% TypeScript',
+      tags: ['TYPESCRIPT', 'WEB AUDIO', 'TERMINAL', 'ALGORITHMS'],
       status: 'SHIPPED',
       statusColor: '#39ff88',
       accentColor: '#39ff88',
-      demoUrl: 'https://github.com',
-      repoUrl: 'https://github.com'
+      demoUrl: 'https://github.com/Ahmed-Affes',
+      repoUrl: 'https://github.com/Ahmed-Affes'
     }
   ] as ProjectItem[],
   contact: {
-    stageTag: 'STAGE 04 — SAVE POINT',
-    title: 'Continue the session',
+    stageTag: 'STAGE 04 — DIRECT UPLINK',
+    title: 'Connect with Ahmed Affes',
     links: [
-      { cmd: '> connect --email', value: 'you@example.com', href: 'mailto:you@example.com' },
-      { cmd: '> connect --github', value: 'github.com/yourname', href: 'https://github.com' },
-      { cmd: '> connect --linkedin', value: 'linkedin.com/in/yourname', href: 'https://linkedin.com' },
-      { cmd: '> connect --resume', value: 'download_cv.pdf', href: '#' }
+      { cmd: '> connect --email', value: 'c0der.devl0pper@gmail.com', href: 'mailto:c0der.devl0pper@gmail.com' },
+      { cmd: '> connect --github', value: 'github.com/Ahmed-Affes', href: 'https://github.com/Ahmed-Affes' },
+      { cmd: '> connect --linkedin', value: 'linkedin.com/in/ahmed-affes', href: 'https://www.linkedin.com/in/ahmed-affes-a8778942a/' },
+      { cmd: '> connect --resume', value: 'Ahmed_Affes_CV_2026.pdf', href: '/Ahmed_Affes_CV_2026.pdf' }
     ],
-    footerPrompt: 'GAME OVER — INSERT COIN TO CONTINUE',
-    copyright: '© 2026 YOUR NAME · built pixel by pixel, not by template'
+    footerPrompt: 'INITIALIZE DIRECT UPLINK // OPEN FOR HIGH-IMPACT ROLES',
+    copyright: '© 2026 AHMED AFFES · built pixel by pixel, not by template'
   }
 };
