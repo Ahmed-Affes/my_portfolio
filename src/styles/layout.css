@@ -1381,15 +1381,48 @@
   border-color: #39ff88 !important;
   box-shadow: 0 0 40px rgba(57, 255, 136, 0.45) !important;
 }
+.robot-face-chassis.mode-stealth .face-corner-bracket {
+  border-color: #39ff88 !important;
+}
+.robot-face-chassis.mode-stealth .mouth-bar {
+  background: #39ff88 !important;
+  box-shadow: 0 0 8px #39ff88 !important;
+}
+.robot-face-chassis.mode-stealth .robot-eye-socket {
+  border-color: #39ff88 !important;
+  box-shadow: inset 0 0 16px rgba(57, 255, 136, 0.4) !important;
+}
 
 .robot-face-chassis.mode-overclock {
   border-color: #ff2e88 !important;
   box-shadow: 0 0 50px rgba(255, 46, 136, 0.65), inset 0 0 25px rgba(255, 46, 136, 0.2) !important;
 }
+.robot-face-chassis.mode-overclock .face-corner-bracket {
+  border-color: #ff2e88 !important;
+}
+.robot-face-chassis.mode-overclock .mouth-bar {
+  background: #ff2e88 !important;
+  box-shadow: 0 0 10px #ff2e88 !important;
+}
+.robot-face-chassis.mode-overclock .robot-eye-socket {
+  border-color: #ff2e88 !important;
+  box-shadow: inset 0 0 16px rgba(255, 46, 136, 0.5) !important;
+}
 
 .robot-face-chassis.mode-quantum {
   border-color: #ffb238 !important;
   box-shadow: 0 0 45px rgba(255, 178, 56, 0.55) !important;
+}
+.robot-face-chassis.mode-quantum .face-corner-bracket {
+  border-color: #ffb238 !important;
+}
+.robot-face-chassis.mode-quantum .mouth-bar {
+  background: #ffb238 !important;
+  box-shadow: 0 0 8px #ffb238 !important;
+}
+.robot-face-chassis.mode-quantum .robot-eye-socket {
+  border-color: #ffb238 !important;
+  box-shadow: inset 0 0 16px rgba(255, 178, 56, 0.4) !important;
 }
 
 .face-corner-bracket {
@@ -1598,34 +1631,48 @@
 .sentinel-mode-strip {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
-  margin-top: 4px;
+  gap: 5px;
+  margin-top: 6px;
+  position: relative;
+  z-index: 100;
+  pointer-events: auto;
 }
 
 .sentinel-mode-pill {
   font-family: var(--font-pixel);
-  font-size: 5.5px;
-  background: rgba(10, 16, 36, 0.85);
-  border: 1px solid rgba(79, 227, 255, 0.25);
+  font-size: 6.5px;
+  background: rgba(12, 18, 42, 0.95);
+  border: 1px solid rgba(79, 227, 255, 0.35);
   color: var(--muted);
-  padding: 3px 2px;
-  border-radius: 2px;
-  cursor: pointer;
+  padding: 5px 3px;
+  min-height: 22px;
+  border-radius: 3px;
+  cursor: pointer !important;
   text-align: center;
-  transition: all 0.15s ease;
+  transition: all 0.18s ease;
   white-space: nowrap;
+  position: relative;
+  z-index: 101;
+  pointer-events: auto !important;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sentinel-mode-pill:hover {
   border-color: var(--cyan);
-  color: var(--cyan);
+  color: #ffffff;
+  background: rgba(79, 227, 255, 0.25);
+  box-shadow: 0 0 10px rgba(79, 227, 255, 0.5);
+  transform: translateY(-1px);
 }
 
 .sentinel-mode-pill.active {
-  background: rgba(79, 227, 255, 0.2);
+  background: rgba(79, 227, 255, 0.35);
   border-color: var(--cyan);
   color: #ffffff;
-  box-shadow: 0 0 8px rgba(79, 227, 255, 0.4);
+  box-shadow: 0 0 12px rgba(79, 227, 255, 0.6);
 }
 
 .face-footer-tag {
@@ -1684,30 +1731,52 @@
   gap: 8px;
   width: 100%;
   margin-top: 14px;
+  position: relative;
+  z-index: 50;
+  pointer-events: auto;
 }
 
 .orbit-satellite {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(8, 14, 30, 0.9);
+  gap: 8px;
+  background: rgba(8, 14, 32, 0.94);
   border: 1px solid var(--cyan-dim);
-  padding: 6px 8px;
-  border-radius: 3px;
-  cursor: pointer;
+  padding: 8px 10px;
+  border-radius: 4px;
+  cursor: pointer !important;
   backdrop-filter: blur(8px);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  animation: slowSmoothFloat 4.8s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  will-change: transform;
+  position: relative;
+  z-index: 51;
+  pointer-events: auto !important;
+}
+
+.orbit-satellite.sat-1 { animation-delay: 0s; }
+.orbit-satellite.sat-2 { animation-delay: 1.2s; }
+.orbit-satellite.sat-3 { animation-delay: 2.4s; }
+.orbit-satellite.sat-4 { animation-delay: 3.6s; }
+
+@keyframes slowSmoothFloat {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0px); }
 }
 
 .orbit-satellite:hover {
   border-color: var(--cyan);
-  box-shadow: 0 0 14px rgba(79, 227, 255, 0.4);
+  background: rgba(16, 26, 56, 0.98);
+  box-shadow: 0 0 16px rgba(79, 227, 255, 0.5);
+  animation-play-state: paused;
 }
 
 .orbit-satellite.active {
   border-color: var(--cyan);
-  background: rgba(79, 227, 255, 0.2);
-  box-shadow: 0 0 16px rgba(79, 227, 255, 0.45);
+  background: rgba(79, 227, 255, 0.25);
+  box-shadow: 0 0 20px rgba(79, 227, 255, 0.6);
+  animation-play-state: paused;
 }
 
 .sat-icon {

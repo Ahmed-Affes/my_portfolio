@@ -137,58 +137,72 @@ export class RobotFaceController {
     }, durationMs);
   }
 
-  private initModeSelector() {
+  public setMode(mode: 'nominal' | 'stealth' | 'overclock' | 'quantum') {
+    this.currentMode = mode;
+    this.triggerSpeech(1000);
+
     const modePills = document.querySelectorAll('#sentinel-mode-strip .sentinel-mode-pill');
+    modePills.forEach((p) => {
+      if (p.getAttribute('data-mode') === mode) p.classList.add('active');
+      else p.classList.remove('active');
+    });
+
     const statusText = document.getElementById('face-status-text');
     const cpuEl = document.getElementById('face-cpu-stat');
     const tempEl = document.getElementById('face-temp-stat');
 
+    // Reset theme classes on chassis
+    this.containerEl?.classList.remove('mode-stealth', 'mode-overclock', 'mode-quantum');
+    this.pupilLeftEl?.classList.remove('pupil-amber', 'pupil-magenta', 'pupil-green');
+    this.pupilRightEl?.classList.remove('pupil-amber', 'pupil-magenta', 'pupil-green');
+
+    if (mode === 'nominal') {
+      sounds.playHoverBlip();
+      if (statusText) statusText.textContent = 'STATUS: NOMINAL';
+      if (cpuEl) cpuEl.textContent = 'CPU: 1.2%';
+      if (tempEl) tempEl.textContent = 'TEMP: 32°C';
+    } else if (mode === 'stealth') {
+      sounds.playPanelOpen();
+      this.containerEl?.classList.add('mode-stealth');
+      this.pupilLeftEl?.classList.add('pupil-green');
+      this.pupilRightEl?.classList.add('pupil-green');
+      if (statusText) statusText.textContent = 'STATUS: ENCRYPTED';
+      if (cpuEl) cpuEl.textContent = 'CPU: 0.4%';
+      if (tempEl) tempEl.textContent = 'TEMP: 26°C';
+    } else if (mode === 'overclock') {
+      sounds.playQuantumSurge();
+      this.containerEl?.classList.add('mode-overclock');
+      this.pupilLeftEl?.classList.add('pupil-magenta');
+      this.pupilRightEl?.classList.add('pupil-magenta');
+      if (statusText) statusText.textContent = 'STATUS: OVERCLOCKED';
+      if (cpuEl) cpuEl.textContent = 'CPU: 99.9%';
+      if (tempEl) tempEl.textContent = 'TEMP: 78°C';
+    } else if (mode === 'quantum') {
+      sounds.playCrtPower();
+      this.containerEl?.classList.add('mode-quantum');
+      this.pupilLeftEl?.classList.add('pupil-amber');
+      this.pupilRightEl?.classList.add('pupil-amber');
+      if (statusText) statusText.textContent = 'STATUS: QUANTUM_FLUX';
+      if (cpuEl) cpuEl.textContent = 'CPU: 48.2%';
+      if (tempEl) tempEl.textContent = 'TEMP: 44°C';
+    }
+  }
+
+  private initModeSelector() {
+    const modePills = document.querySelectorAll('#sentinel-mode-strip .sentinel-mode-pill');
+
     modePills.forEach((pill) => {
-      pill.addEventListener('click', (e) => {
+      const handleSelect = (e: Event) => {
+        e.preventDefault();
         e.stopPropagation();
-        modePills.forEach((p) => p.classList.remove('active'));
-        pill.classList.add('active');
-
         const mode = pill.getAttribute('data-mode') as 'nominal' | 'stealth' | 'overclock' | 'quantum';
-        this.currentMode = mode;
-        this.triggerSpeech(1000);
-
-        // Reset theme classes on chassis
-        this.containerEl?.classList.remove('mode-stealth', 'mode-overclock', 'mode-quantum');
-        this.pupilLeftEl?.classList.remove('pupil-amber', 'pupil-magenta', 'pupil-green');
-        this.pupilRightEl?.classList.remove('pupil-amber', 'pupil-magenta', 'pupil-green');
-
-        if (mode === 'nominal') {
-          sounds.playHoverBlip();
-          if (statusText) statusText.textContent = 'STATUS: NOMINAL';
-          if (cpuEl) cpuEl.textContent = 'CPU: 1.2%';
-          if (tempEl) tempEl.textContent = 'TEMP: 32°C';
-        } else if (mode === 'stealth') {
-          sounds.playPanelOpen();
-          this.containerEl?.classList.add('mode-stealth');
-          this.pupilLeftEl?.classList.add('pupil-green');
-          this.pupilRightEl?.classList.add('pupil-green');
-          if (statusText) statusText.textContent = 'STATUS: ENCRYPTED';
-          if (cpuEl) cpuEl.textContent = 'CPU: 0.4%';
-          if (tempEl) tempEl.textContent = 'TEMP: 26°C';
-        } else if (mode === 'overclock') {
-          sounds.playQuantumSurge();
-          this.containerEl?.classList.add('mode-overclock');
-          this.pupilLeftEl?.classList.add('pupil-magenta');
-          this.pupilRightEl?.classList.add('pupil-magenta');
-          if (statusText) statusText.textContent = 'STATUS: OVERCLOCKED';
-          if (cpuEl) cpuEl.textContent = 'CPU: 99.9%';
-          if (tempEl) tempEl.textContent = 'TEMP: 78°C';
-        } else if (mode === 'quantum') {
-          sounds.playCrtPower();
-          this.containerEl?.classList.add('mode-quantum');
-          this.pupilLeftEl?.classList.add('pupil-amber');
-          this.pupilRightEl?.classList.add('pupil-amber');
-          if (statusText) statusText.textContent = 'STATUS: QUANTUM_FLUX';
-          if (cpuEl) cpuEl.textContent = 'CPU: 48.2%';
-          if (tempEl) tempEl.textContent = 'TEMP: 44°C';
+        if (mode) {
+          this.setMode(mode);
         }
-      });
+      };
+
+      pill.addEventListener('click', handleSelect);
+      pill.addEventListener('pointerdown', handleSelect);
     });
   }
 
