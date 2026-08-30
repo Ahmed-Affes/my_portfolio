@@ -517,17 +517,88 @@
               
               <div class="stage-label">
                 <span class="stage-label-box"></span>
-                <span>STAGE 04 — SUB-ORBITAL QUANTUM TRANSMITTER</span>
+                <span>STAGE 04 — SUB-ORBITAL QUANTUM TRANSMITTER &amp; RELAY SATELLITE</span>
               </div>
               <h2 class="zone-title" id="contact-title">Direct Neural Uplink</h2>
               <p class="zone-subtitle">
-                Deep-space transmission channels are open. Transmit for full-stack contracts, creative architecture, or technical collaboration.
+                Deep-space satellite relay active. Aim laser beam or select a ground receiver terminal to establish instant transmission with Ahmed Affes.
               </p>
+
+              <!-- 🛰️ Sub-Orbital Satellite Array in Upper Atmosphere -->
+              <div class="satellite-airspace" id="satellite-airspace" aria-hidden="true">
+                <div class="orbital-satellite-rig" id="orbital-satellite-rig">
+                  <!-- Left Solar Wing Panel -->
+                  <div class="satellite-solar-wing left">
+                    <div class="wing-strut"></div>
+                    <div class="solar-photovoltaic-grid">
+                      <span class="solar-cell"></span><span class="solar-cell"></span>
+                      <span class="solar-cell"></span><span class="solar-cell"></span>
+                      <span class="solar-cell"></span><span class="solar-cell"></span>
+                    </div>
+                  </div>
+
+                  <!-- Central Satellite Dish Core & Laser Optics -->
+                  <div class="satellite-central-core">
+                    <div class="satellite-avionics-dome">
+                      <div class="avionics-sensor-lens"></div>
+                      <div class="avionics-led-array">
+                        <span class="sat-led l1"></span>
+                        <span class="sat-led l2"></span>
+                        <span class="sat-led l3"></span>
+                      </div>
+                    </div>
+
+                    <!-- Parabolic Dish -->
+                    <div class="satellite-parabolic-dish">
+                      <div class="dish-subreflector"></div>
+                      <div class="dish-feed-horn"></div>
+                      <div class="dish-laser-aperture" id="satellite-laser-aperture">
+                        <div class="laser-spark-core"></div>
+                      </div>
+                    </div>
+
+                    <div class="satellite-thruster-exhaust">
+                      <span class="sat-exhaust-flame"></span>
+                    </div>
+                  </div>
+
+                  <!-- Right Solar Wing Panel -->
+                  <div class="satellite-solar-wing right">
+                    <div class="wing-strut"></div>
+                    <div class="solar-photovoltaic-grid">
+                      <span class="solar-cell"></span><span class="solar-cell"></span>
+                      <span class="solar-cell"></span><span class="solar-cell"></span>
+                      <span class="solar-cell"></span><span class="solar-cell"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Dynamic Volumetric Laser Target Beam -->
+                <svg class="satellite-laser-canvas" id="satellite-laser-canvas">
+                  <defs>
+                    <linearGradient id="satLaserGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
+                      <stop offset="25%" stop-color="#4fe3ff" stop-opacity="0.9" />
+                      <stop offset="70%" stop-color="#ff2e88" stop-opacity="0.7" />
+                      <stop offset="100%" stop-color="#4fe3ff" stop-opacity="0" />
+                    </linearGradient>
+                    <filter id="laserGlow">
+                      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                      <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  <line id="laser-beam-line" x1="0" y1="0" x2="0" y2="0" stroke="url(#satLaserGrad)" stroke-width="3" filter="url(#laserGlow)" opacity="0" />
+                  <circle id="laser-target-reticle" cx="0" cy="0" r="10" stroke="#4fe3ff" stroke-width="1.5" fill="none" opacity="0" />
+                </svg>
+              </div>
 
               <!-- Central Unified Cyber Comms Station Console -->
               <div class="comms-station-deck" id="comms-console-deck">
                 
-                <!-- Left Sector: Tactical Radar Scope & Uplink Status Deck -->
+                <!-- Left Sector: Tactical Radar Scope & Uplink Status Deck + Quick Message Dispatcher -->
                 <div class="console-left-sector">
                   <div class="radar-scope-frame" id="quantum-radar-pod">
                     <div class="radar-corner-bracket tl"></div>
@@ -539,26 +610,40 @@
                   </div>
 
                   <div class="radar-console-meta">
-                    <div class="meta-status-pill">
+                    <div class="meta-status-pill" id="uplink-status-pill">
                       <span class="status-live-blip"></span>
-                      <span class="meta-status-text">TRANSMITTER ONLINE</span>
+                      <span class="meta-status-text" id="sat-tele-status">SATELLITE ORBITAL // TRACKING</span>
                     </div>
                     <div class="console-telemetry-grid">
-                      <div class="tele-item"><span class="t-key">FREQ:</span> <span class="t-val">433.92 MHz</span></div>
-                      <div class="tele-item"><span class="t-key">LATENCY:</span> <span class="t-val">12ms</span></div>
-                      <div class="tele-item"><span class="t-key">CIPHER:</span> <span class="t-val">AES-256</span></div>
-                      <div class="tele-item"><span class="t-key">SIGNAL:</span> <span class="t-val">99.8%</span></div>
+                      <div class="tele-item"><span class="t-key">TARGET:</span> <span class="t-val" id="sat-tele-target">READY</span></div>
+                      <div class="tele-item"><span class="t-key">SIGNAL:</span> <span class="t-val" id="sat-tele-signal">99.8%</span></div>
+                      <div class="tele-item"><span class="t-key">AZIMUTH:</span> <span class="t-val" id="sat-tele-azimuth">180°</span></div>
+                      <div class="tele-item"><span class="t-key">CIPHER:</span> <span class="t-val">QUANTUM</span></div>
+                    </div>
+
+                    <!-- Quick Transmission Ping Form -->
+                    <div class="quick-ping-form" id="quick-ping-form">
+                      <div class="ping-input-wrapper">
+                        <span class="ping-prefix">&gt;</span>
+                        <input type="text" id="quick-ping-input" class="quick-ping-input" placeholder="Type brief inquiry..." aria-label="Quick Message for Ahmed Affes" />
+                        <button id="quick-ping-btn" class="quick-ping-send-btn" title="Transmit to Ahmed Affes">
+                          <span>TRANSMIT</span> ⚡
+                        </button>
+                      </div>
+                      <div class="ping-status-msg" id="ping-status-msg"></div>
                     </div>
                   </div>
                 </div>
 
-                <!-- Right Sector: 4 High-Tech Communication Conduits (2x2 Grid) -->
+                <!-- Right Sector: 4 High-Tech Ground Receiver Conduits -->
                 <div class="console-right-sector" id="beacon-kiosk">
                   
                   <!-- Conduit 1: Direct Email -->
-                  <div class="comms-conduit-card" id="beacon-email-link">
+                  <div class="comms-conduit-card ground-receiver-dock" id="beacon-email-link" data-station-index="0" data-station-name="EMAIL_UPLINK" data-station-freq="433.92 MHz">
+                    <div class="receiver-antenna-spike"></div>
                     <div class="conduit-top-bar">
                       <span class="conduit-channel-code">01 // COMMS</span>
+                      <div class="station-signal-meter"><span class="meter-bar active"></span><span class="meter-bar active"></span><span class="meter-bar active"></span><span class="meter-bar"></span></div>
                       <span class="conduit-icon">✉</span>
                     </div>
                     <div class="conduit-label">DIRECT EMAIL</div>
@@ -571,9 +656,11 @@
                   </div>
 
                   <!-- Conduit 2: GitHub Archives -->
-                  <div class="comms-conduit-card" id="beacon-github-link">
+                  <div class="comms-conduit-card ground-receiver-dock" id="beacon-github-link" data-station-index="1" data-station-name="GITHUB_ARCHIVE" data-station-freq="868.10 MHz">
+                    <div class="receiver-antenna-spike"></div>
                     <div class="conduit-top-bar">
                       <span class="conduit-channel-code">02 // ARCHIVE</span>
+                      <div class="station-signal-meter"><span class="meter-bar active"></span><span class="meter-bar active"></span><span class="meter-bar active"></span><span class="meter-bar"></span></div>
                       <span class="conduit-icon">⚡</span>
                     </div>
                     <div class="conduit-label">GITHUB ARCHIVES</div>
@@ -586,9 +673,11 @@
                   </div>
 
                   <!-- Conduit 3: LinkedIn Uplink -->
-                  <div class="comms-conduit-card" id="beacon-linkedin-link">
+                  <div class="comms-conduit-card ground-receiver-dock" id="beacon-linkedin-link" data-station-index="2" data-station-name="LINKEDIN_RELAY" data-station-freq="915.00 MHz">
+                    <div class="receiver-antenna-spike"></div>
                     <div class="conduit-top-bar">
                       <span class="conduit-channel-code">03 // NETWORK</span>
+                      <div class="station-signal-meter"><span class="meter-bar active"></span><span class="meter-bar active"></span><span class="meter-bar active"></span><span class="meter-bar"></span></div>
                       <span class="conduit-icon">◈</span>
                     </div>
                     <div class="conduit-label">LINKEDIN UPLINK</div>
@@ -601,9 +690,11 @@
                   </div>
 
                   <!-- Conduit 4: Operator Technical Dossier -->
-                  <div class="comms-conduit-card" id="beacon-resume-link">
+                  <div class="comms-conduit-card ground-receiver-dock" id="beacon-resume-link" data-station-index="3" data-station-name="DOSSIER_CORE" data-station-freq="1200.50 MHz">
+                    <div class="receiver-antenna-spike"></div>
                     <div class="conduit-top-bar">
                       <span class="conduit-channel-code">04 // SPEC</span>
+                      <div class="station-signal-meter"><span class="meter-bar active"></span><span class="meter-bar active"></span><span class="meter-bar active"></span><span class="meter-bar"></span></div>
                       <span class="conduit-icon">📜</span>
                     </div>
                     <div class="conduit-label">DOSSIER / RESUME</div>

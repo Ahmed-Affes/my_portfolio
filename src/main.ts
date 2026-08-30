@@ -12,14 +12,16 @@ import { HeroQuantumReactor } from './interactive/heroReactor';
 import { RadarTransmitterEngine } from './interactive/radarTransmitter';
 import { HeroSubtitleMorpher } from './interactive/heroSubtitleMorpher';
 import { CustomCursorController } from './interactive/cursor';
+import { SatelliteUplinkController } from './interactive/satelliteUplink';
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 0. Initialize War Star Shooting Meteor Engine, Hero Quantum Reactor, Robot Face, Radar, Subtitle Morpher & CLI Help Center
+  // 0. Initialize War Star Shooting Meteor Engine, Hero Quantum Reactor, Robot Face, Radar, Subtitle Morpher, Satellite Relay & CLI Help Center
   const meteorEngine = new WarStarMeteorEngine();
   new HeroQuantumReactor('hero-reactor-canvas');
   new RadarTransmitterEngine('radar-canvas');
+  new SatelliteUplinkController();
   const robotFace = new RobotFaceController('about-robot-face');
   const cliTerminal = new CyberCLITerminal('cli-terminal-window');
   const heroSubtitleMorpher = new HeroSubtitleMorpher('hero-typewriter-text');

@@ -2189,40 +2189,194 @@
   color: var(--cyan);
 }
 
-/* ==================== ACT 4: SUB-ORBITAL QUANTUM SATELLITE CONSTELLATION ==================== */
+/* ==================== ACT 4: SUB-ORBITAL QUANTUM SATELLITE RELAY & UPLINK ==================== */
 .transmission-modern-stage {
   max-width: 1150px;
   width: 100%;
   margin: 0 auto;
   position: relative;
-  padding: 10px 16px;
+  padding: 6px 16px;
   background: transparent;
   display: flex;
   flex-direction: column;
 }
 
-.orbital-constellation-stage {
+/* 🛰️ Orbital Satellite Airspace & Laser Optics */
+.satellite-airspace {
   position: relative;
   width: 100%;
-  min-height: 480px;
+  height: 65px;
+  margin: 2px 0 6px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none !important;
+}
+
+.orbital-satellite-rig {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 16px 0 24px 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+  filter: drop-shadow(0 0 18px rgba(79, 227, 255, 0.85)) drop-shadow(0 0 30px rgba(255, 46, 136, 0.35));
 }
 
-/* ==================== ACT 4: UNIFIED CYBER COMMS STATION DECK ==================== */
-.comms-modern-container {
-  max-width: 1040px;
-  width: 100%;
-  margin: 0 auto;
+.satellite-solar-wing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.satellite-solar-wing.left {
+  flex-direction: row-reverse;
+}
+
+.wing-strut {
+  width: 16px;
+  height: 2.5px;
+  background: var(--cyan);
+  box-shadow: 0 0 6px var(--cyan);
+}
+
+.solar-photovoltaic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 18px);
+  grid-template-rows: repeat(2, 13px);
+  gap: 2px;
+  background: #020612;
+  border: 1px solid var(--cyan);
+  padding: 3px;
+  box-shadow: inset 0 0 10px rgba(79, 227, 255, 0.5), 0 0 16px rgba(79, 227, 255, 0.25);
+  border-radius: 2px;
+}
+
+.solar-cell {
+  background: linear-gradient(135deg, #091e42 0%, #0d346e 100%);
+  border: 0.5px solid rgba(79, 227, 255, 0.35);
+  border-radius: 1px;
+}
+
+.satellite-central-core {
   position: relative;
-  padding: 0 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 12px;
 }
 
+.satellite-avionics-dome {
+  width: 34px;
+  height: 12px;
+  background: #081120;
+  border: 1.5px solid var(--cyan);
+  border-bottom: none;
+  border-radius: 16px 16px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 4px;
+  box-shadow: inset 0 0 6px rgba(79, 227, 255, 0.7);
+}
+
+.avionics-led-array {
+  display: flex;
+  gap: 3px;
+}
+
+.sat-led {
+  width: 3.5px;
+  height: 3.5px;
+  border-radius: 50%;
+  box-shadow: 0 0 6px currentColor;
+}
+.sat-led.l1 { color: #ff2e88; background: #ff2e88; animation: pulseDot 0.6s infinite alternate; }
+.sat-led.l2 { color: #39ff88; background: #39ff88; animation: pulseDot 0.8s infinite 0.2s alternate; }
+.sat-led.l3 { color: #4fe3ff; background: #4fe3ff; animation: pulseDot 0.7s infinite 0.4s alternate; }
+
+.satellite-parabolic-dish {
+  width: 64px;
+  height: 30px;
+  background: radial-gradient(ellipse at 50% 100%, #152d58 0%, #060e1e 80%);
+  border: 1.5px solid var(--cyan);
+  border-radius: 0 0 60px 60px;
+  box-shadow: 0 0 22px rgba(79, 227, 255, 0.6), inset 0 0 14px rgba(79, 227, 255, 0.35);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dish-subreflector {
+  position: absolute;
+  top: 4px;
+  width: 14px;
+  height: 3px;
+  background: var(--cyan);
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--cyan);
+}
+
+.dish-feed-horn {
+  position: absolute;
+  top: 7px;
+  width: 2px;
+  height: 12px;
+  background: #ffffff;
+  box-shadow: 0 0 6px #ffffff;
+}
+
+.dish-laser-aperture {
+  position: absolute;
+  bottom: 2px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 14px #ffffff, 0 0 24px #4fe3ff, 0 0 35px #ff2e88;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.laser-spark-core {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ff2e88;
+  box-shadow: 0 0 8px #ff2e88;
+  animation: pulseDot 0.3s infinite alternate;
+}
+
+.satellite-thruster-exhaust {
+  display: flex;
+  justify-content: center;
+  margin-top: -1px;
+}
+
+.sat-exhaust-flame {
+  width: 4px;
+  height: 6px;
+  background: linear-gradient(180deg, #4fe3ff 0%, #ff2e88 80%, transparent 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ff2e88;
+  animation: pulseDot 0.2s infinite alternate;
+}
+
+/* Dynamic Volumetric Laser Target Beam */
+.satellite-laser-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 520px;
+  pointer-events: none !important;
+  z-index: 40;
+  overflow: visible;
+}
+
+/* ==================== ACT 4: UNIFIED CYBER COMMS STATION DECK ==================== */
 .comms-station-deck {
   width: 100%;
   display: grid;
@@ -2230,11 +2384,11 @@
   gap: 22px;
   background: rgba(8, 12, 26, 0.94);
   border: 1.5px solid var(--cyan-dim);
-  padding: 20px 22px;
+  padding: 18px 20px;
   border-radius: 4px;
   backdrop-filter: blur(16px);
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(79, 227, 255, 0.05);
-  margin: 12px 0 16px 0;
+  margin: 4px 0 10px 0;
   position: relative;
 }
 
@@ -2249,13 +2403,13 @@
   box-shadow: 0 0 12px var(--cyan);
 }
 
-/* Left Sector: Tactical Scope & Telemetry */
+/* Left Sector: Tactical Scope & Telemetry + Quick Ping Form */
 .console-left-sector {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
-  padding: 14px 12px;
+  gap: 10px;
+  padding: 12px 10px;
   background: rgba(4, 7, 16, 0.9);
   border: 1px solid rgba(79, 227, 255, 0.3);
   border-radius: 3px;
@@ -2263,12 +2417,12 @@
 }
 
 .radar-scope-frame {
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   position: relative;
   border-radius: 50%;
   border: 2px solid rgba(79, 227, 255, 0.6);
-  box-shadow: 0 0 35px rgba(79, 227, 255, 0.3), inset 0 0 25px rgba(57, 255, 136, 0.12);
+  box-shadow: 0 0 30px rgba(79, 227, 255, 0.3), inset 0 0 25px rgba(57, 255, 136, 0.12);
   background: radial-gradient(circle, rgba(12, 20, 42, 0.95) 0%, rgba(4, 7, 16, 0.98) 100%);
   display: flex;
   align-items: center;
@@ -2287,8 +2441,8 @@
 }
 
 .radar-canvas {
-  width: 190px;
-  height: 190px;
+  width: 170px;
+  height: 170px;
   display: block;
   border-radius: 50%;
 }
@@ -2297,20 +2451,20 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .meta-status-pill {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   font-family: var(--font-pixel);
   font-size: 6px;
   color: var(--green);
   background: rgba(10, 40, 25, 0.5);
   border: 1px solid rgba(57, 255, 136, 0.4);
-  padding: 4px 8px;
+  padding: 4px 6px;
   border-radius: 2px;
   letter-spacing: 0.5px;
 }
@@ -2327,7 +2481,7 @@
 .console-telemetry-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 6px 8px;
+  gap: 4px 6px;
 }
 
 .tele-item {
@@ -2336,7 +2490,7 @@
   font-family: var(--font-pixel);
   font-size: 5.5px;
   background: rgba(8, 14, 28, 0.7);
-  padding: 4px 6px;
+  padding: 3px 5px;
   border-radius: 2px;
   border: 1px solid rgba(79, 227, 255, 0.15);
 }
@@ -2344,7 +2498,82 @@
 .t-key { color: var(--muted); }
 .t-val { color: var(--cyan); text-shadow: 0 0 6px var(--cyan); }
 
-/* Right Sector: 4 High-Tech Conduits in 2x2 Grid */
+/* Quick Neural Ping Form */
+.quick-ping-form {
+  width: 100%;
+  margin-top: 2px;
+}
+
+.ping-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: rgba(6, 10, 22, 0.95);
+  border: 1px solid var(--cyan-dim);
+  padding: 3px 6px;
+  border-radius: 2px;
+  gap: 6px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ping-input-wrapper:focus-within {
+  border-color: var(--cyan);
+  box-shadow: 0 0 12px rgba(79, 227, 255, 0.4);
+}
+
+.ping-prefix {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: var(--green);
+}
+
+.quick-ping-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-pixel);
+  font-size: 6.5px;
+  color: var(--ink);
+  width: 100%;
+  letter-spacing: 0.5px;
+}
+
+.quick-ping-input::placeholder {
+  color: var(--muted);
+  opacity: 0.6;
+}
+
+.quick-ping-send-btn {
+  background: var(--cyan);
+  border: none;
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  color: #040814;
+  padding: 4px 7px;
+  cursor: pointer;
+  border-radius: 2px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.quick-ping-send-btn:hover {
+  background: #ffffff;
+  box-shadow: 0 0 12px #4fe3ff;
+  transform: scale(1.04);
+}
+
+.ping-status-msg {
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  color: var(--green);
+  min-height: 12px;
+  margin-top: 3px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* Right Sector: 4 High-Tech Ground Receiver Conduits */
 .console-right-sector {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -2360,7 +2589,74 @@
   flex-direction: column;
   justify-content: space-between;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.6);
+  position: relative;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  user-select: none;
   transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.22s ease;
+}
+
+.comms-conduit-card * {
+  pointer-events: none !important;
+}
+
+.comms-conduit-card .conduit-btn-row a {
+  pointer-events: auto !important;
+}
+
+.receiver-antenna-spike {
+  position: absolute;
+  top: -8px;
+  right: 12px;
+  width: 2px;
+  height: 8px;
+  background: var(--cyan);
+  box-shadow: 0 0 6px var(--cyan);
+  border-radius: 1px;
+}
+
+.receiver-antenna-spike::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--magenta);
+  box-shadow: 0 0 8px var(--magenta);
+  animation: pulseDot 1.2s infinite;
+}
+
+.comms-conduit-card.station-locked {
+  border-color: var(--cyan);
+  box-shadow: 0 0 35px rgba(79, 227, 255, 0.55), inset 0 0 16px rgba(79, 227, 255, 0.15);
+  transform: translateY(-4px) scale(1.02);
+}
+
+.station-signal-meter {
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  height: 9px;
+  margin-left: auto;
+  margin-right: 8px;
+}
+
+.station-signal-meter .meter-bar {
+  width: 2.5px;
+  background: rgba(79, 227, 255, 0.2);
+  border-radius: 0.5px;
+}
+
+.station-signal-meter .meter-bar:nth-child(1) { height: 3px; }
+.station-signal-meter .meter-bar:nth-child(2) { height: 5px; }
+.station-signal-meter .meter-bar:nth-child(3) { height: 7px; }
+.station-signal-meter .meter-bar:nth-child(4) { height: 9px; }
+
+.station-signal-meter .meter-bar.active {
+  background: var(--green);
+  box-shadow: 0 0 4px var(--green);
 }
 
 .comms-conduit-card:hover {
@@ -2447,7 +2743,7 @@
 }
 
 .beacon-footer-area {
-  margin-top: 8px;
+  margin-top: 6px;
   text-align: center;
 }
 

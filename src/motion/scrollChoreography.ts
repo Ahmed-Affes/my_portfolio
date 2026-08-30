@@ -541,7 +541,41 @@ export class ScrollChoreography {
         ease: 'power3.out'
       }, 11.7)
 
-      // 1. Station Console expands from central quantum core
+      // 1. Orbital Satellite Rig descends from deep space and unfolds solar wings
+      .fromTo('#orbital-satellite-rig', {
+        y: -100,
+        scale: 0.6,
+        rotateX: 45,
+        opacity: 0
+      }, {
+        y: 0,
+        scale: 1.0,
+        rotateX: 0,
+        opacity: 1,
+        duration: 1.0,
+        ease: 'back.out(1.6)'
+      }, 11.7)
+      .fromTo('.satellite-solar-wing', {
+        scaleX: 0,
+        opacity: 0
+      }, {
+        scaleX: 1,
+        opacity: 1,
+        stagger: 0.1,
+        duration: 0.8,
+        ease: 'power3.out'
+      }, 11.9)
+      .fromTo('#satellite-laser-aperture', {
+        scale: 0,
+        boxShadow: '0 0 0px #ffffff'
+      }, {
+        scale: 1,
+        boxShadow: '0 0 24px #4fe3ff, 0 0 35px #ff2e88',
+        duration: 0.6,
+        ease: 'elastic.out(1.2, 0.4)'
+      }, 12.0)
+
+      // 2. Station Console expands from central quantum core
       .fromTo('.comms-station-deck', {
         scale: 0.8,
         y: 40,
@@ -552,9 +586,9 @@ export class ScrollChoreography {
         opacity: 1,
         duration: 0.9,
         ease: 'power3.out'
-      }, 11.7)
+      }, 11.8)
 
-      // 2. Tactical Radar Scope boots with 360° spin lock
+      // 3. Tactical Radar Scope boots with 360° spin lock
       .fromTo('.radar-scope-frame', {
         scale: 0.1,
         rotate: -360,
@@ -565,9 +599,9 @@ export class ScrollChoreography {
         opacity: 1,
         duration: 1.0,
         ease: 'back.out(1.8)'
-      }, 11.8)
+      }, 11.9)
 
-      // 3. 4 Integrated Comms Conduits slide in with Matrix Stagger
+      // 4. 4 Ground Receiver Conduits slide in with Matrix Stagger
       .fromTo('.comms-conduit-card', {
         x: 60,
         opacity: 0,
@@ -579,7 +613,7 @@ export class ScrollChoreography {
         stagger: 0.08,
         duration: 0.8,
         ease: 'power3.out'
-      }, 11.9)
+      }, 12.0)
 
       // Radar transmission pulses
       .set(radarWaves, { opacity: 1 }, 12.3)
