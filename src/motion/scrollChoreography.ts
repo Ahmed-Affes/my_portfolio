@@ -232,7 +232,20 @@ export class ScrollChoreography {
         filter: 'blur(0px)',
         duration: 0.8,
         ease: 'power3.out'
-      }, 0.5);
+      }, 0.5)
+      // Orbiting satellites cascade in from around the sentinel drone
+      .fromTo('.orbit-satellite', {
+        scale: 0,
+        opacity: 0,
+        y: 20
+      }, {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.08,
+        ease: 'back.out(1.8)'
+      }, 0.6);
 
     // =========================================================================
     // 🚪 CHAPTER 1 -> 2: MAINFRAME OUT -> KINETIC MAG-LEV DATA RUNWAY (SKILLS)
@@ -240,6 +253,13 @@ export class ScrollChoreography {
     // =========================================================================
     masterTl
       // Act 1 terminal dissolves and sweeps left into data buffers
+      .to('.orbit-satellite', {
+        scale: 0.5,
+        opacity: 0,
+        duration: 0.4,
+        stagger: 0.04,
+        ease: 'power2.in'
+      }, 2.6)
       .to('.biometric-avatar-pod', {
         x: -120,
         opacity: 0,

@@ -238,12 +238,27 @@
                 Cursor-tracking gaze module and operational dossier archive. Select memory sectors or click the terminal to inspect logs.
               </p>
 
-              <!-- Mainframe Lab Layout: Left Biometric Avatar Pod + Right Holographic Dossier Console -->
+              <!-- Mainframe Lab Layout: Left Biometric Sentinel Drone Pod + Orbiting Satellites + Right Holographic Dossier Console -->
               <div class="mainframe-lab-stage">
                 
-                <!-- Left Deck: Biometric Cyber Android Pod -->
+                <!-- Background Dynamic Laser Matrix & Hologram Grid Projectors -->
+                <div class="about-holo-grid-plane" aria-hidden="true">
+                  <div class="holo-grid-pedestal"></div>
+                  <div class="holo-energy-rings"></div>
+                </div>
+
+                <!-- Left Deck: Biometric Cyber Android Sentinel Drone Pod -->
                 <div class="biometric-avatar-pod" id="robot-face-container">
-                  <div class="robot-face-chassis" id="about-robot-face" role="region" aria-label="Interactive Mouse Tracking Robot Face">
+                  
+                  <!-- Drone Top Radar Scanner & Communication Mast -->
+                  <div class="sentinel-radar-mast" aria-hidden="true">
+                    <span class="radar-dish-sweep"></span>
+                    <span class="radar-beacon-led"></span>
+                    <div class="radar-laser-emitter"></div>
+                  </div>
+
+                  <!-- Floating Sentinel Head & Eye Rig -->
+                  <div class="robot-face-chassis" id="about-robot-face" role="region" aria-label="Interactive Mouse Tracking Sentinel Drone">
                     <div class="face-corner-bracket top-left"></div>
                     <div class="face-corner-bracket top-right"></div>
                     <div class="face-corner-bracket bottom-left"></div>
@@ -253,7 +268,7 @@
                     <div class="face-header-bar">
                       <div class="face-title-group">
                         <span class="face-status-dot"></span>
-                        <span class="face-telemetry-label">UNIT_07 // GAZE_TRACKER</span>
+                        <span class="face-telemetry-label">UNIT_07 // SENTINEL_AI</span>
                       </div>
                       <span class="face-fps">60 FPS</span>
                     </div>
@@ -272,10 +287,12 @@
                       <div class="robot-eye-socket" id="robot-eye-left">
                         <div class="eye-grid-bg"></div>
                         <div class="robot-pupil" id="robot-pupil-left"></div>
+                        <div class="eye-reticle-ring"></div>
                       </div>
                       <div class="robot-eye-socket" id="robot-eye-right">
                         <div class="eye-grid-bg"></div>
                         <div class="robot-pupil" id="robot-pupil-right"></div>
+                        <div class="eye-reticle-ring"></div>
                       </div>
                     </div>
 
@@ -296,52 +313,97 @@
                       <span class="mouth-bar bar-10"></span>
                     </div>
 
-                    <!-- Interactive Overclock Toggle Switch -->
-                    <div class="face-overclock-row">
-                      <button class="overclock-toggle-btn" id="face-overclock-btn" aria-label="Toggle Neural Overclock Mode">
-                        <span class="overclock-led"></span>
-                        <span class="overclock-text" id="overclock-status-label">CORE: NOMINAL</span>
-                        <span class="overclock-badge">OVERCLOCK ⚡</span>
-                      </button>
+                    <!-- Interactive Mode Selector Pills -->
+                    <div class="sentinel-mode-strip" id="sentinel-mode-strip">
+                      <button class="sentinel-mode-pill active" data-mode="nominal" title="Nominal Mode">⚡ NOMINAL</button>
+                      <button class="sentinel-mode-pill" data-mode="stealth" title="Stealth Encrypted">🛡️ STEALTH</button>
+                      <button class="sentinel-mode-pill" data-mode="overclock" title="Overclock Combat">🔥 OVERCLOCK</button>
+                      <button class="sentinel-mode-pill" data-mode="quantum" title="Quantum Surge">✨ QUANTUM</button>
                     </div>
 
-                    <div class="face-footer-tag">[CLICK CORE TO OVERCLOCK · HOVER TO ENGAGE]</div>
+                    <div class="face-footer-tag">[HOVER TO AIM · CLICK MODES TO MUTATE]</div>
                   </div>
 
-                  <!-- Quick Hardware & Operational Badges -->
-                  <div class="avatar-stats-strip">
-                    <div class="avatar-stat-card">
-                      <span class="stat-num">6+ YRS</span>
-                      <span class="stat-lbl">PROD SCALE</span>
+                  <!-- Dual Antigravity Jet Thrusters -->
+                  <div class="sentinel-thrusters-row" aria-hidden="true">
+                    <div class="sentinel-thruster left">
+                      <div class="thruster-nozzle"></div>
+                      <div class="thruster-plasma-flame"></div>
                     </div>
-                    <div class="avatar-stat-card">
-                      <span class="stat-num">0ms</span>
-                      <span class="stat-lbl">INPUT LATENCY</span>
-                    </div>
-                    <div class="avatar-stat-card">
-                      <span class="stat-num">100%</span>
-                      <span class="stat-lbl">PURE CODE</span>
+                    <div class="sentinel-thruster right">
+                      <div class="thruster-nozzle"></div>
+                      <div class="thruster-plasma-flame"></div>
                     </div>
                   </div>
+
+                  <!-- 4 Floating Orbiting Knowledge Satellites -->
+                  <div class="orbiting-satellites-group" id="orbiting-satellites">
+                    <div class="orbit-satellite sat-1" data-chip="fullstack">
+                      <span class="sat-icon">⚛️</span>
+                      <div class="sat-content">
+                        <span class="sat-code">MOD_01</span>
+                        <span class="sat-title">FULLSTACK ARCH</span>
+                      </div>
+                      <span class="sat-dot"></span>
+                    </div>
+                    <div class="orbit-satellite sat-2" data-chip="latency">
+                      <span class="sat-icon">⚡</span>
+                      <div class="sat-content">
+                        <span class="sat-code">MOD_02</span>
+                        <span class="sat-title">0ms LATENCY</span>
+                      </div>
+                      <span class="sat-dot"></span>
+                    </div>
+                    <div class="orbit-satellite sat-3" data-chip="creative">
+                      <span class="sat-icon">🎨</span>
+                      <div class="sat-content">
+                        <span class="sat-code">MOD_03</span>
+                        <span class="sat-title">WEBGL / CREATIVE</span>
+                      </div>
+                      <span class="sat-dot"></span>
+                    </div>
+                    <div class="orbit-satellite sat-4" data-chip="cloud">
+                      <span class="sat-icon">☁️</span>
+                      <div class="sat-content">
+                        <span class="sat-code">MOD_04</span>
+                        <span class="sat-title">DISTRIBUTED CLOUD</span>
+                      </div>
+                      <span class="sat-dot"></span>
+                    </div>
+                  </div>
+
                 </div>
 
                 <!-- Right Deck: Holographic Neural Command Terminal -->
                 <div class="holographic-dossier-pod" id="holographic-dossier-pod">
                   
-                  <!-- Holographic Emitter Projector Bar -->
+                  <!-- Dual Holographic Projector Emitter Laser Beams (Linking Sentinel to Terminal) -->
                   <div class="holographic-emitter-bar">
-                    <span class="emitter-spark left"></span>
+                    <div class="emitter-projector-lens left">
+                      <span class="lens-glow"></span>
+                      <div class="projector-laser-beam left"></div>
+                    </div>
                     <div class="emitter-beam-track">
                       <span class="emitter-core-laser"></span>
+                      <span class="emitter-status-text">NEURAL_HOLO_FEED // ACTIVE</span>
                     </div>
-                    <span class="emitter-spark right"></span>
+                    <div class="emitter-projector-lens right">
+                      <span class="lens-glow"></span>
+                      <div class="projector-laser-beam right"></div>
+                    </div>
                   </div>
 
                   <!-- Bio Dossier Memory Tabs -->
                   <div class="bio-tabs-header" id="bio-tabs">
-                    <button class="bio-tab-btn active" data-tab="0">01 // OPERATOR LOG</button>
-                    <button class="bio-tab-btn" data-tab="1">02 // TIMELINE</button>
-                    <button class="bio-tab-btn" data-tab="2">03 // NEURAL SPECS</button>
+                    <button class="bio-tab-btn active" data-tab="0">
+                      <span class="tab-icon">📄</span> 01 // OPERATOR LOG
+                    </button>
+                    <button class="bio-tab-btn" data-tab="1">
+                      <span class="tab-icon">🛰️</span> 02 // CAREER RADAR
+                    </button>
+                    <button class="bio-tab-btn" data-tab="2">
+                      <span class="tab-icon">📊</span> 03 // LIVE TELEMETRY
+                    </button>
                   </div>
 
                   <!-- Dossier Display Screen -->
@@ -353,12 +415,99 @@
                         <span class="dot yellow"></span>
                         <span class="dot green"></span>
                       </div>
-                      <div class="terminal-status">TELEMETRY_PORT // 2026 · [AUTHENTICATED]</div>
-                      <div class="terminal-action-hint">[CLICK TO EXPAND]</div>
+                      <div class="terminal-status" id="terminal-port-status">TELEMETRY_PORT // 2026 · [AUTHENTICATED]</div>
+                      <button class="terminal-scan-trigger-btn" id="run-neural-scan-btn" title="Run Full Diagnostic Sweep">
+                        ⚡ RUN DIAGNOSTIC SCAN
+                      </button>
                     </div>
                     
-                    <div class="terminal-body" id="terminal-bio-body" data-full-text="Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Ahmed Affes. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads. Step into the Data Core or approach an Arcade Cabinet to inspect live archives."></div>
-                    <span class="terminal-cursor" aria-hidden="true"></span>
+                    <!-- Dynamic Multi-Tab Content Container -->
+                    <div class="terminal-body-wrapper">
+                      <!-- Tab 0: Operator Log with Audio Synthesizer -->
+                      <div class="terminal-tab-view active" id="tab-view-0">
+                        <div class="terminal-body" id="terminal-bio-body" data-full-text="Boot sequence initiated. I am UNIT_07 — the personal avatar and telemetry core for Ahmed Affes. For 6+ years, we have engineered responsive distributed systems, crisp interactive web experiences, and microsecond-latency client tools. Everything here is code-driven, hand-tuned, and built to survive production loads. Step into the Data Core or approach an Arcade Cabinet to inspect live archives."></div>
+                        <span class="terminal-cursor" aria-hidden="true"></span>
+                      </div>
+
+                      <!-- Tab 1: Interactive Career Timeline Radar -->
+                      <div class="terminal-tab-view" id="tab-view-1">
+                        <div class="timeline-radar-container">
+                          <div class="timeline-node-card active" data-year="2025-2026">
+                            <div class="timeline-node-dot"></div>
+                            <div class="timeline-node-info">
+                              <div class="timeline-year">2025 — PRESENT // LEAD MOTION &amp; DISTRIBUTED ARCHITECT</div>
+                              <div class="timeline-role">High-throughput microservices, sub-millisecond client interfaces, WebGL shader systems.</div>
+                              <div class="timeline-chips">
+                                <span>TypeScript</span><span>WebGL / Canvas</span><span>Rust</span><span>Distributed Systems</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="timeline-node-card" data-year="2023-2024">
+                            <div class="timeline-node-dot"></div>
+                            <div class="timeline-node-info">
+                              <div class="timeline-year">2023 — 2024 // SENIOR FULL-STACK SYSTEMS ENGINEER</div>
+                              <div class="timeline-role">Architected resilient backend APIs, responsive Next.js/React frontends, and low-latency state caches.</div>
+                              <div class="timeline-chips">
+                                <span>React</span><span>Node.js</span><span>Docker</span><span>PostgreSQL</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="timeline-node-card" data-year="2020-2022">
+                            <div class="timeline-node-dot"></div>
+                            <div class="timeline-node-info">
+                              <div class="timeline-year">2020 — 2022 // CREATIVE UI &amp; FRONTEND DEVELOPER</div>
+                              <div class="timeline-role">Pixel-perfect motion engines, game-inspired HUD interfaces, high-concurrency client applications.</div>
+                              <div class="timeline-chips">
+                                <span>GSAP</span><span>Vanilla JS</span><span>CSS Architecture</span><span>UI/UX</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Tab 2: Live System Telemetry Gauges -->
+                      <div class="terminal-tab-view" id="tab-view-2">
+                        <div class="telemetry-gauges-container">
+                          <div class="gauge-row">
+                            <div class="gauge-meta">
+                              <span class="gauge-name">⚡ ARCHITECTURAL RESILIENCE</span>
+                              <span class="gauge-val" id="gauge-val-1">99.8%</span>
+                            </div>
+                            <div class="gauge-bar-track">
+                              <div class="gauge-bar-fill cyan" style="width: 99.8%;"></div>
+                            </div>
+                          </div>
+                          <div class="gauge-row">
+                            <div class="gauge-meta">
+                              <span class="gauge-name">📡 REAL-TIME DATA THROUGHPUT</span>
+                              <span class="gauge-val" id="gauge-val-2">98.6%</span>
+                            </div>
+                            <div class="gauge-bar-track">
+                              <div class="gauge-bar-fill amber" style="width: 98.6%;"></div>
+                            </div>
+                          </div>
+                          <div class="gauge-row">
+                            <div class="gauge-meta">
+                              <span class="gauge-name">✨ INTERACTIVE MOTION &amp; WEBGL</span>
+                              <span class="gauge-val" id="gauge-val-3">100.0%</span>
+                            </div>
+                            <div class="gauge-bar-track">
+                              <div class="gauge-bar-fill green" style="width: 100%;"></div>
+                            </div>
+                          </div>
+                          <div class="gauge-row">
+                            <div class="gauge-meta">
+                              <span class="gauge-name">🛡️ FAULT TOLERANCE &amp; DEPLOYMENT</span>
+                              <span class="gauge-val" id="gauge-val-4">99.4%</span>
+                            </div>
+                            <div class="gauge-bar-track">
+                              <div class="gauge-bar-fill magenta" style="width: 99.4%;"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
                   </div>
 
                   <!-- Quick Direct Telemetry Chips & Action Row -->

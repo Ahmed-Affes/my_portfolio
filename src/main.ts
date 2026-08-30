@@ -376,8 +376,9 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.add('active');
 
       const tabIdx = parseInt(btn.getAttribute('data-tab') || '0', 10);
-      const text = bioTabData[tabIdx] || bioTabData[0];
-      typeBioText(text);
+      if (tabIdx === 0) {
+        typeBioText(bioTabData[0]);
+      }
     });
   });
 
